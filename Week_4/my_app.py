@@ -27,18 +27,18 @@ df = pd.read_csv("urbanization-index-2022.csv")
 st.write("Here's our data!")
 st.dataframe(df)
 
-box_plot1 = sns.boxplot(x = df["urban"], y=df["pvi2022"])
 
+box_plot1 = sns.boxplot(x = df["urban"], y=df["pvi_22"])
+st.pyplot(box_plot1.get_figure())
 
-city = st.selectbox("Select a city", df["City"].unique(), index = None)
-filtered_df = df[df["City"] == city]
+grouping = st.selectbox("Select a district type", df["grouping"].unique(), index = None)
+filtered_df = df[df["grouping"] == grouping]
 
-st.write(f"People in the {city}")
+st.write(f"People in the {grouping}")
 st.dataframe(filtered_df)
 
 st.bar_chart(df["Urban"])
 
-import seaborn as sns
 
 
 st.pyplot(box_plot1.get_figure())
