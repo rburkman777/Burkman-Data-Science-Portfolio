@@ -17,6 +17,8 @@ else:
 
 import pandas as pd
 
+import seaborn as sns
+
 st.subheader("Exploring Our Dataset")
 
 # Loard the CSV file
@@ -25,8 +27,7 @@ df = pd.read_csv("urbanization-index-2022.csv")
 st.write("Here's our data!")
 st.dataframe(df)
 
-
-box_plot1 = sns.boxplot(x = df["City"], y=df["Salary"])
+box_plot1 = sns.boxplot(x = df["urban"], y=df["pvi2022"])
 
 
 city = st.selectbox("Select a city", df["City"].unique(), index = None)
