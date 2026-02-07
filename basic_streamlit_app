@@ -1,0 +1,7 @@
+LASTNAME-Data-Science-Portfolio/
+├── README.md
+├── basic_streamlit_app/
+│   ├── README.md
+│   ├── main.py
+│   ├── data/
+│   |   ├── your_data.csv
