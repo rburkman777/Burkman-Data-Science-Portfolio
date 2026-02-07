@@ -26,8 +26,6 @@ st.write("Here's our data!")
 st.dataframe(df)
 
 
-git push -m "A short, meaningful description of your changes"
-
 box_plot1 = sns.boxplot(x = df["City"], y=df["Salary"])
 
 
@@ -37,7 +35,7 @@ filtered_df = df[df["City"] == city]
 st.write(f"People in the {city}")
 st.dataframe(filtered_df)
 
-st.bar_chart(df["Salary"])
+st.bar_chart(df["Urban"])
 
 import seaborn as sns
 
