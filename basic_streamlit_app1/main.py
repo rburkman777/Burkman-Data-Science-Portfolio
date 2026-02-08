@@ -6,10 +6,11 @@ st.title("Congressional Districts in the 2022 Election")
 st.write("Welcome to my first Streamlit app! As a political science major,"
 "I believe there is a lot to be learned from studying election results. This "
 "page was designed to let you interact with this data from FiveThirtyEight and explore"
-"trends in American elections. You will be able to filter through election data below and explore how many 
-"of different kinds of congressional district are in each state.NOTE ON THE DATA: for the pvi_22 variable, it is " \
-"measuring the partisanship of each congressional district. A positive value " \
-"means an estimate that the district has a more Democratic partisanship while a negative value indicates" \
+"trends in American elections. You will be able to filter through data about American congressional districts" \
+"in the lead up to the 2022 elections below. You will be able to explore how many "
+"different kinds of congressional district are in each state and search for patterns. NOTE ON THE DATA: for the pvi_22 variable, it is " 
+"measuring the partisanship of each congressional district. A positive value " 
+"means an estimate that the district has a more Democratic partisanship while a negative value indicates" 
 "a more Republican congressional district.")
 
 #we will need pandas and seaborn. If these are not installed, use conda to do so. 
@@ -82,7 +83,7 @@ st.pyplot(plt)
 #and are more likely to be located in Democratic states and vice versa. 
 st.write("As you may have noticed, more rural and Republican districts are in so-called red states and more "
 "Democratic and urban distircts are in so-called blue states. It turns out that rural areas tend to lean Republican "
-"and urban areas tend to lean Democratic. On the other hand, you may also find some exceptions to this. Try looking 
+"and urban areas tend to lean Democratic. On the other hand, you may also find some exceptions to this. Try looking "
 "at suburban, Republican districts -- you will notice there are actually a lot of these that exist Florida and Texas!")
 
 
