@@ -1,8 +1,8 @@
 import streamlit as st
-# Markdown Hashtag
+#here we import streamlit and give our application a title
 st.title("Congressional Districts in the 2022 Election")
 
-
+#here we have a descirption of the basic functions of our app
 st.write("Welcome to my first Streamlit app! As a political science major,"
 "I believe there is a lot to be learned from studying election results. This "
 "page was designed to let you interact with this data from FiveThirtyEight and explore"
@@ -11,7 +11,7 @@ st.write("Welcome to my first Streamlit app! As a political science major,"
 "means an estimate that the district has a more Democratic partisanship while a negative value indicates" \
 "a more Republican congressional district.")
 
-
+#we will need pandas and seaborn. If these are not installed, use conda to do so. 
 import pandas as pd
 
 
@@ -28,12 +28,14 @@ df = pd.read_csv("urbanization-index-2022.csv")
 st.write("Here's our data!")
 st.dataframe(df)
 
+
+#this is out first filter: we filter by 'grouping' or the way that FiveThirtyEight characterizes the district based on how urban, suburban, or rural it is. 
 st.write("Use this menu to look at individual distirct types based on population density")
 grouping = st.selectbox("Select a district type", df["grouping"].unique(), index = None)
 filtered_df = df[df["grouping"] == grouping]
 
 
-# --- PVI Slider ---
+#Here, we create a slider that lets us filter by partisanship. 
 st.write("Use the slider to filter districts by partisanship (`pvi_22`)")
 min_pvi = int(df['pvi_22'].min())
 max_pvi = int(df['pvi_22'].max())
@@ -45,13 +47,12 @@ pvi_range = st.slider(
 )
 
 
-# --- Apply Both Filters ---
+#we apply both filters. In other words, this allows us to 
 filtered_df = df[
    (df["grouping"] == grouping) &
    (df["pvi_22"] >= pvi_range[0]) &
    (df["pvi_22"] <= pvi_range[1])
 ]
-
 
 st.write(f"Districts in the {grouping} group with PVI between {pvi_range[0]} and {pvi_range[1]}:")
 st.dataframe(filtered_df)
@@ -63,7 +64,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-# --- Bar Plot: Number of districts per state (affected by both filters) ---
+#here, we create an interactive bar plot that sums up the number of congressional districts from each filtration category in each state. 
 st.subheader(f"Number of selected districts per state")
 state_counts = filtered_df['state'].value_counts().sort_values(ascending=False)
 
