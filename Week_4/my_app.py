@@ -28,7 +28,6 @@ df = pd.read_csv("urbanization-index-2022.csv")
 st.write("Here's our data!")
 st.dataframe(df)
 
-
 st.write("Use this menu to look at individual distirct types based on population density")
 grouping = st.selectbox("Select a district type", df["grouping"].unique(), index = None)
 filtered_df = df[df["grouping"] == grouping]
