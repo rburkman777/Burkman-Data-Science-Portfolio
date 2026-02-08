@@ -10,3 +10,6 @@ In order to use the app, simply open up a python script in visual studio code. P
 
 While exploring the app, do notice the data has been displayed for easy viewing. You can sort the congressional distircts by "partisan voting index" (aka PVI) and by their level of density as categorized by state. From this, you can find information on the voting habits of different states and the trends across congressional districts. 
 
+## Important Note
+
+I want to acknowledge that I used AI to help me write the code for the slider and the bar graph as I did not know how to write it myself yet. I studied the code it produced to get an understanding of it. The rest of the code was written either cold turkey or using in-class examples. 
