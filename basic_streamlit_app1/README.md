@@ -4,7 +4,7 @@ The Streamlit app is an open source Python framework for data scientists to deli
 
 ## Link to Streamlit App
 
-http://192.168.0.208:8501
+http://192.168.0.208:8501/
 
 ## How to Load the App via Visual Studio Code
 
