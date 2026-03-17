@@ -6,7 +6,7 @@ st.title("Congressional Districts in the 2022 Election")
 st.write("Welcome to my first Streamlit app! As a political science major,"
 "I believe there is a lot to be learned from studying election results. This "
 "page was designed to let you interact with this data from FiveThirtyEight and explore"
-"trends in American elections. You will be able to filter through data about American congressional districts" \
+" trends in American elections. You will be able to filter through data about American congressional districts" 
 "in the lead up to the 2022 elections below. You will be able to explore how many "
 "different kinds of congressional district are in each state and search for patterns. NOTE ON THE DATA: for the pvi_22 variable, it is " 
 "measuring the partisanship of each congressional district. A positive value " 
