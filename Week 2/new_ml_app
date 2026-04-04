@@ -1,0 +1,12 @@
+import streamlit as st
+
+st.title("Machine Learning Streamlit App")
+
+st.write("Welcome! Let's start by uploading your dataset! You can upload it as a CSV here:")
+
+uploaded_file = st.file_uploader("Upload a CSV")
+
+if uploaded_file:
+    import pandas as pd
+    df = pd.read_csv(uploaded_file)
+    st.write(df)
