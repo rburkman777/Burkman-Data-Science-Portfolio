@@ -1,58 +1,5 @@
 import streamlit as st
 import pandas as pd
-from sklearn.linear_model import LinearRegression
-
-st.title("Machine Learning Streamlit App")
-
-st.write("Upload your dataset (CSV):" \
-"Note: Please assure that the file contains a label for the independent variable, the dependent variable, and the numeric values below it. Here is an example:")
-uploaded_file = st.file_uploader("Upload a CSV")
-
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.write("### Preview of Data")
-    st.write(df)
-
-    # Select columns
-    columns = df.columns.tolist()
-    
-    x_column = st.selectbox("Select feature (X)", columns)
-    y_column = st.selectbox("Select target (y)", columns)
-
-    if st.button("Train Model"):
-        X = df[[x_column]]
-        y = df[y_column]
-
-        model = LinearRegression()
-        model.fit(X, y)
-
-        st.write("### Model Results")
-        st.write(f"Coefficient: {model.coef_[0]}")
-        st.write(f"Intercept: {model.intercept_}")
-
-        # Predictions
-        predictions = model.predict(X)
-
-        df["Predictions"] = predictions
-        st.write("### Predictions")
-        st.write(df)
-
-
-
-#uploaded_file = st.file_uploader("Upload a CSV")
-
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.write("### Preview of Data")
-    st.write(df)
-
-    # Select columns
-    columns = df.columns.tolist()
-
-
-
-import streamlit as st
-import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -62,10 +9,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 from sklearn import tree
 import graphviz
 
-
-
 st.title("Decision Tree Machine Learning App")
-st.write("This app alos gives you the chance to experiment with a decision tree.")
 
 # -----------------------------
 # Upload Dataset
