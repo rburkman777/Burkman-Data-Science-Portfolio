@@ -181,3 +181,17 @@ if uploaded_file is not None:
             if st.button("Predict"):
                 prediction = model.predict(input_df)
                 st.success(f"Prediction: {prediction[0]}")
+
+                # Compute the Area Under the Curve (AUC) score
+roc_auc = roc_auc_score(y_test, y_probs)
+print(f"ROC AUC Score: {roc_auc:.2f}")
+
+# Plot the ROC curve
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, lw=2, label=f'ROC Curve (AUC = {roc_auc:.2f})')
+plt.plot([0, 1], [0, 1], lw=2, linestyle='--', label='Random Guess') # Plotting 50% line
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver Operating Characteristic (ROC) Curve')
+plt.legend(loc="lower right")
+plt.show()
