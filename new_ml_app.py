@@ -182,7 +182,14 @@ if uploaded_file is not None:
                 prediction = model.predict(input_df)
                 st.success(f"Prediction: {prediction[0]}")
 
-                # Compute the Area Under the Curve (AUC) score
+# Get the predicted probabilities for the positive class (malignant)
+y_probs = model.predict_proba(X_test)[:, 1]
+
+# Calculate the False Positive Rate (FPR), True Positive Rate (TPR), and thresholds
+fpr, tpr, thresholds = roc_curve(y_test, y_probs)
+
+
+# Compute the Area Under the Curve (AUC) score
 roc_auc = roc_auc_score(y_test, y_probs)
 print(f"ROC AUC Score: {roc_auc:.2f}")
 
