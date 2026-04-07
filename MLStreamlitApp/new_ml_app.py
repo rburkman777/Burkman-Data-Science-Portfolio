@@ -13,7 +13,7 @@ import graphviz
 
 st.title("🤖 Machine Learning Streamlit App")
 st.write("Welcome to my machine learning app! This app was created to allow users to explore various machine learning models and the ways that they can be used to learn about data. Let's get started!")
-
+st.markdown("-----------------------------------------------------------------")
 # -----------------------------
 # STEP 1: MODEL SELECTION
 # -----------------------------
@@ -27,6 +27,7 @@ model_type = st.selectbox(
 with st.expander("CLICK HERE to learn more about each model type"):
     st.write("Linear Regressions: There are models that can tell you about the relationship between two variables. Specifically, we learn whether an increase in one variable leads to an increase or decrease in the other variable. \n\n Decision Trees: Decision trees are a kind of machine learning that make a series of decisions using yes or no questions.")
 
+
 if model_type == "Select...":
     st.warning("Please select a model to continue.")
     st.stop()
@@ -35,12 +36,15 @@ if model_type == "Select...":
 # STEP 2: DATA SOURCE
 # -----------------------------
 if model_type == "Linear Regression":
+    st.markdown("-----------------------------------------------------------------")
     st.write("You chose linear regression! Now let's get a dataset in order for you. You can upload one or use our built-in dataset or upload your own.")
     st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n *It is a csv file \n\n *The rows above each column of data are labelled \n\n *The data is numeric")
+    st.markdown("-----------------------------------------------------------------")
 else:
+    st.markdown("-----------------------------------------------------------------")
     st.write("You chose decision tree! Let's get you a dataset to work with. You can use the built in dataset or upload your own")
     st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n *It is a csv file \n\n *The rows above each column of data are labelled \n\n *The data is numeric")
-
+    st.markdown("-----------------------------------------------------------------")
 data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"])
 
 df = None
@@ -107,89 +111,138 @@ if model_type == "Linear Regression":
 # 🌳 DECISION TREE
 # =============================
 elif model_type == "Decision Tree":
+    st.space(size="small")
+    st.markdown("-----------------------------------------------------------------")
+    st.space(size="small")
+
     st.header("🌳 Decision Tree")
-    st.write("You chose to make a decision tree! Great choice! \n\n \n\n The first step is to choose your features and target. The target is what you want the dataset to make predictions about using the decision tree. Meanwhile, the features are what you want the decision tree to use to make the decisions.")
+    st.space(size="small")
+
+    st.write("You chose to make a decision tree! Great choice! Begin by completing step one of making your decision tree below:")
+    st.markdown("-----------------------------------------------------------------")
+    st.markdown("#### Step One: Enter your target and predicting features below:")
+    st.write("The first step is to choose your features and target. The target is what you want the dataset to make predictions about using the decision tree. Meanwhile, the features are what you want the decision tree to use to make the decisions.")
    
+    target = st.selectbox("Select Target Column (y) --> what you want the dataset to make a prediction about", columns)
+    features = st.multiselect("Select Feature Columns (X) --> the features you want to use to make the prediction", columns)
 
-    target = st.selectbox("##Select Target Column (y) --> what you want the dataset to make a prediction about", columns)
-    features = st.multiselect("## Select Feature Columns (X) --> the features you want to use to make the prediction", columns)
+if target and features:
+    X = df[features]
+    y = df[target]
 
-    if target and features:
-        X = df[features]
-        y = df[target]
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42
+    # Step Two
+    st.space(size="medium")
+    st.markdown("#### Step Two: Tune your hyperparameters below:")
+    st.write("Below is where you may tune your hyperparameters to change the function of the model.")
+
+    with st.expander("CLICK HERE to learn more about the different types of hyperparameters tuning"):
+        st.write(
+            "Max Depth: Controls how deep the decision tree grows.\n\n"
+            "Criterion: Measures split quality. Gini minimizes impurity, while entropy measures information gain."
         )
 
-        # Sidebar settings
-        st.sidebar.header("⚙️ Model Settings")
-        max_depth = st.slider("## Max Depth", 1, 10, 3)
-        criterion = st.selectbox("## Criterion", ["gini", "entropy"])
+    # ✅ OUTSIDE expander but INSIDE if-block
+    max_depth = st.slider("Max Depth", 1, 10, 3)
+    criterion = st.selectbox("Criterion", ["gini", "entropy"])
 
-        if st.button("Train Decision Tree"):
-            model = DecisionTreeClassifier(
-                max_depth=max_depth,
-                criterion=criterion,
-                random_state=42
-            )
-            model.fit(X_train, y_train)
+    # ✅ Train button ALSO inside the if-block
+    st.space(size="medium")
+    st.markdown("#### Step Three: Press the button below to run the decision tree on your data with the features, targets, and hyperparameters you chose! You will get multiple evaluations of the tree's performance:")
+    st.write("NOTE: You can change any of the selections you made above to produce a new decision tree!")
+    if st.button("Train Decision Tree"):
+        model = DecisionTreeClassifier(
+            max_depth=max_depth,
+            criterion=criterion,
+            random_state=42
+        )
+        model.fit(X_train, y_train)
 
-            st.success("✅ Model trained!")
+        st.success("✅ Model trained!")
+        st.markdown("## Model Evaluation")
+        st.write("Below there are three different measurements of the model's performance:" \
+        "\n\n *Accuracy and Classification Report \n\n *Confusion Matrix \n\n *ROC Curve \n\n\n\n There is also a " \
+        "visualization of the decision tree")
+        st.space(size="small")
+        st.markdown("-----------------------------------------------------------------")
+        st.space(size="small")
+        st.markdown("### 1. Accuracy and Classification Report")
 
-            # Predictions
-            y_pred = model.predict(X_test)
-            acc = accuracy_score(y_test, y_pred)
-            st.write(f"### 🎯 Accuracy: {acc:.2f}")
+        # Predictions
+        y_pred = model.predict(X_test)
+        acc = accuracy_score(y_test, y_pred)
+        st.write(f"### 🎯 Model Accuracy: {acc:.2f}")
 
-            # Confusion Matrix
-            st.write("### 🔢 Confusion Matrix")
-            cm = confusion_matrix(y_test, y_pred)
-            fig, ax = plt.subplots()
-            sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax)
-            ax.set_xlabel("Predicted")
-            ax.set_ylabel("Actual")
-            st.pyplot(fig)
+        st.space(size="small")
 
-            # Classification Report
-            st.write("### 📄 Classification Report")
-            st.text(classification_report(y_test, y_pred))
+        # Classification Report
+        report_dict = classification_report(y_test, y_pred, output_dict=True)
+        report_df = pd.DataFrame(report_dict).transpose()
 
-            # Tree Visualization
-            st.write("### 🌳 Decision Tree Visualization")
-            dot_data = tree.export_graphviz(
-                model,
-                feature_names=features,
-                class_names=[str(c) for c in y.unique()],
-                filled=True
-            )
-            st.graphviz_chart(graphviz.Source(dot_data))
+        st.write("### 📄 Classification Report")
+        st.dataframe(report_df.style.format("{:.2f}"))
 
-            # 🔮 User Input for Prediction
-            st.write("### 🔮 Make a Prediction")
-            user_input = {}
-            for feature in features:
-                if df[feature].dtype in ["int64", "float64"]:
-                    user_input[feature] = st.number_input(feature, value=0.0)
-                else:
-                    user_input[feature] = st.text_input(feature)
-            input_df = pd.DataFrame([user_input])
-            if st.button("Predict (Decision Tree)"):
-                prediction = model.predict(input_df)
-                st.success(f"Prediction: {prediction[0]}")
 
-            # ROC Curve (binary only)
-            if len(y.unique()) == 2:
-                y_probs = model.predict_proba(X_test)[:, 1]
-                fpr, tpr, _ = roc_curve(y_test, y_probs)
-                roc_auc = roc_auc_score(y_test, y_probs)
-                fig2, ax2 = plt.subplots()
-                ax2.plot(fpr, tpr, label=f"AUC = {roc_auc:.2f}")
-                ax2.plot([0, 1], [0, 1], linestyle='--')
-                ax2.set_xlabel("False Positive Rate")
-                ax2.set_ylabel("True Positive Rate")
-                ax2.set_title("ROC Curve")
-                ax2.legend()
-                st.pyplot(fig2)
-            else:
-                st.info("ROC curve only works for binary classification.")
+        with st.expander("CLICK HERE to learn more about accruacy an the classification report"):
+            st.write("Accuracy is a simple measure of what percentage of times the decision tree correctly predicted the outcome using the features. The classification report gives you a number of " \
+            "useful evaluative information. ")
+      
+        st.space(size="small")
+        st.markdown("-----------------------------------------------------------------")
+        st.space(size="small")
+
+        st.markdown("### 2. Confusion Matrix")
+
+
+        # Confusion Matrix
+        st.write("### 🔢 Confusion Matrix")
+        cm = confusion_matrix(y_test, y_pred)
+        fig, ax = plt.subplots()
+        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax)
+        ax.set_xlabel("Predicted")
+        ax.set_ylabel("Actual")
+        st.pyplot(fig)
+
+
+        st.space(size="small")
+        st.markdown("-----------------------------------------------------------------")
+        st.space(size="small")
+
+        st.markdown("### 3. ROC Curve")
+
+        # ROC Curve (binary only)
+        if len(y.unique()) == 2:
+            y_probs = model.predict_proba(X_test)[:, 1]
+            fpr, tpr, _ = roc_curve(y_test, y_probs)
+            roc_auc = roc_auc_score(y_test, y_probs)
+            fig2, ax2 = plt.subplots()
+            ax2.plot(fpr, tpr, label=f"AUC = {roc_auc:.2f}")
+            ax2.plot([0, 1], [0, 1], linestyle='--')
+            ax2.set_xlabel("False Positive Rate")
+            ax2.set_ylabel("True Positive Rate")
+            ax2.set_title("ROC Curve")
+            ax2.legend()
+            st.pyplot(fig2)
+        else:
+            st.info("ROC curve only works for binary classification.")
+
+
+        st.space(size="small")
+        st.markdown("-----------------------------------------------------------------")
+        st.space(size="small")
+
+        st.markdown("### 4. Decision Tree Visualization")
+
+
+        # Tree Visualization
+        st.write("### 🌳 Decision Tree Visualization")
+        dot_data = tree.export_graphviz(
+            model,
+            feature_names=features,
+            class_names=[str(c) for c in y.unique()],
+            filled=True
+        )
+        st.graphviz_chart(graphviz.Source(dot_data))
