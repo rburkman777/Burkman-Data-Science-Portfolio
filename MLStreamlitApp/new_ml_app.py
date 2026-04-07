@@ -34,6 +34,13 @@ if model_type == "Select...":
 # -----------------------------
 # STEP 2: DATA SOURCE
 # -----------------------------
+if model_type == "Linear Regression":
+    st.write("You chose linear regression! Now let's get a dataset in order for you. You can upload one or use our built-in dataset or upload your own.")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n *It is a csv file \n\n *The rows above each column of data are labelled \n\n *The data is numeric")
+else:
+    st.write("You chose decision tree! Let's get you a dataset to work with. You can use the built in dataset or upload your own")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n *It is a csv file \n\n *The rows above each column of data are labelled \n\n *The data is numeric")
+
 data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"])
 
 df = None
@@ -61,6 +68,7 @@ else:
 # STEP 3: DISPLAY DATA
 # -----------------------------
 st.write("### 📊 Data Preview")
+st.write("Here's a preview of our data")
 st.write(df)
 columns = df.columns.tolist()
 
@@ -100,11 +108,11 @@ if model_type == "Linear Regression":
 # =============================
 elif model_type == "Decision Tree":
     st.header("🌳 Decision Tree")
-    st.write("You chose to make a decision tree! Great choice! First, let's pick a dataset. You can upload your own dataset or use the built in dataset.")
-    st.write("NOTE: If you want to upload your own dataset, make sure that it is a csv file and that the rows above each column of data are labelled")
+    st.write("You chose to make a decision tree! Great choice! \n\n \n\n The first step is to choose your features and target. The target is what you want the dataset to make predictions about using the decision tree. Meanwhile, the features are what you want the decision tree to use to make the decisions.")
+   
 
-    target = st.selectbox("Select Target Column (y)", columns)
-    features = st.multiselect("Select Feature Columns (X)", columns)
+    target = st.selectbox("##Select Target Column (y) --> what you want the dataset to make a prediction about", columns)
+    features = st.multiselect("## Select Feature Columns (X) --> the features you want to use to make the prediction", columns)
 
     if target and features:
         X = df[features]
@@ -116,8 +124,8 @@ elif model_type == "Decision Tree":
 
         # Sidebar settings
         st.sidebar.header("⚙️ Model Settings")
-        max_depth = st.slider("Max Depth", 1, 10, 3)
-        criterion = st.selectbox("Criterion", ["gini", "entropy"])
+        max_depth = st.slider("## Max Depth", 1, 10, 3)
+        criterion = st.selectbox("## Criterion", ["gini", "entropy"])
 
         if st.button("Train Decision Tree"):
             model = DecisionTreeClassifier(
