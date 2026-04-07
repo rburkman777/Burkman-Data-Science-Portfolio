@@ -12,14 +12,20 @@ from sklearn import tree
 import graphviz
 
 st.title("🤖 Machine Learning Streamlit App")
+st.write("Welcome to my machine learning app! This app was created to allow users to explore various machine learning models and the ways that they can be used to learn about data. Let's get started!")
 
 # -----------------------------
 # STEP 1: MODEL SELECTION
 # -----------------------------
+
 model_type = st.selectbox(
     "👉 First, choose a model",
     ["Select...", "Linear Regression", "Decision Tree"]
 )
+
+with st.expander("CLICK HERE to learn more about each model type"):
+    st.write("Linear Regressions: There are models that can tell you about the relationship between two variables. Specifically, we learn whether an increase in one variable leads to an increase or decrease in the other variable. "
+"Decision Trees: Decision trees are a kind of machine learning that make a series of decisions using yes or no questions.")
 
 if model_type == "Select...":
     st.warning("Please select a model to continue.")
@@ -55,7 +61,7 @@ else:
 # STEP 3: DISPLAY DATA
 # -----------------------------
 st.write("### 📊 Data Preview")
-st.write(df.head())
+st.write(df)
 columns = df.columns.tolist()
 
 # =============================
