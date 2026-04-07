@@ -23,9 +23,9 @@ model_type = st.selectbox(
     ["Select...", "Linear Regression", "Decision Tree"]
 )
 
+
 with st.expander("CLICK HERE to learn more about each model type"):
-    st.write("Linear Regressions: There are models that can tell you about the relationship between two variables. Specifically, we learn whether an increase in one variable leads to an increase or decrease in the other variable. "
-"Decision Trees: Decision trees are a kind of machine learning that make a series of decisions using yes or no questions.")
+    st.write("Linear Regressions: There are models that can tell you about the relationship between two variables. Specifically, we learn whether an increase in one variable leads to an increase or decrease in the other variable. \n\n Decision Trees: Decision trees are a kind of machine learning that make a series of decisions using yes or no questions.")
 
 if model_type == "Select...":
     st.warning("Please select a model to continue.")
@@ -100,6 +100,8 @@ if model_type == "Linear Regression":
 # =============================
 elif model_type == "Decision Tree":
     st.header("🌳 Decision Tree")
+    st.write("You chose to make a decision tree! Great choice! First, let's pick a dataset. You can upload your own dataset or use the built in dataset.")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it is a csv file and that the rows above each column of data are labelled")
 
     target = st.selectbox("Select Target Column (y)", columns)
     features = st.multiselect("Select Feature Columns (X)", columns)
