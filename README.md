@@ -2,9 +2,35 @@
 
 ## Overview
 
-This respository will contain several projects that will demonstrate my skills across a vareity of platforms. They will also highlight my talents for data analysis, coding, and visualizing my findings. 
+Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. I invite you to explore the descriptions of my projects as well as to directly interact with them. 
+________________________________________________________________________________________________________________________________________________
 
-My first project is underway and is now avaiable in this repository. It allows the user to explore data about congressional distircts from the 2022 election. You can view it in the basic_streamlit_app1 folder. 
+##Machine Learning Streamlit App
+
+###LINK to app:
+###LINK to Github folder with project code, information, and data:
+
+####Project Overview
+
+In this project, I created an app capable of accepting an input of data from a user and using that data to illustrate the process of machine learning. The app allows users to choose a type of machine learning (linear regression or decision tree) and tune hyperparameters based off that choice. Afterwards, the users can evaluate various metrics of model performance, including ROC curves, accuracy, precision, and others. The visualization below depicts a decision tree from the model that is outputted after the user uploads data and performs custom hyperparameter tuning. 
+
+The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters can impact the performance metrics of the model. In this way, it will also be a learning experience about the nuances of machine learning. 
+
+Picture: A sample decision tree produced and visualized by the app from running sample data embedded in the app: 
+
+<img width="783" height="394" alt="Screen Shot 2026-04-07 at 8 28 35 PM" src="https://github.com/user-attachments/assets/a7355982-b764-4ccf-a19f-3dddffe66c2e" />
+
+________________________________________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
 
 ## Link to Streamlit App
 
