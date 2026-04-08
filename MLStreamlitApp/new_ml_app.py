@@ -162,9 +162,20 @@ if target and features:
         model.fit(X_train, y_train)
 
         st.success("✅ Model trained!")
-        st.markdown("## Model Evaluation")
+        st.markdown("## Quick Model Evaluation")
+        y_pred = model.predict(X_test)
+        acc = accuracy_score(y_test, y_pred)
+        if len(y.unique()) == 2:
+            y_probs = model.predict_proba(X_test)[:, 1]
+            fpr, tpr, _ = roc_curve(y_test, y_probs)
+            roc_auc = roc_auc_score(y_test, y_probs)
+        st.write(f"### 🎯 Model Accuracy: {acc:.2f}")
+        st.write(f"### 📈 Area Under the Curve (AUC) = {roc_auc:.2f}")
+        st.write("To learn more about these metrics and others see the full model evaluation below.")
+        st.markdown("-----------------------------------------------------------------")
+        st.markdown("## Full Model Evaluation")
         st.write("Below there are three different measurements of the model's performance:" \
-        "\n\n *Accuracy and Classification Report \n\n *Confusion Matrix \n\n *ROC Curve \n\n\n\n There is also a " \
+        "\n\n 1. Accuracy and Classification Report \n\n 2. Confusion Matrix \n\n 3. ROC Curve \n\n\n\n 4. There is also a " \
         "visualization of the decision tree")
         st.space(size="small")
         st.markdown("-----------------------------------------------------------------")
@@ -174,7 +185,13 @@ if target and features:
         # Predictions
         y_pred = model.predict(X_test)
         acc = accuracy_score(y_test, y_pred)
+        
         st.write(f"### 🎯 Model Accuracy: {acc:.2f}")
+        with st.expander("CLICK HERE to learn more about accuracy"):
+            st.write(
+            "Accuracy is a simple measure of what percentage of times the decision tree correctly predicted the outcome using the features."
+        )
+
 
         st.space(size="small")
 
@@ -186,19 +203,20 @@ if target and features:
         st.dataframe(report_df.style.format("{:.2f}"))
 
 
-        with st.expander("CLICK HERE to learn more about accruacy an the classification report"):
-            st.write("Accuracy is a simple measure of what percentage of times the decision tree correctly predicted the outcome using the features. The classification report gives you a number of " \
-            "useful evaluative information. ")
+        with st.expander("The classification report gives us a number useful metrics. \n\n " \
+        "*Precision is essentially the accuracy of your positive predcitions \n\n *Recall is essentially the accuracy of your negative predictions." \
+        "\n\n *The F-1 score attempts to measure how well a model performs in both recall and precision. It does this by taking the harmonic mean of precision and recall. " \
+        "\n\n *Support is the number of actual occurrences of the class in the specified dataset."):
+            st.write()
       
         st.space(size="small")
         st.markdown("-----------------------------------------------------------------")
         st.space(size="small")
 
-        st.markdown("### 2. Confusion Matrix")
+        st.markdown("### 2. Confusion Matrix 🔢")
 
 
         # Confusion Matrix
-        st.write("### 🔢 Confusion Matrix")
         cm = confusion_matrix(y_test, y_pred)
         fig, ax = plt.subplots()
         sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax)
@@ -206,6 +224,10 @@ if target and features:
         ax.set_ylabel("Actual")
         st.pyplot(fig)
 
+        with st.expander("CLICK HERE to learn more the confusion matrix"):
+            st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. " \
+            "In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, "
+            "and false negatives. The top left box on your screen is true negatives, the bottom right box is true positives, the top right box is false positives, and bottom left box is false negatives. Also explain how this relates to the tree")
 
         st.space(size="small")
         st.markdown("-----------------------------------------------------------------")
@@ -229,16 +251,21 @@ if target and features:
         else:
             st.info("ROC curve only works for binary classification.")
 
+        with st.expander("CLICK HERE to learn more the ROC curve and AUC"):
+            st.write("The ROC curve is a plot of the true positive rate against the false positive rate. The AUC " \
+            "measures the ability of the model to distinguish classes, with 1 being perfect and 0.5 being random guessing. " \
+            "You will notice that it does this by plotting the true positive rate against the false positive rate. In other the words, the AUC is a measure of the probability that the model will correctly rank a randomly chosen positive example higher than a randomly chosen negative example." \
+            "So in short, a higher value here indicates better model performance." \
+            "This is a good way to measure overall model performance.")
 
         st.space(size="small")
         st.markdown("-----------------------------------------------------------------")
         st.space(size="small")
 
-        st.markdown("### 4. Decision Tree Visualization")
+        st.markdown("### 4. Decision Tree Visualization 🌳 ")
 
 
         # Tree Visualization
-        st.write("### 🌳 Decision Tree Visualization")
         dot_data = tree.export_graphviz(
             model,
             feature_names=features,
@@ -246,3 +273,8 @@ if target and features:
             filled=True
         )
         st.graphviz_chart(graphviz.Source(dot_data))
+
+        with st.expander("CLICK HERE to learn more this visualization"):
+            st.write("The above visualization is of the decision tree that you produced. Notice the branching nature of it." \
+            "You will notice that the tree shows you the information it is using to make decisions. It outputs the gini/entropy of each outcome, the 'samples' refers to the number of samples each node is working with, the 'values' refers" \
+            "to the number in each group you have per class in each step, and the 'class' is the target group the model decided to place predictors who follow the path to that node in.")
