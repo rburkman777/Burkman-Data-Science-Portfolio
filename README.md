@@ -3,6 +3,7 @@
 ## Overview
 
 Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. I invite you to explore the descriptions of my projects as well as to directly interact with them. 
+
 ________________________________________________________________________________________________________________________________________________
 
 ## Machine Learning Streamlit App
