@@ -4,12 +4,17 @@
 
 Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. I invite you to explore the descriptions of my projects as well as to directly interact with them. 
 
+#### Table of Contents
+Machine Learning Streamlit App
+Data Cleaning Jupyter Notebook
+Elections Analysis Streamlit App
+
 ________________________________________________________________________________________________________________________________________________
 
 
 ## Machine Learning Streamlit App
 
-### LINK to app:
+### LINK to Streamlit App:
 ### LINK to Github folder with project code, information, and data:
 
 #### Project Overview
@@ -22,22 +27,23 @@ Picture: A sample decision tree produced and visualized by the app from running 
 
 <img width="783" height="394" alt="Screen Shot 2026-04-07 at 8 28 35 PM" src="https://github.com/user-attachments/assets/a7355982-b764-4ccf-a19f-3dddffe66c2e" />
 
+#### How to Load the App via Visual Studio Code
+
+In order to run the app yourself, simply open up a python script in visual studio code. Paste the code in the "main.py" file into a new file. Go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py into the interface and hit enter. It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on. You will also want to take the data from the data folder and load it into Visual Studio. The raw data and CSV data is provided in the data folder. There is also a copy in the basic_streamlit_app1 folder outside the data folder. 
+
 ________________________________________________________________________________________________________________________________________________
 
 
+## Elections Analysis Streamlit App
 
+### LINK: to Streamlit App: http://192.168.0.208:8501/
 
+### LINK to Github folder with project code, information, and data:
 
+#### Project Overview
 
+This app is designed to give users the opporunity to explore data about American elections compiled by the website FiveThirtyEight. Users can filter congressional districts for various attributes and learn about their geographic distribution throughout the country, their partisanship, and their urbanization. Users can use this information to make insights about contempotary American politics. 
 
-
-
-
-
-## Link to Streamlit App
-
-http://192.168.0.208:8501/
-
-## How to Load the App via Visual Studio Code
+#### How to Load the App via Visual Studio Code
 
 In order to run the app yourself, simply open up a python script in visual studio code. Paste the code in the "main.py" file into a new file. Go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py into the interface and hit enter. It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on. You will also want to take the data from the data folder and load it into Visual Studio. The raw data and CSV data is provided in the data folder. There is also a copy in the basic_streamlit_app1 folder outside the data folder. 
