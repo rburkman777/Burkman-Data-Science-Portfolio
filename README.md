@@ -5,9 +5,11 @@
 Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. I invite you to explore the descriptions of my projects as well as to directly interact with them. 
 
 #### Table of Contents
-Machine Learning Streamlit App \n
-Data Cleaning Jupyter Notebook \n
-Elections Analysis Streamlit App \n
+Machine Learning Streamlit App 
+
+Data Cleaning Jupyter Notebook 
+
+Elections Analysis Streamlit App 
 
 ________________________________________________________________________________________________________________________________________________
 
