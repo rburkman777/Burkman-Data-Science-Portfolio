@@ -63,9 +63,6 @@ else:
 
     if model_type == "Linear Regression":
         dataset_path = os.path.join(BASE_DIR, "data", "medical_insurance_cost.csv")
-        st.expander("CLICK HERE for an explainer on the variables in this dataset"):
-        st.write("* Charges: This is the medical insurance bill for each patient. It is the target variable of the model. \n\n"
-                 "* Sex: Binary variable where 1 means the patient is a man and 0 means it is a woman \n\n")
     elif model_type == "Decision Tree":
         dataset_path = os.path.join(BASE_DIR, "data", "student_admissions_data.csv")
 
@@ -82,6 +79,10 @@ st.write("### 📊 Data Preview")
 st.write("Here's a preview of our data")
 st.write(df)
 columns = df.columns.tolist()
+if model_type == "Linear Regression":
+ with st.expander("CLICK HERE for an explainer on the variables in this dataset"):
+            st.write("* Charges: This is the medical insurance bill for each patient. It is the target variable of the model. \n\n"
+                 "* Sex: Binary variable where 1 means the patient is a man and 0 means it is a woman \n\n")
 
 # =============================
 # 📈 LINEAR REGRESSION
@@ -89,31 +90,85 @@ columns = df.columns.tolist()
 if model_type == "Linear Regression":
     st.header("📈 Linear Regression")
 
-    x_column = st.selectbox("Select feature (X)", columns)
+    # -------------------------
+    # Select target + features
+    # -------------------------
     y_column = st.selectbox("Select target (y)", columns)
+    x_columns = st.multiselect(
+        "Select feature(s) (X)",
+        [col for col in columns if col != y_column]
+    )
 
-    if st.button("Train Linear Regression"):
-        X = df[[x_column]]
-        y = df[y_column]
+    if not x_columns:
+        st.warning("Please select at least one feature.")
+        st.stop()
+
+    X = df[x_columns]
+    y = df[y_column]
+
+    from sklearn.metrics import mean_squared_error, r2_score
+    from sklearn.preprocessing import StandardScaler
+    import numpy as np
+
+    # -------------------------
+    # Scaling toggle
+    # -------------------------
+    scaling_option = st.radio(
+        "Choose data scaling option:",
+        ["Unscaled", "Scaled"]
+    )
+
+    # -------------------------
+    # Train model
+    # -------------------------
+    if st.button("Train Model"):
+        
+        if scaling_option == "Scaled":
+            scaler = StandardScaler()
+            X_used = scaler.fit_transform(X)
+        else:
+            X_used = X
 
         model = LinearRegression()
-        model.fit(X, y)
+        model.fit(X_used, y)
 
-        st.success("✅ Model trained!")
-        st.write(f"Coefficient: {model.coef_[0]}")
-        st.write(f"Intercept: {model.intercept_}")
+        y_pred = model.predict(X_used)
 
-        df["Predictions"] = model.predict(X)
-        st.write("### Predictions")
-        st.write(df)
+        # -------------------------
+        # Metrics FIRST
+        # -------------------------
+        r2 = r2_score(y, y_pred)
+        mse = mean_squared_error(y, y_pred)
+        rmse = np.sqrt(mse)
 
-        # 🔮 User input prediction
-        st.write("### 🔮 Make a Prediction")
-        user_value = st.number_input(f"Enter value for {x_column}")
-        if st.button("Predict (Regression)"):
-            prediction = model.predict([[user_value]])
-            st.success(f"Prediction: {prediction[0]}")
+        st.success(f"✅ Model trained ({scaling_option})")
 
+        st.write("### 📊 Model Performance")
+        st.write(f"R² Score: {r2:.4f}")
+        st.write(f"Mean Squared Error (MSE): {mse:.4f}")
+        st.write(f"Root Mean Squared Error (RMSE): {rmse:.4f}")
+
+        # -------------------------
+        # Coefficients AFTER
+        # -------------------------
+        coef_df = pd.DataFrame({
+            "Feature": x_columns,
+            "Coefficient": model.coef_
+        })
+
+        st.write("### Coefficients")
+        st.dataframe(coef_df)
+
+        st.write(f"Intercept: {model.intercept_:.4f}")
+
+    # -------------------------
+    # Explanation
+    # -------------------------
+    st.info(
+        "Switch between scaled and unscaled data to see how coefficients change.\n\n"
+        "Scaling standardizes features (mean = 0, std = 1), which makes coefficients comparable.\n\n"
+        "Model performance metrics (R², MSE, RMSE) usually stay similar."
+    )
 # =============================
 # 🌳 DECISION TREE
 # =============================
