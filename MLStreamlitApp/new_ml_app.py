@@ -38,12 +38,12 @@ if model_type == "Select...":
 if model_type == "Linear Regression":
     st.markdown("-----------------------------------------------------------------")
     st.write("You chose linear regression! Now let's get a dataset in order for you. You can upload one or use our built-in dataset or upload your own.")
-    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n *It is a csv file \n\n *The rows above each column of data are labelled \n\n *The data is numeric")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric")
     st.markdown("-----------------------------------------------------------------")
 else:
     st.markdown("-----------------------------------------------------------------")
     st.write("You chose decision tree! Let's get you a dataset to work with. You can use the built in dataset or upload your own")
-    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n *It is a csv file \n\n *The rows above each column of data are labelled \n\n *The data is numeric")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * MAKE SURE THAT YOUR DATA HAS A BINARY TARGET. In other words, you need a dataset that has a value you wish to predict that is binary (either 1 or 0) * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric")
     st.markdown("-----------------------------------------------------------------")
 data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"])
 
@@ -57,17 +57,24 @@ if data_option == "Upload CSV":
         st.success("✅ CSV uploaded successfully!")
     else:
         st.stop()
+
 else:
     st.subheader("📁 Using Built-in Dataset")
-    dataset_path = os.path.join(BASE_DIR, "data", "student_admissions_data.csv")
+
+    if model_type == "Linear Regression":
+        dataset_path = os.path.join(BASE_DIR, "data", "medical_insurance_cost.csv")
+        st.expander("CLICK HERE for an explainer on the variables in this dataset"):
+        st.write("* Charges: This is the medical insurance bill for each patient. It is the target variable of the model. \n\n"
+                 "* Sex: Binary variable where 1 means the patient is a man and 0 means it is a woman \n\n")
+    elif model_type == "Decision Tree":
+        dataset_path = os.path.join(BASE_DIR, "data", "student_admissions_data.csv")
 
     if not os.path.exists(dataset_path):
         st.error(f"Dataset '{dataset_path}' not found.")
         st.stop()
 
     df = pd.read_csv(dataset_path)
-    st.success("Using built-in dataset: student_admissions_data.csv")
-
+    st.success(f"Using built-in dataset: {os.path.basename(dataset_path)}")
 # -----------------------------
 # STEP 3: DISPLAY DATA
 # -----------------------------
@@ -123,7 +130,7 @@ elif model_type == "Decision Tree":
     st.markdown("#### Step One: Enter your target and predicting features below:")
     st.write("The first step is to choose your features and target. The target is what you want the dataset to make predictions about using the decision tree. Meanwhile, the features are what you want the decision tree to use to make the decisions.")
    
-    target = st.selectbox("Select Target Column (y) --> what you want the dataset to make a prediction about", columns)
+    target = st.selectbox("Select Target Column (y) --> what you want the dataset to make a prediction about. It should be a binary feature (a feature of 0s and 1s)", columns)
     features = st.multiselect("Select Feature Columns (X) --> the features you want to use to make the prediction", columns)
 
 if target and features:
@@ -141,8 +148,11 @@ if target and features:
 
     with st.expander("CLICK HERE to learn more about the different types of hyperparameters tuning"):
         st.write(
-            "Max Depth: Controls how deep the decision tree grows.\n\n"
-            "Criterion: Measures split quality. Gini minimizes impurity, while entropy measures information gain."
+            "Max Depth: Controls how deep the decision tree grows, ie the number of splits the decision tree makes to predict classes \n\n"
+            "Criterion: Measures split quality. The Gini index measures the performance of a split by the lack of diversity of outcomes in each group of leaves. We calculate the Gini index based on the probability of picking two outcomes from the same group that are different (so we want a lower value)." 
+            " Entropy is also interested in getting the groups of results in the leaves that are similar. However, it measures it in a different way. It compares the purity of leaves based on the probability of drawing a certain combination or sequence of items from the set in each leaf group." 
+
+
         )
 
     # ✅ OUTSIDE expander but INSIDE if-block
@@ -203,11 +213,19 @@ if target and features:
         st.dataframe(report_df.style.format("{:.2f}"))
 
 
-        with st.expander("The classification report gives us a number useful metrics. \n\n " \
-        "*Precision is essentially the accuracy of your positive predcitions \n\n *Recall is essentially the accuracy of your negative predictions." \
-        "\n\n *The F-1 score attempts to measure how well a model performs in both recall and precision. It does this by taking the harmonic mean of precision and recall. " \
-        "\n\n *Support is the number of actual occurrences of the class in the specified dataset."):
-            st.write()
+        with st.expander("CLICK HERE to learn more about the classification report"):
+            st.write(
+        "The classification report gives us several useful metrics:\n\n"
+        "* Precision: The ratio of the correctly predicted class to the total predicted class. In other words, how well the model minimizes false positives for the class \n\n"
+        "* Recall: Recall is the ratio of correctly predicted class to all data in the actual class. In other words, it is how well the model minimuzes false negatives in the class \n\n"
+        "* F1-score: A balance between precision and recall that tries to capture how well the model performs on both counts by taking the harmonic mean of recall and precision\n\n"
+        "* Support: The number of actual occurrences of each class in the dataset \n\n"
+        "* 0 and 1 are the different classes in your model. Note that the precision and recall are for each class respectively \n\n"
+        "* Accuracy: The overall accuracy score for the classifier gives a general idea of the model's performance but can be misleading as it considers every correct prediction for both classes \n\n"
+        "* Macro Average: This is the average of the values for each class \n\n"
+        "* Weighted Average: This is also an average value for both classes but it also takes it account the support"
+
+    )
       
         st.space(size="small")
         st.markdown("-----------------------------------------------------------------")
@@ -225,9 +243,7 @@ if target and features:
         st.pyplot(fig)
 
         with st.expander("CLICK HERE to learn more the confusion matrix"):
-            st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. " \
-            "In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, "
-            "and false negatives. The top left box on your screen is true negatives, the bottom right box is true positives, the top right box is false positives, and bottom left box is false negatives. Also explain how this relates to the tree")
+            st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, and false negatives. Where the zeroes interact is the true negatives, where the 1s meet is the true positives, where the 0 is predicted and the 1 is actual is the false negative, and where the 1 is predicted and the 0 is actual is the false positives. We want to maximize true positives and negatives for best model performance.")
 
         st.space(size="small")
         st.markdown("-----------------------------------------------------------------")
@@ -254,7 +270,7 @@ if target and features:
         with st.expander("CLICK HERE to learn more the ROC curve and AUC"):
             st.write("The ROC curve is a plot of the true positive rate against the false positive rate. The AUC " \
             "measures the ability of the model to distinguish classes, with 1 being perfect and 0.5 being random guessing. " \
-            "You will notice that it does this by plotting the true positive rate against the false positive rate. In other the words, the AUC is a measure of the probability that the model will correctly rank a randomly chosen positive example higher than a randomly chosen negative example." \
+            "In other the words, the AUC is a measure of the probability that the model will correctly rank a randomly chosen positive example higher than a randomly chosen negative example." \
             "So in short, a higher value here indicates better model performance." \
             "This is a good way to measure overall model performance.")
 
