@@ -1,16 +1,17 @@
-import streamlit as st
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import os
+import streamlit as st #loading streamlit and all its features
+import pandas as pd #loading pandas and all its features
+import seaborn as sns # loading seaborn and all its features
+import matplotlib.pyplot as plt # loading mathplotlib.pyplot and all its features
+import os # importing os 
 
-from sklearn.linear_model import LinearRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_curve, roc_auc_score
-from sklearn import tree
+# below we import a variety of tools that we will use for various project features
+from sklearn.linear_model import LinearRegression # needed for linear regression
+from sklearn.tree import DecisionTreeClassifier # needed for decision tree
+from sklearn.model_selection import train_test_split # needed for multiple models
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_curve, roc_auc_score # needed to evaluate the models
+from sklearn import tree 
 import graphviz
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier # needed for KNN
 
 st.title("🤖 Machine Learning Streamlit App")
 st.write("Welcome to my machine learning app! This app was created to allow users to explore various machine learning models and the ways that they can be used to learn about data. Let's get started!")
@@ -19,17 +20,18 @@ st.markdown("-----------------------------------------------------------------")
 # STEP 1: MODEL SELECTION
 # -----------------------------
 
+# we want an interactive feature that allows for selection of different models to explore, so we use a selectbox
 model_type = st.selectbox(
     "👉 First, choose a model",
     ["Select...", "Linear Regression", "Decision Tree - Classification", "K-Nearest Neighbors (KNN)"]
 )
 
-
+# we use the expander function to create a drop-down box where users can learn more about different model types
 with st.expander("CLICK HERE to learn more about each model type"):
     st.write("Linear Regressions: There are models that can tell you about the relationship between variables. Specifically, we learn whether an increase in one variable leads to an increase or decrease in the the target variable. \n\n Decision Trees: Decision trees are a kind of machine learning that make a series of decisions using yes or no questions. In this model, the decision tree classifies features into binary categories."
     "\n\nK-Nearest Neighbor (KNN): This is a mahcine learning model that can classify features into groups based on their associated target group. Basically, it tries to make predictions about group classification on features.")
 
-
+# have an option if a model hasn't been selected using if statements 
 if model_type == "Select...":
     st.warning("Please select a model to continue.")
     st.stop()
@@ -37,6 +39,9 @@ if model_type == "Select...":
 # -----------------------------
 # STEP 2: DATA SOURCE
 # -----------------------------
+
+# we use if statements to respond to various user choices the user might make. 
+# this code gives the user parameters for various model types
 if model_type == "Linear Regression":
     st.markdown("-----------------------------------------------------------------")
     st.write("You chose linear regression! Now let's get a dataset in order for you. You can upload one or use our built-in dataset or upload your own.")
@@ -52,42 +57,45 @@ elif model_type == "K-Nearest Neighbors (KNN)":
     st.write("You chose K-Nearest Neighbors! Let's get you a dataset to work with. You can use the built in dataset or upload your own")
     st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * Make sure that your dataset has a target feature that consists of classes. A dataset where the classes are binary (meaning they are either 1 or 0) is recommended \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric")
     st.markdown("-----------------------------------------------------------------")
-data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"])
+data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"]) # here is another selection box to allow the user to choose whether they upload the data or take the built-in dataset 
 
-df = None
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+df = None # this creates our dataframe variable 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # this code begins setting up our file pathes for the built in datasets
 
+# we use if statements to direct students to their choice of where to obtain their dataset
 if data_option == "Upload CSV":
     uploaded_file = st.file_uploader("📂 Upload your CSV file", type=["csv"])
     if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
+        df = pd.read_csv(uploaded_file) # creates dataframe for the uploaded data 
         st.success("✅ CSV uploaded successfully!")
     else:
         st.stop()
-
-else:
-    st.subheader("📁 Using Built-in Dataset")
-
+# we move to an else statement if the user does not choose to upload their own file
+else: 
+    st.subheader("📁 Using Built-in Dataset") # use a subheader to make the title
+    # we again use if and elif statements to filter for the different model types
     if model_type == "Linear Regression":
-        dataset_path = os.path.join(BASE_DIR, "data", "medical_insurance_cost.csv")
+        dataset_path = os.path.join(BASE_DIR, "data", "medical_insurance_cost.csv") # set up path to sample dataset for linear regression
     elif model_type == "Decision Tree - Classification":
-        dataset_path = os.path.join(BASE_DIR, "data", "student_admissions_data.csv")
-    elif model_type == "K-Nearest Neighbors (KNN)":
-        dataset_path = os.path.join(BASE_DIR, "data", "diabetes.csv")
+        dataset_path = os.path.join(BASE_DIR, "data", "student_admissions_data.csv") # set up path to sample dataset for decision tree
+    elif model_type == "K-Nearest Neighbors (KNN)": 
+        dataset_path = os.path.join(BASE_DIR, "data", "diabetes.csv") # set up path to sample dataset for KNN
     
     if not os.path.exists(dataset_path):
-        st.error(f"Dataset '{dataset_path}' not found.")
+        st.error(f"Dataset '{dataset_path}' not found.") # sets up error message if there is an issue
         st.stop()
 
-    df = pd.read_csv(dataset_path)
-    st.success(f"Using built-in dataset: {os.path.basename(dataset_path)}")
+    df = pd.read_csv(dataset_path) # creates dataframe for the sample, built-in data 
+    st.success(f"Using built-in dataset: {os.path.basename(dataset_path)}") # success message for the dataset loading
 # -----------------------------
 # STEP 3: DISPLAY DATA
 # -----------------------------
+# we use st.write to display some information
 st.write("### 📊 Data Preview")
 st.write("Here's a preview of our data")
-st.write(df)
-columns = df.columns.tolist()
+st.write(df) # we show our data 
+columns = df.columns.tolist() # retrieves column names so user can pick from them
+# we describe the sample data for the various models here -- give the user details about each feature
 if model_type == "Linear Regression":
  with st.expander("CLICK HERE for an explainer on the variables in this dataset"):
             st.write("* Charges: This is the medical insurance bill for each patient. It is the target variable of the model. \n\n"
@@ -96,25 +104,31 @@ if model_type == "Linear Regression":
 # =============================
 # 📈 LINEAR REGRESSION
 # =============================
+# if the model type is linear regression, the model follows this code
 if model_type == "Linear Regression":
     st.header("📈 Linear Regression")
 
     # -------------------------
     # Select target + features
     # -------------------------
-    y_column = st.selectbox("Select target (y)", columns)
+    # this is the code for the user to select which features they want as the target feature and which features they want as the predicting features
+    y_column = st.selectbox("Select target (y)", columns) # we use another select box
+    # the mutliselect function lets users employ multiple feautres
     x_columns = st.multiselect(
         "Select feature(s) (X)",
-        [col for col in columns if col != y_column]
+        [col for col in columns if col != y_column] # this removes the feature from the x feature menu that was selected as the y feature
     )
 
+    # this stops the execution if the user does not select at least one feature
     if not x_columns:
         st.warning("Please select at least one feature.")
         st.stop()
 
+    # creates dataframe series for x and y 
     X = df[x_columns]
     y = df[y_column]
 
+    # we import some functions to help us measure the quality of our prediction
     from sklearn.metrics import mean_squared_error, r2_score
     from sklearn.preprocessing import StandardScaler
     import numpy as np
@@ -122,62 +136,80 @@ if model_type == "Linear Regression":
     # -------------------------
     # Scaling toggle
     # -------------------------
+    # this function helps us set up the ability to scale or unscale the model
     scaling_option = st.radio(
         "Choose data scaling option:",
         ["Unscaled", "Scaled"]
     )
 
     # -------------------------
-    # Train model
+    # Train/Test Split FIRST
     # -------------------------
-    if st.button("Train Model"):
-        
-        if scaling_option == "Scaled":
-            scaler = StandardScaler()
-            X_used = scaler.fit_transform(X)
-        else:
-            X_used = X
-
-        model = LinearRegression()
-        model.fit(X_used, y)
-
-        y_pred = model.predict(X_used)
-
-        # -------------------------
-        # Metrics FIRST
-        # -------------------------
-        r2 = r2_score(y, y_pred)
-        mse = mean_squared_error(y, y_pred)
-        rmse = np.sqrt(mse)
-
-        st.success(f"✅ Model trained ({scaling_option})")
-
-        st.write("### 📊 Model Performance")
-        st.write(f"R² Score: {r2:.4f}")
-        st.write(f"Mean Squared Error (MSE): {mse:.4f}")
-        st.write(f"Root Mean Squared Error (RMSE): {rmse:.4f}")
-
-        # -------------------------
-        # Coefficients AFTER
-        # -------------------------
-        coef_df = pd.DataFrame({
-            "Feature": x_columns,
-            "Coefficient": model.coef_
-        })
-
-        st.write("### Coefficients")
-        st.dataframe(coef_df)
-
-        st.write(f"Intercept: {model.intercept_:.4f}")
-
-    # -------------------------
-    # Explanation
-    # -------------------------
-    st.info(
-        "Switch between scaled and unscaled data to see how coefficients change.\n\n"
-        "Scaling standardizes features (mean = 0, std = 1), which makes coefficients comparable.\n\n"
-        "Model performance metrics (R², MSE, RMSE) usually stay similar."
+    # let's split our data into testing and training data
+    X_train_raw, X_test_raw, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
     )
+
+    # -------------------------
+    # Scaling (if selected)
+    # -------------------------
+    if scaling_option == "Scaled":
+        scaler = StandardScaler()
+        X_train = scaler.fit_transform(X_train_raw)
+        X_test = scaler.transform(X_test_raw)
+    else:
+        X_train = X_train_raw
+        X_test = X_test_raw
+
+    # -------------------------
+    # Model Training 
+    # -------------------------
+    # here we set up the regression using the training data
+    lin_reg = LinearRegression()
+    lin_reg.fit(X_train, y_train)
+
+    # -------------------------
+    # Predictions
+    # -------------------------
+    # we use the regression we set up and test it on our testing data (20% of our data)
+    y_pred = lin_reg.predict(X_test)
+
+    # -------------------------
+    # Metrics
+    # -------------------------
+    #here we print out some useful metrics 
+    r2 = r2_score(y_test, y_pred)
+    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+
+    st.success(f"✅ Model trained ({scaling_option})")
+
+    st.write("### 📊 Model Performance")
+    st.write(f"R² Score: {r2:.4f}")
+    st.write(f"Mean Squared Error (MSE): {mse:.4f}")
+    st.write(f"Root Mean Squared Error (RMSE): {rmse:.4f}")
+
+    # -------------------------
+    # Coefficients AFTER
+    # -------------------------
+    coef_df = pd.DataFrame({
+        "Feature": x_columns,
+        "Coefficient": lin_reg.coef_
+    })
+
+    st.write("### Coefficients")
+    st.dataframe(coef_df)
+
+    st.write(f"Intercept: {lin_reg.intercept_:.4f}")
+
+# -------------------------
+# Explanation
+# -------------------------
+    st.info(
+    "Switch between scaled and unscaled data to see how coefficients change.\n\n"
+    "Scaling standardizes features (mean = 0, std = 1), which makes coefficients comparable.\n\n"
+    "Model performance metrics (R², MSE, RMSE) usually stay similar."
+)
 # =============================
 # 🌳 DECISION TREE
 # =============================
@@ -371,7 +403,8 @@ elif model_type == "K-Nearest Neighbors (KNN)":
     st.header("🤝 K-Nearest Neighbors (KNN)")
     st.space(size="small")
 
-    st.write("You chose KNN! This model classifies points based on the majority class of their nearest neighbors.")
+    st.write("You chose KNN! This model classifies points based on the majority class of their nearest 'neighbors.' In other" \
+    "words, we can imagine the model as sorting different groups together on a graph based on which groups are nearest to each other.")
 
     st.markdown("-----------------------------------------------------------------")
     st.markdown("#### Step One: Enter your target and predicting features below:")
@@ -398,7 +431,14 @@ elif model_type == "K-Nearest Neighbors (KNN)":
         st.markdown("#### Step Two: Tune your hyperparameters below:")
 
         k = st.slider("Number of Neighbors (k)", 1, 15, 5)
+        with st.expander("CLICK HERE to learn more about k"):
+            st.write("k is the number of neighbors that the model considers when making a prediction for a new data point. The algorithm identifies the k training samples closest to the target point and assigns the most frequent class label through majority vote.")
+
+
         metric = st.selectbox("Distance Metric", ["euclidean", "manhattan"])
+        with st.expander("CLICK HERE to learn more about distance metric"):
+            st.write("This is how the model calculates distance between points. Euclidean is the most straight forward and simply calculates the distance between points Manhattan distance calculates the distance in a 'grid-based' format (like calculating the distance of streets as they are positioned around buildings). Euclidiean is the most straight forward but some datasets might make more sense with manhattan.")
+
 
         from sklearn.preprocessing import StandardScaler
 
@@ -406,11 +446,15 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             "Scale the data? (Recommended for KNN)",
             ["Yes", "No"]
         )
+        with st.expander("CLICK HERE to learn more about scaling the data"):
+            st.write("This standardizes the scale of the features so that they all have a mean of 0 and a standard deviation of 1. Pay attention to how having unscaled data in a KNN model can be potentially disruptive.")
+
 
         if scale_option == "Yes":
             scaler = StandardScaler()
             X_train = scaler.fit_transform(X_train)
             X_test = scaler.transform(X_test)
+
 
         st.space(size="medium")
         st.markdown("#### Step Three: Train your KNN model")
@@ -420,6 +464,10 @@ elif model_type == "K-Nearest Neighbors (KNN)":
                 n_neighbors=k,
                 metric=metric
             )
+            with st.expander("CLICK HERE to learn more about what we are doing here"):
+                st.write("We train the model by splitting it up into 'training' data and 'testing' data. We do this "
+                "so that we have 80% training data and 20% testing data. We use the training data to help the model learn how to make predictions and the testing data to evaluate its performance.")
+
 
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
@@ -430,11 +478,11 @@ elif model_type == "K-Nearest Neighbors (KNN)":
 
             acc = accuracy_score(y_test, y_pred)
             st.write(f"### 🎯 Model Accuracy: {acc:.2f}")
+            with st.expander("CLICK HERE to learn more this accuracy"):
+                st.write("Model accuracy measures the proportion of features that the model correctly classifies.")
 
-            if len(y.unique()) == 2:
-                y_probs = model.predict_proba(X_test)[:, 1]
-                roc_auc = roc_auc_score(y_test, y_probs)
-                st.write(f"### 📈 Area Under the Curve (AUC) = {roc_auc:.2f}")
+
+
 
             st.markdown("-----------------------------------------------------------------")
             st.markdown("## Full Model Evaluation")
@@ -445,6 +493,20 @@ elif model_type == "K-Nearest Neighbors (KNN)":
 
             st.write("### 📄 Classification Report")
             st.dataframe(report_df.style.format("{:.2f}"))
+            with st.expander("CLICK HERE to learn more about the classification report"):
+                st.write(
+        "The classification report gives us several useful metrics:\n\n"
+        "* Precision: The ratio of the correctly predicted class to the total predicted class. In other words, how well the model minimizes false positives for the class \n\n"
+        "* Recall: Recall is the ratio of correctly predicted class to all data in the actual class. In other words, it is how well the model minimuzes false negatives in the class \n\n"
+        "* F1-score: A balance between precision and recall that tries to capture how well the model performs on both counts by taking the harmonic mean of recall and precision\n\n"
+        "* Support: The number of actual occurrences of each class in the dataset \n\n"
+        "* 0 and 1 are the different classes in your model. Note that the precision and recall are for each class respectively \n\n"
+        "* Accuracy: The overall accuracy score for the classifier gives a general idea of the model's performance but can be misleading as it considers every correct prediction for both classes \n\n"
+        "* Macro Average: This is the average of the values for each class \n\n"
+        "* Weighted Average: This is also an average value for both classes but it also takes it account the support"
+
+    )
+            st.markdown("-----------------------------------------------------------------")
 
             # Confusion Matrix
             st.markdown("### 🔢 Confusion Matrix")
@@ -455,22 +517,9 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             ax.set_xlabel("Predicted")
             ax.set_ylabel("Actual")
             st.pyplot(fig)
+            with st.expander("CLICK HERE to learn more the confusion matrix"):
+                st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, and false negatives. Where the zeroes interact is the true negatives, where the 1s meet is the true positives, where the 0 is predicted and the 1 is actual is the false negative, and where the 1 is predicted and the 0 is actual is the false positives. We want to maximize true positives and negatives for best model performance.")
 
-            # ROC Curve
-            st.markdown("### 📈 ROC Curve")
-
-            if len(y.unique()) == 2:
-                fpr, tpr, _ = roc_curve(y_test, y_probs)
-                fig2, ax2 = plt.subplots()
-                ax2.plot(fpr, tpr, label=f"AUC = {roc_auc:.2f}")
-                ax2.plot([0, 1], [0, 1], linestyle='--')
-                ax2.set_xlabel("False Positive Rate")
-                ax2.set_ylabel("True Positive Rate")
-                ax2.set_title("ROC Curve")
-                ax2.legend()
-                st.pyplot(fig2)
-            else:
-                st.info("ROC curve only works for binary classification.")
 
                 # -------------------------
 # 📊 Accuracy vs K Graph
@@ -502,3 +551,8 @@ elif model_type == "K-Nearest Neighbors (KNN)":
 
 # Show in Streamlit
         st.pyplot(plt)
+
+        with st.expander("CLICK HERE to learn more this graph"):
+            st.write("You might have noticed from experimenting above that accuracy and k are often related. Feel free to explore how " \
+            "adjusting some of the other model parameters impacts this relationship.")
+
