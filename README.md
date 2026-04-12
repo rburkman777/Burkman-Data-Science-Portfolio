@@ -17,8 +17,8 @@ ________________________________________________________________________________
 
 ## Machine Learning Streamlit App
 
-### LINK to Streamlit App:
-### LINK to Github folder with project code, information, and data:
+### LINK to Streamlit App: https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/
+### Github folder with project code, information, and data is above and called "MLStreamlitApp"
 
 #### Project Overview
 
