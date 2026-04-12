@@ -22,9 +22,9 @@ ________________________________________________________________________________
 
 #### Project Overview
 
-In this project, I created an app capable of accepting an input of data from a user and using that data to illustrate the process of machine learning. The app allows users to choose a type of machine learning (linear regression or decision tree) and tune hyperparameters based off that choice. Afterwards, the users can evaluate various metrics of model performance, including ROC curves, accuracy, precision, and others. The visualization below depicts a decision tree from the model that is outputted after the user uploads data and performs custom hyperparameter tuning. 
+In this project, I created an app capable of accepting an input of data from a user and using that data to illustrate the process of machine learning. The app allows users to choose a type of machine learning (linear regression, decision tree, or K-Nearest Neighbor) and tune hyperparameters based off that choice. Afterwards, the users can evaluate various metrics of model performance, including ROC curves, accuracy, precision, and others. The visualization below depicts a decision tree from the model that is outputted after the user uploads data and performs custom hyperparameter tuning. 
 
-The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters can impact the performance metrics of the model. In this way, it will also be a learning experience about the nuances of machine learning. 
+The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters, tuning, and features can impact the performance metrics of the model. In this way, it will also be a learning experience about the nuances of machine learning. 
 
 Picture: A sample decision tree produced and visualized by the app from running sample data embedded in the app: 
 
@@ -32,8 +32,7 @@ Picture: A sample decision tree produced and visualized by the app from running 
 
 #### How to Load the App via Visual Studio Code
 
-In order to run the app yourself, simply open up a python script in visual studio code. Paste the code in the "main.py" file into a new file. Go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py into the interface and hit enter. It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on. You will also want to take the data from the data folder and load it into Visual Studio. The raw data and CSV data is provided in the data folder. There is also a copy in the basic_streamlit_app1 folder outside the data folder. 
-
+In order to run the app yourself, simply open up the MLStreamlitApp folder in visual studio code. You just need to have the data folder and the Machine_Learning_Streamlit_App_Code.py files open. Go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py" into the interface and hit enter (so if you don't change the name, you would type "streamlit run Machine_Learning_Streamlit_App_Code.py"). It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on. 
 ________________________________________________________________________________________________________________________________________________
 
 
