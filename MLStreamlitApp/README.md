@@ -12,12 +12,12 @@ then be able to customize hyperparameters to discover how changes in the mechani
 Alternatively, you can run the app locally by following these instructions: 
 
 ### How to Run the App Locally
-1) Go to the MLStreamlitApp folder contained in this portfolio NOTE: Make sure you open the whole folder as you will need the three files in the 'data' folder
-2) Open the folder in VSCode and go to Machine_Learning_Streamlit_App_Code.py 
-3) Go to the terminal of the file and make sure that the directory is set for the folder you opened it in (you can use the "cd" function to change this)
-4) Type "streamlit run streamlit_machine_learning_app in the interface of the terminal. A link should be outputted
-5) You should be taken to the app on a browser. If that doesn't work, copy and paste the second link it provides into a new browser
 
+In order to run the app yourself, open up the MLStreamlitApp folder in visual studio code. You can do that by clicking on the green 'code' button on the repository main page and copy and pasting the URL. After that, go to VSCode and open the Command Palette (accessible via Ctrl + Shift + P (Windows/Linux) or Cmd + Shift + P (Mac)) then type Git: Clone. Press enter. Paste the URL and hit enter. Decide where on your computer you want to save the folder and then open the folder.
+
+Alternatively, you can simply follow these steps: create a new folder in VSCode with the same title as the folder on this page. Then create a folder inside that folder called data. Add the three csv files in the data folder here into the data folder in your own VSCode. Then, copy and paste the code from Machine_Learning_Streamlit_App_Code.py into a seperate file in your folder (make sure the new file is outside your data folder). In this way, you can recreate the folder in VSCode. You just need to have the data files (in a folder called 'data') and the Machine_Learning_Streamlit_App_Code.py files open.
+
+Once you have everything open in VSCode, go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py" into the interface and hit enter (so if you don't change the name, you would type "streamlit run Machine_Learning_Streamlit_App_Code.py"). It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on.
 ## App Features 
 Three models were used: Linear regression, decision trees, and KNN. See below for how you can tune hyperparameters on both models to explore different outcomes:
 
