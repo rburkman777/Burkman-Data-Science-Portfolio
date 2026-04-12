@@ -7,7 +7,7 @@ then be able to customize hyperparameters to discover how changes in the mechani
 
 ## Instructions 
 
-### Link to App:
+### Link to App: https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/
 
 Alternatively, you can run the app locally by following these instructions: 
 
