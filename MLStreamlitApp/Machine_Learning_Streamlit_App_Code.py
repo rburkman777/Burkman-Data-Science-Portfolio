@@ -309,9 +309,9 @@ elif model_type == "Decision Tree - Classification":
         st.write(
             "Max Depth: Controls how deep the decision tree grows, ie the number of splits the decision tree makes to predict classes. Do explore how changing max depth affects our model evaluations \n\n"
             "Criterion: Measures split quality. The Gini index measures the performance of a split by the lack of diversity of outcomes in each group of leaves. We calculate the Gini index based on the probability of picking two outcomes from the same group that are different (so we want a lower value)." 
-            " Entropy is also interested in getting the groups of results in the leaves that are similar. However, it measures it in a different way. It compares the purity of leaves based on the probability of drawing a certain combination or sequence of items from the set in each leaf group. \n\n
-            "Min Samples Split: this is the minimum number of samples required to split an internal node. Smaller values counter underfitting while larger values counter overfitting \n\n
-            "Min Sample Leaf: this is the minimum number of samples required to be present in a leaf node. A higher value counters overfitting \n\n
+            " Entropy is also interested in getting the groups of results in the leaves that are similar. However, it measures it in a different way. It compares the purity of leaves based on the probability of drawing a certain combination or sequence of items from the set in each leaf group. \n\n"
+            "Min Samples Split: this is the minimum number of samples required to split an internal node. Smaller values counter underfitting while larger values counter overfitting \n\n"
+            "Min Sample Leaf: this is the minimum number of samples required to be present in a leaf node. A higher value counters overfitting \n\n"
             "Class Weight: When one class significantly outnumbers another the tree might otherwise just predict the majority class for everything. Selecting 'balanced' tries to fix this problem by assigning weights inversely proportional to class frequencies"
 
 
