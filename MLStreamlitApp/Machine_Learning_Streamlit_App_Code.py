@@ -237,7 +237,7 @@ if model_type == "Linear Regression":
         st.write(f"Mean Squared Error (MSE): {mse:.4f}")
         st.write(f"Root Mean Squared Error (RMSE): {rmse:.4f}")
         with st.expander("CLICK HERE to learn more about these metrics"):
-            st.write("* R^2: This is a measure of the overall predictive power of your model. It is how much of the variance in the target variable can be explained the predicting varaibles" \
+            st.write("* R^2: This is a measure of the overall predictive power of your model. It is how much of the variance in the target variable can be explained the predicting varaibles. The closer to 1 the better. A score of 0 indicates no relationship. Very generally (although this varies depending on what you're measuring) 0.25 indicates a weak relationship and 0.75 indicates a substantial relationship." \
             "\n\n * Mean Squared Error (MSE): measures the average squared difference between estimated values and the actual value, acting as a key indicator of predictive model accuracy. It is calculated by averaging the squared residuals (errors), which penalizes large errors or outliers heavily \n\n" \
             "* Root Mean Squared Error: used to measure the average magnitude of prediction errors in models, calculating the square root of the average squared differences between predicted and observed values. It indicates model performance, with lower values signifying higher accuracy (consider the scale of your data when thinking about that)")
 
