@@ -144,7 +144,7 @@ elif model_type == "K-Nearest Neighbors (KNN)" and data_option == "Built-in Data
 if model_type == "Linear Regression":
     st.markdown("-----------------------------------------------------------------")
     st.header("📈 Linear Regression")
-    st.write("Linear regressions make predictions about features by writing equations based on how each predicting feature impacts the target feature. Select your target feature and predicting features below:")
+    st.write("Linear regressions make predictions about features by writing equations based on how each predicting feature impacts the target feature. Select your target feature and predicting features below as well as decide whether to scale the model. After that, you will get some evaluation metrics on your model's performance.")
 
     # -------------------------
     # Select target + features
