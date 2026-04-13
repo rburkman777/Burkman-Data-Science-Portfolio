@@ -125,6 +125,7 @@ elif model_type == "Decision Tree - Classification" and data_option == "Built-in
 elif model_type == "K-Nearest Neighbors (KNN)" and data_option == "Built-in Dataset":
     with st.expander("CLICK HERE for an explanation on the variables in this dataset"):
         st.write("* Outcome: the target variable. Whether the patient has diabetes or not \n\n"
+                 "* Age: patient age \n\n"
                  "* Pregnancies: number of pregnancies patient has had in their life \n\n"
                  "* Glucose: blood glucose level in patient \n\n"
                  "* BloodPressure: patient blood pressure \n\n"
