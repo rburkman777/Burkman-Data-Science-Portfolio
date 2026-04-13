@@ -317,6 +317,15 @@ elif model_type == "Decision Tree - Classification":
 
     max_depth = st.slider("Max Depth", 1, 15, 3) # we use a slider to let the user control the max depth
     criterion = st.selectbox("Criterion", ["gini", "entropy"]) # we use the selectbox function to let them control the criterion
+    min_samples_split = st.slider("Min Samples Split", 2, 20, 2) # adds our minimum samples for a split
+    min_samples_leaf = st.slider("Min Samples Leaf", 1, 20, 1)
+    class_weight_option = st.selectbox(
+        "Class Weight",
+        ["None", "balanced"]
+)
+
+# Convert class weight selection
+class_weight = None if class_weight_option == "None" else "balanced"
     
     st.space(size="medium")
     st.markdown("#### Step Three: Press the button below to run the decision tree on your data with the features, targets, and hyperparameters you chose! You will get multiple evaluations of the tree's performance:")
@@ -326,8 +335,11 @@ elif model_type == "Decision Tree - Classification":
         model = DecisionTreeClassifier(
             max_depth=max_depth,
             criterion=criterion,
+            min_samples_split=min_samples_split,
+            min_samples_leaf=min_samples_leaf,
+            class_weight=class_weight,
             random_state=42
-        )
+)
         with st.expander("CLICK HERE to learn more what we are doing here"):
             st.write("This model works by splitting the data into 80% training data to create the regression formula (how the features predict the target feature). It then tests the regression it created on 20% of the data.")
 
