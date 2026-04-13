@@ -205,7 +205,7 @@ if model_type == "Linear Regression":
     
     if st.button("Train Linear Regression Model"):
         with st.expander("CLICK HERE to learn more what we just did here"):
-            st.write("This model works by splitting the data into 80% training data to create the regression formula (how the features predict the target feature). It then tests the regression it created on 20% of the data.")
+            st.write("This model works by splitting the data into 80% training data to create the regression formula (how the features predict the target feature). It then tests the regression it created on 20% of the data to evaluate performance.")
 
 
     # -------------------------
