@@ -425,7 +425,7 @@ elif model_type == "Decision Tree - Classification":
         st.pyplot(fig) # sets up our plot for viewer
 
         with st.expander("CLICK HERE to learn more the confusion matrix"):
-            st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, and false negatives. Where the zeroes interact is the true negatives, where the 1s meet is the true positives, where the 0 is predicted and the 1 is actual is the false negative, and where the 1 is predicted and the 0 is actual is the false positives. We want to maximize true positives and negatives for best model performance. Since the orange line represents random guessing, we want our model (the blue line) to be 'above it' and not to straddle it.")
+            st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, and false negatives. Where the zeroes interact is the true negatives, where the 1s meet is the true positives, where the 0 is predicted and the 1 is actual is the false negative, and where the 1 is predicted and the 0 is actual is the false positives. We want to maximize true positives and negatives for best model performance.")
 
         st.space(size="small")
         st.markdown("-----------------------------------------------------------------")
@@ -454,7 +454,7 @@ elif model_type == "Decision Tree - Classification":
             "measures the ability of the model to distinguish classes, with 1 being perfect and 0.5 being random guessing. " \
             "In other the words, the AUC is a measure of the probability that the model will correctly rank a randomly chosen positive example higher than a randomly chosen negative example." \
             "So in short, a higher value here indicates better model performance." \
-            "This is a good way to measure overall model performance.")
+            "This is a good way to measure overall model performance.  Since the orange line represents random guessing, we want our model (the blue line) to be 'above it' and not to straddle it.")
 
         st.space(size="small")
         st.markdown("-----------------------------------------------------------------")
@@ -612,7 +612,7 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             ax.set_ylabel("Actual") # y axis label
             st.pyplot(fig) # plots our matrix
             with st.expander("CLICK HERE to learn more the confusion matrix"):
-                st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, and false negatives. Where the zeroes interact is the true negatives, where the 1s meet is the true positives, where the 0 is predicted and the 1 is actual is the false negative, and where the 1 is predicted and the 0 is actual is the false positives. We want to maximize true positives and negatives for best model performance. Since the orange line represents random guessing, we want our model (the blue line) to be 'above it' and not to straddle it.")
+                st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, and false negatives. Where the zeroes interact is the true negatives, where the 1s meet is the true positives, where the 0 is predicted and the 1 is actual is the false negative, and where the 1 is predicted and the 0 is actual is the false positives. We want to maximize true positives and negatives for best model performance.")
 
 
             # -------------------------
