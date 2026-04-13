@@ -315,7 +315,7 @@ elif model_type == "Decision Tree - Classification":
         )
 
 
-    max_depth = st.slider("Max Depth", 1, 10, 3) # we use a slider to let the user control the max depth
+    max_depth = st.slider("Max Depth", 1, 15, 3) # we use a slider to let the user control the max depth
     criterion = st.selectbox("Criterion", ["gini", "entropy"]) # we use the selectbox function to let them control the criterion
     
     st.space(size="medium")
