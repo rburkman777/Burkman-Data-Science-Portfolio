@@ -307,7 +307,7 @@ elif model_type == "Decision Tree - Classification":
 
     with st.expander("CLICK HERE to learn more about the different types of hyperparameters tuning"):
         st.write(
-            "Max Depth: Controls how deep the decision tree grows, ie the number of splits the decision tree makes to predict classes \n\n"
+            "Max Depth: Controls how deep the decision tree grows, ie the number of splits the decision tree makes to predict classes. Do explore how changing max depth affects our model evaluations \n\n"
             "Criterion: Measures split quality. The Gini index measures the performance of a split by the lack of diversity of outcomes in each group of leaves. We calculate the Gini index based on the probability of picking two outcomes from the same group that are different (so we want a lower value)." 
             " Entropy is also interested in getting the groups of results in the leaves that are similar. However, it measures it in a different way. It compares the purity of leaves based on the probability of drawing a certain combination or sequence of items from the set in each leaf group." 
 
@@ -358,7 +358,7 @@ elif model_type == "Decision Tree - Classification":
         st.markdown("### 1. Accuracy and Classification Report")
 
         # Predictions
-        #
+        
         y_pred = model.predict(X_test)
         acc = accuracy_score(y_test, y_pred) # compares number of correct predictions with number of total predictions to caluclate accuracy
         # we output a number of our evaluators below 
