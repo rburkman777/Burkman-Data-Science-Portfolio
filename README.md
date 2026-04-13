@@ -28,6 +28,8 @@ In this project, I created an app capable of accepting an input of data from a u
 
 The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters, tuning, and features can impact the performance metrics of the model. In this way, it will also be a learning experience about the nuances of machine learning. 
 
+The app illustrates my skills in python coding. The entire model is built in and operates in python coding I wrote. You will note its unique features also illustrate my skills in model development, planning, and execution. 
+
 Picture: A sample decision tree produced and visualized by the app from running sample data embedded in the app: 
 
 <img width="783" height="394" alt="Screen Shot 2026-04-07 at 8 28 35 PM" src="https://github.com/user-attachments/assets/a7355982-b764-4ccf-a19f-3dddffe66c2e" />
