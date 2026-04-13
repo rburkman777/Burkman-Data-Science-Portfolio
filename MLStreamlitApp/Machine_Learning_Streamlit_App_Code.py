@@ -257,7 +257,7 @@ if model_type == "Linear Regression":
         st.write(f"Intercept: {lin_reg.intercept_:.4f}")
 
         with st.expander("CLICK HERE to learn more about coefficients and the y-intercept"):
-            st.write("The coefficient(s) measure how much a unit change in the predictor feature changes the value of the predicted target. NOTE: Explore how changing whether the data is scaled or unscaled affects the coefficients. \n\n The y-intercept is the point on the line at which the predicted target (y) is equal to zero, or when the predicting feature(s) are zero.")
+            st.write("The coefficient(s) measure how much a unit change in the predictor feature changes the value of the predicted target. NOTE: Explore how changing whether the data is scaled or unscaled affects the coefficients. \n\n The y-intercept is the point on the line/regression at which the predicting feature(s) are equal to zero.")
 
 
 # -------------------------
@@ -310,7 +310,7 @@ elif model_type == "Decision Tree - Classification":
             "Max Depth: Controls how deep the decision tree grows, ie the number of splits the decision tree makes to predict classes. Do explore how changing max depth affects our model evaluations \n\n"
             "Criterion: Measures split quality. The Gini index measures the performance of a split by the lack of diversity of outcomes in each group of leaves. We calculate the Gini index based on the probability of picking two outcomes from the same group that are different (so we want a lower value)." 
             " Entropy is also interested in getting the groups of results in the leaves that are similar. However, it measures it in a different way. It compares the purity of leaves based on the probability of drawing a certain combination or sequence of items from the set in each leaf group. \n\n"
-            "Min Samples Split: this is the minimum number of samples required to split an internal node. Smaller values counter underfitting while larger values counter overfitting \n\n"
+            "Min Samples Split: this is the minimum number of samples (the number of data points that each node is working with) required to split an internal node. Smaller values counter underfitting while larger values counter overfitting \n\n"
             "Min Sample Leaf: this is the minimum number of samples required to be present in a leaf node. A higher value counters overfitting \n\n"
             "Class Weight: When one class significantly outnumbers another the tree might otherwise just predict the majority class for everything. Selecting 'balanced' tries to fix this problem by assigning weights inversely proportional to class frequencies"
 
@@ -345,7 +345,7 @@ elif model_type == "Decision Tree - Classification":
             random_state=42
 )
         with st.expander("CLICK HERE to learn more what we are doing here"):
-            st.write("This model works by splitting the data into 80% training data to create the regression formula (how the features predict the target feature). It then tests the regression it created on 20% of the data.")
+            st.write("This model works by splitting the data into 80% training data to create the model. It then tests the model it created on 20% of the data.")
 
         model.fit(X_train, y_train) # this fits our testing data based on the model from the training data
 
@@ -612,7 +612,8 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             ax.set_ylabel("Actual") # y axis label
             st.pyplot(fig) # plots our matrix
             with st.expander("CLICK HERE to learn more the confusion matrix"):
-                st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, and false negatives. Where the zeroes interact is the true negatives, where the 1s meet is the true positives, where the 0 is predicted and the 1 is actual is the false negative, and where the 1 is predicted and the 0 is actual is the false positives. We want to maximize true positives and negatives for best model performance.")
+                st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, and false negatives. Where the zeroes interact is the true negatives, where the 1s meet is the true positives, where the 0 is predicted and the 1 is actual is the false negative, and where the 1 is predicted and the 0 is actual is the false positives. We want to maximize true positives and negatives for best model performance.
+                "NOTE: If you have multiple classes, the same rules as above apply. True positives will still be where the prediction of the class and the actual class intercept, etc.")
 
 
             # -------------------------
