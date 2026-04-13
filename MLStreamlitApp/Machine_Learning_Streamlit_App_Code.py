@@ -326,7 +326,7 @@ elif model_type == "Decision Tree - Classification":
 
 # Convert class weight selection
 
-        class_weight = None if class_weight_option == "None" else "balanced"
+    class_weight = None if class_weight_option == "None" else "balanced"
     
     st.space(size="medium")
     st.markdown("#### Step Three: Press the button below to run the decision tree on your data with the features, targets, and hyperparameters you chose! You will get multiple evaluations of the tree's performance:")
