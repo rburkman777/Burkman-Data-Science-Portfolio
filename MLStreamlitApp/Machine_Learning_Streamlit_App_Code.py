@@ -403,8 +403,8 @@ elif model_type == "Decision Tree - Classification":
         "* F1-score: A balance between precision and recall that tries to capture how well the model performs on both counts by taking the harmonic mean of recall and precision\n\n"
         "* Support: The number of actual occurrences of each class in the dataset \n\n"
         "* 0 and 1 are the different classes in your model. Note that the precision and recall are for each class respectively \n\n"
-        "* Accuracy: The overall accuracy score for the classifier gives a general idea of the model's performance but can be misleading as it considers every correct prediction for both classes \n\n"
-        "* Macro Average: This is the average of the values for each class \n\n"
+        "* Accuracy: The overall accuracy score for the classifier gives a general idea of the model's performance but can be misleading as it considers every correct prediction for all classes (so if a class is very large it can inflate this) \n\n"
+        "* Macro Average: This is the average of the metrics for each class. It can be helpful to identify imbalances between classes \n\n"
         "* Weighted Average: This is also an average value for both classes but it also takes it account the support"
 
     )
@@ -595,8 +595,8 @@ elif model_type == "K-Nearest Neighbors (KNN)":
         "* F1-score: A balance between precision and recall that tries to capture how well the model performs on both counts by taking the harmonic mean of recall and precision\n\n"
         "* Support: The number of actual occurrences of each class in the dataset \n\n"
         "* 0 and 1 are the different classes in your model. Note that the precision and recall are for each class respectively \n\n"
-        "* Accuracy: The overall accuracy score for the classifier gives a general idea of the model's performance but can be misleading as it considers every correct prediction for both classes \n\n"
-        "* Macro Average: This is the average of the values for each class \n\n"
+        "* Accuracy: The overall accuracy score for the classifier gives a general idea of the model's performance but can be misleading as it considers every correct prediction for all classes. That can inflate this value is there a huge amount of one class  \n\n"
+        "* Macro Average: This is the average of the values for each class. It can be helpful in identifying imbalances between classes \n\n"
         "* Weighted Average: This is also an average value for both classes but it also takes it account the support"
 
     )
