@@ -476,8 +476,8 @@ elif model_type == "Decision Tree - Classification":
 
         with st.expander("CLICK HERE to learn more this visualization"):
             st.write("The above visualization is of the decision tree that you produced. Notice the branching nature of it." \
-            "You will notice that the tree shows you the information it is using to make decisions. It outputs the gini/entropy of each outcome, the 'samples' refers to the number of samples each node is working with, the 'values' refers" \
-            "to the number in each group you have per class in each step, and the 'class' is the target group the model decided to place predictors who follow the path to that node in.")
+            " You will notice that the tree shows you the information it is using to make decisions. It outputs the gini/entropy of each outcome, the 'samples' refers to the number of samples each node is working with, the 'values' refers" \
+            " to the number in each group you have per class in each step, and the 'class' is the target group the model decided to place predictors who follow the path to that node in.")
 
 
 # =============================
