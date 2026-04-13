@@ -37,6 +37,7 @@ Here is a useful reference on some of the metrics used to evaluate model perform
 
 ## Visual Example
 Here is an example of the kind of visual you will produce using the app (this shows a visualization of a decision tree you can produce in the app):
+
 <img width="783" height="394" alt="Screen Shot 2026-04-07 at 8 28 35 PM" src="https://github.com/user-attachments/assets/d27812bd-99f2-448e-8739-d3c9033f0e57" />
 
 
