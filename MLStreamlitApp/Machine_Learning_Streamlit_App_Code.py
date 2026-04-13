@@ -333,13 +333,13 @@ elif model_type == "Decision Tree - Classification":
     st.write("NOTE: You can change any of the selections you made above to produce a new decision tree!")
     # we establish our training button and parameters
     if st.button("Train Decision Tree"):
-        model = DecisionTreeClassifier(
-            max_depth=max_depth,
-            criterion=criterion,
-            min_samples_split=min_samples_split,
-            min_samples_leaf=min_samples_leaf,
-            class_weight=class_weight,
-            random_state=42
+    model = DecisionTreeClassifier(
+        max_depth=max_depth,
+        criterion=criterion,
+        min_samples_split=min_samples_split,
+        min_samples_leaf=min_samples_leaf,
+        class_weight=class_weight,
+        random_state=42
 )
         with st.expander("CLICK HERE to learn more what we are doing here"):
             st.write("This model works by splitting the data into 80% training data to create the regression formula (how the features predict the target feature). It then tests the regression it created on 20% of the data.")
