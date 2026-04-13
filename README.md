@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. I invite you to explore the descriptions of my projects as well as to directly interact with them. 
+Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. You will also get a sample of my skills in app development and organization. I invite you to explore the descriptions of my projects as well as to directly interact with them. The Machine Learning Streamlit App and the Elections Analysis App illustrate specifically my skills in python and app devleopment while the Data Clearning Jupyter Notebook illustrates my skills in data cleaning, python, and using Jupyter notebooks.
 
 #### Table of Contents
 
