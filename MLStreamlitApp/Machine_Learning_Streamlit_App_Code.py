@@ -663,14 +663,14 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             k_values = range(1, 20, 2)
             accuracies = []
 
-            # Loop through different values of k
+            # Loop through different values of k (through the model)
             for k_val in k_values:
                 knn_temp = KNeighborsClassifier(n_neighbors=k_val, metric=metric)
                 knn_temp.fit(X_train, y_train)
                 y_temp_pred = knn_temp.predict(X_test)
                 accuracies.append(accuracy_score(y_test, y_temp_pred))
 
-                # Plot accuracy vs. number of neighbors (k)
+            # Plot accuracy vs. number of neighbors (k)
             plt.figure(figsize=(8, 5))
             plt.plot(k_values, accuracies, marker='o')
             plt.title('Accuracy vs. Number of Neighbors (k)')
@@ -685,6 +685,6 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             st.pyplot(plt)
 
             with st.expander("CLICK HERE to learn more this graph"):
-                st.write("You might have noticed from experimenting above that accuracy and k are often related. Feel free to explore how " \
+                st.write("You might have noticed from experimenting above that accuracy and k are often related. The vertical line shows oyur current k value. Feel free to explore how " \
                 "adjusting some of the other model parameters impacts this relationship. You may notice that changing the scale of the data has an impact on this relationship -- go explore!")
 
