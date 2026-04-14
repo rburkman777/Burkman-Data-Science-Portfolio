@@ -18,7 +18,7 @@ Alternatively, you can simply follow these steps: create a new folder in VSCode 
 
 Once you have everything open in VSCode, go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py" into the interface and hit enter (so if you don't change the name, you would type "streamlit run Machine_Learning_Streamlit_App_Code.py"). It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on.
 
-Also, help yourself to the sample datasets that you can upload into the app if you choose to upload your own file instead of using one of the sample datasets (in the sample_datasets_for_app_uploading folder. 
+Also, help yourself to the sample datasets that you can upload into the app if you choose to upload your own file instead of using one of the sample datasets (in the sample_datasets_for_app_uploading folder). 
 
 ## App Features 
 Three models were used: Linear regression, decision trees, and k-nearest neighbor. See below for how you can tune hyperparameters on both models to explore different outcomes:
