@@ -2,15 +2,15 @@
 
 ## Overview
 
-Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. You will also get a sample of my skills in app development and organization. I invite you to explore the descriptions of my projects as well as to directly interact with them. The Machine Learning Streamlit App and the Elections Analysis App illustrate specifically my skills in python and app devleopment while the Data Clearning Jupyter Notebook illustrates my skills in data cleaning, python, and using Jupyter notebooks.
+Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. You will also get a sample of my skills in app development and organization. I invite you to explore the descriptions of my projects as well as to directly interact with them. The Machine Learning Streamlit App and the Elections Analysis App illustrate specifically my skills in python and app devleopment while the Tidy Data Jupyter Notebook illustrates my skills in data cleaning, python, and using Jupyter notebooks.
 
 #### Table of Contents
 
-Machine Learning Streamlit App 
+1. Machine Learning Streamlit App 
 
-Elections Analysis Streamlit App 
+2. Elections Analysis Streamlit App 
 
-Data Cleaning Jupyter Notebook 
+3. Tidy Data Jupyter Notebook
 
 ________________________________________________________________________________________________________________________________________________
 
@@ -28,7 +28,7 @@ In this project, I created an app capable of accepting an input of data from a u
 
 The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters, tuning, and features can impact the performance metrics of the model. In this way, it will also be a learning experience about the nuances of machine learning. 
 
-The app illustrates my skills in python coding. The entire model is built in and operates in python coding I developed. You will note its unique features also illustrate my skills in model development, planning, and execution. The app also demonstrates my skills in visual layout, graphic design, and creating an engaging user experience through its design. 
+The application demonstrates many of my skills. The entire model is built in and operates in python coding that I developed and is an example of my coding abilities. The app is also an illustration of my skills in app development and execution. The app highlights my interest and aptitude in visual layout, graphic design, and creating an engaging user experience. Most importantly, the application illustrates my love for teaching by allowing users to explore useful new data analysis models and skills. 
 
 Picture: A sample decision tree produced and visualized by the app from running sample data embedded in the app: 
 
@@ -56,13 +56,11 @@ ________________________________________________________________________________
 
 ## Tidy Data Jupyter Notebook
 
-#### Project Overview
+### LINK to Github folder with project code, information, and data:
 
-This notebook highlights how to clean data. We take a dataset about olympic medalists that begins as quite messy and use a variety of functions to tidy it up. This makes it much easier to complete a variety of tasks with it. This application demonstrates my skills with data tidying, data organization, python, Jupyer notebooks, and data analysis. 
+### Project Overview
 
-#### How to Load the App via Visual Studio Code
-
-This can be accessed simply. Go into the Tidy Data Folder (accessible above) and click on the Tidy_Data_Notebook_Code file. After doing that, open the notebook in VSCode and explore. 
+This notebook highlights how to clean data. We take a dataset about olympic medalists that begins as quite messy and use a variety of functions to tidy it up. This makes it much easier to complete a variety of tasks with it, including producing visualizations. This application demonstrates my skills with data tidying, data organization, python, Jupyer notebooks, and data analysis. 
 
 Picture: Below is a graph showing the frequency of male and female participation across sports at the Olympics
 
