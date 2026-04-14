@@ -28,7 +28,7 @@ In this project, I created an app capable of accepting an input of data from a u
 
 The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters, tuning, and features can impact the performance metrics of the model. In this way, it will also be a learning experience about the nuances of machine learning. 
 
-The application demonstrates many of my skills. The entire model is built in and operates in python coding that I developed and is an example of my coding abilities. The app is also an illustration of my skills in app development and execution. The app highlights my interest and aptitude in visual layout, graphic design, and creating an engaging user experience. Most importantly, the application illustrates my love for teaching by allowing users to explore useful new data analysis models and skills. 
+The application demonstrates many of my skills. The entire model is built in and operates in python coding that I developed and is an example of my coding abilities. The app is also an illustration of my skills in app development and execution. The app highlights my interest in visual layout, graphic design, and creating an engaging user experience. Most importantly, the application illustrates my love for teaching by enabling user exploration of new data analysis models and skills. 
 
 Picture: A sample decision tree produced and visualized by the app from running sample data embedded in the app: 
 
@@ -56,7 +56,7 @@ ________________________________________________________________________________
 
 ## Tidy Data Jupyter Notebook
 
-### LINK to Github folder with project code, information, and data:
+### LINK to Github folder with project code, information, and data: https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/TidyDataProject
 
 ### Project Overview
 
