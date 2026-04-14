@@ -529,7 +529,7 @@ elif model_type == "K-Nearest Neighbors (KNN)":
     )
     # the multiselect function makes it so we can select more than one item
     features = st.multiselect(
-        "Select Feature Columns (X)",
+        "Select Feature Columns (X) --> the features you want to use to predict the target variable",
         [col for col in columns if col != target]
     )
 
