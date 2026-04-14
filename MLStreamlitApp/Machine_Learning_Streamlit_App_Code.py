@@ -298,7 +298,7 @@ elif model_type == "Decision Tree - Classification":
 
     # we use the selectbox fucntion again to allow users to select predicting features and the target features
     target = st.selectbox("Select Target Column (y) --> what you want the dataset to make a prediction about. It should be a binary feature (a feature of 0s and 1s)", columns)
-    features = st.multiselect("Select Feature Columns (X) --> the features you want to use to make the prediction. Do not select the target variable in thix box", columns)
+    features = st.multiselect("Select Feature Columns (X) --> the features you want to use to make the prediction. Do not select the target variable in this box", columns)
  
     # -------------------------
     # Data splitting and processing
