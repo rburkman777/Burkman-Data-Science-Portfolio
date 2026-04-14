@@ -60,7 +60,7 @@ ________________________________________________________________________________
 
 ### Project Overview
 
-This notebook highlights how to clean data. We take a dataset about olympic medalists that begins as quite messy and use a variety of functions to tidy it up. This makes it much easier to complete a variety of tasks with it, including producing visualizations. This application demonstrates my skills with data tidying, data organization, python, Jupyer notebooks, and data analysis. 
+This notebook highlights how to clean data. We take a dataset about olympic medalists that begins as quite messy and use a variety of functions to tidy it up. This makes it much easier to complete a variety of tasks with it, including producing visualizations. This application demonstrates my skills with data tidying, data organization, python, Jupyer notebooks, and data analysis. The application will also serve as a helpful guide for those interested in learning more about how python can be employed to tidy data. 
 
 Picture: Below is a graph showing the frequency of male and female participation across sports at the Olympics
 
