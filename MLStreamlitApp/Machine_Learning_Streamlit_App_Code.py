@@ -70,6 +70,7 @@ if data_option == "Upload CSV":
         st.success("✅ CSV uploaded successfully!")
     else:
         st.stop()
+
 # we move to an else statement if the user does not choose to upload their own file
 else: 
     st.subheader("📁 Using Built-in Dataset") # use a subheader to make the title
@@ -87,10 +88,13 @@ else:
 
     df = pd.read_csv(dataset_path) # creates dataframe for the sample, built-in data 
     st.success(f"Using built-in dataset: {os.path.basename(dataset_path)}") # success message for the dataset loading
+
 # -----------------------------
 # STEP 3: DISPLAY DATA
 # -----------------------------
+
 # we use st.write to display some information
+
 st.write("### 📊 Data Preview")
 st.write("Here's a preview of our data")
 st.write(df) # we show our data 
@@ -109,6 +113,7 @@ if model_type == "Linear Regression" and data_option == "Built-in Dataset":
                 "* northeast: binary variable to indicate whether the subject lives in the northeast region of the country or not \n\n"
 
             )
+
 elif model_type == "Decision Tree - Classification" and data_option == "Built-in Dataset":
     with st.expander("CLICK HERE for an explanation on the variables in this dataset"):
         st.write("* admit: the target variable; whether the subject was admitted or not \n\n"
@@ -139,6 +144,7 @@ elif model_type == "K-Nearest Neighbors (KNN)" and data_option == "Built-in Data
 # =============================
 # 📈 LINEAR REGRESSION
 # =============================
+
 # if the model type is linear regression, the model follows this code
 
 if model_type == "Linear Regression":
@@ -174,6 +180,7 @@ if model_type == "Linear Regression":
     # -------------------------
     # Scaling toggle
     # -------------------------
+
     # this function helps us set up the ability to scale or unscale the model
     scaling_option = st.radio(
         "Choose data scaling option:",
@@ -182,8 +189,6 @@ if model_type == "Linear Regression":
     with st.expander("CLICK HERE to learn more about scaling the data"):
         st.write("Scaling the data is the process of transforming the features into similar scales without changing the shape of the data. This can help to contextualize the coefficients of the features (which measure how much each of the features impact our target variable). It can protect against a variable with a larger magnitude from dominating the model. If you hit the 'scaled' button, the data will be scaled. If you hit the 'unscaled' button, it will not be scaled and left as it is.")
 
-
-
     # -------------------------
     # Train/Test Split FIRST
     # -------------------------
@@ -191,7 +196,6 @@ if model_type == "Linear Regression":
     X_train_raw, X_test_raw, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42
     )
-
 
     # Scaling (if selected)
     # next we use if and else statements to set up the scaling feature
@@ -203,11 +207,10 @@ if model_type == "Linear Regression":
         X_train = X_train_raw
         X_test = X_test_raw
     
-    
+    # a button the user can click to train the model
     if st.button("Train Linear Regression Model"):
         with st.expander("CLICK HERE to learn more what we just did here"):
             st.write("This model works by splitting the data into 80% training data to create the regression formula (how the features predict the target feature). It then tests the regression it created on 20% of the data to evaluate performance.")
-
 
     # -------------------------
     # Model Training 
@@ -242,7 +245,6 @@ if model_type == "Linear Regression":
             "\n\n * Mean Squared Error (MSE): measures the average squared difference between estimated values and the actual value, acting as a key indicator of predictive model accuracy. It is calculated by averaging the squared residuals (errors), which penalizes large errors or outliers heavily \n\n" \
             "* Root Mean Squared Error: used to measure the average magnitude of prediction errors in models, calculating the square root of the average squared differences between predicted and observed values. It indicates model performance, with lower values signifying higher accuracy (consider the scale of your data when thinking about that)")
 
-
     # -------------------------
     # Coefficients AFTER
     # -------------------------
@@ -260,7 +262,6 @@ if model_type == "Linear Regression":
         with st.expander("CLICK HERE to learn more about coefficients and the y-intercept"):
             st.write("The coefficient(s) measure how much a unit change in the predictor feature changes the value of the predicted target. NOTE: Explore how changing whether the data is scaled or unscaled affects the coefficients. \n\n The y-intercept is the point on the line/regression at which the predicting feature(s) are equal to zero.")
 
-
 # -------------------------
 # Explanation
 # -------------------------
@@ -270,10 +271,17 @@ if model_type == "Linear Regression":
     "Scaling standardizes features (mean = 0, std = 1), which makes coefficients comparable.\n\n"
     "Model performance metrics (R², MSE, RMSE) usually stay similar since we are only scaling the predictors and not the target."
 )
+        
 # =============================
 # 🌳 DECISION TREE
 # =============================
+
 # let's move to the decision tree. We use an elif statement to specify we are focusing on this model now
+
+# -------------------------
+# Intro information
+# -------------------------
+
 elif model_type == "Decision Tree - Classification":
     st.space(size="small")
     st.markdown("-----------------------------------------------------------------")
@@ -283,7 +291,7 @@ elif model_type == "Decision Tree - Classification":
     st.space(size="small")
 
     # we introduce our user to the section using markdown and write functions
-    st.write("You chose to make a decision tree! Great choice! Begin by completing step one of making your decision tree below:")
+    st.write("You chose to make a decision tree! Great choice! Begin by completing the steps below to set up your model:")
     st.markdown("-----------------------------------------------------------------")
     st.markdown("#### Step One: Enter your target and predicting features below:")
     st.write("The first step is to choose your features and target. The target is what you want the dataset to make predictions about using the decision tree. Meanwhile, the features are what you want the decision tree to use to make the decisions.")
@@ -291,6 +299,10 @@ elif model_type == "Decision Tree - Classification":
     # we use the selectbox fucntion again to allow users to select predicting features and the target features
     target = st.selectbox("Select Target Column (y) --> what you want the dataset to make a prediction about. It should be a binary feature (a feature of 0s and 1s)", columns)
     features = st.multiselect("Select Feature Columns (X) --> the features you want to use to make the prediction", columns)
+ 
+    # -------------------------
+    # Data splitting and processing
+    # -------------------------
     
     # we again set up our dataframes and then split our data into training and testing data using the below code
     if target and features:
@@ -301,7 +313,10 @@ elif model_type == "Decision Tree - Classification":
         X, y, test_size=0.2, random_state=42
     )
 
-    # Step Two
+    # -------------------------
+    # Hyperparameter tuning
+    # -------------------------
+    
     st.space(size="medium")
     st.markdown("#### Step Two: Tune your hyperparameters below:")
     st.write("Below is where you may tune your hyperparameters to change the function of the model.")
@@ -326,15 +341,20 @@ elif model_type == "Decision Tree - Classification":
     class_weight_option = st.selectbox(
         "Class Weight",
         ["None", "balanced"]
-) # finally, we add our class weight options using a select box function
+)   # finally, we add our class weight options using a select box function
 
-# Convert class weight selection
-
+    # Convert class weight selection
+    
     class_weight = None if class_weight_option == "None" else "balanced"
     
     st.space(size="medium")
     st.markdown("#### Step Three: Press the button below to run the decision tree on your data with the features, targets, and hyperparameters you chose! You will get multiple evaluations of the tree's performance:")
     st.write("NOTE: You can change any of the selections you made above to produce a new decision tree!")
+
+    # -------------------------
+    # Model setup and evaluation metrics 
+    # -------------------------
+    
     # we establish our training button and parameters
     if st.button("Train Decision Tree"):
         model = DecisionTreeClassifier(
@@ -374,17 +394,17 @@ elif model_type == "Decision Tree - Classification":
         st.space(size="small")
         st.markdown("### 1. Accuracy and Classification Report")
 
-        # Predictions
+        # Predictions + accuracy calculation
         
         y_pred = model.predict(X_test)
         acc = accuracy_score(y_test, y_pred) # compares number of correct predictions with number of total predictions to caluclate accuracy
+        
         # we output a number of our evaluators below 
         st.write(f"### 🎯 Model Accuracy: {acc:.2f}")
         with st.expander("CLICK HERE to learn more about accuracy"):
             st.write(
             "Accuracy is a simple measure of what percentage of times the decision tree correctly predicted the outcome using the features."
         )
-
 
         st.space(size="small")
 
@@ -415,7 +435,6 @@ elif model_type == "Decision Tree - Classification":
         st.space(size="small")
 
         st.markdown("### 2. Confusion Matrix 🔢")
-
 
         # Confusion Matrix
         cm = confusion_matrix(y_test, y_pred) #establishes our matrix
@@ -463,7 +482,6 @@ elif model_type == "Decision Tree - Classification":
 
         st.markdown("### 4. Decision Tree Visualization 🌳 ")
 
-
         # Tree Visualization
         # we use the code below to help us visualize the decision tree
         dot_data = tree.export_graphviz(
@@ -484,6 +502,11 @@ elif model_type == "Decision Tree - Classification":
 # =============================
 # 🤝 K-NEAREST NEIGHBORS (KNN)
 # =============================
+
+# -------------------------
+# Intro information
+# -------------------------
+
 # we have another elif function for when the user chooses KNN 
 elif model_type == "K-Nearest Neighbors (KNN)":
     st.space(size="small")
@@ -509,7 +532,12 @@ elif model_type == "K-Nearest Neighbors (KNN)":
         "Select Feature Columns (X)",
         [col for col in columns if col != target]
     )
-    # we establish our dataframes and split our data below
+
+    # -------------------------
+    # Set up and data splitting 
+    # -------------------------
+    
+    # we establish our dataframes and split our data below (using the same format as for the other models)
     if target and features:
         X = df[features]
         y = df[target]
@@ -518,6 +546,10 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             X, y, test_size=0.2, random_state=42
         )
 
+        # -------------------------
+        # Hyperparameters, tuning, and scaling 
+        # -------------------------
+        
         st.space(size="medium")
         st.markdown("#### Step Two: Tune your hyperparameters and prepare data below:")
 
@@ -540,6 +572,7 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             "Scale the data? (Recommended for KNN)",
             ["Yes", "No"]
         )
+        
         # we again use the expander function to create a dropdown menu to give more information
         with st.expander("CLICK HERE to learn more about scaling the data"):
             st.write("This standardizes the scale of the features so that they all have a mean of 0 and a standard deviation of 1. Pay attention to how having unscaled data in a KNN model can be potentially disruptive.")
@@ -553,6 +586,10 @@ elif model_type == "K-Nearest Neighbors (KNN)":
         st.space(size="medium")
         st.markdown("#### Step Three: Train your KNN model")
 
+        # -------------------------
+        # Model execution and evaluation
+        # -------------------------
+        
         # this is the code that activates our model and allows it to classify the groups, including by incorporating our parameters
         if st.button("Train KNN Model"):
             model = KNeighborsClassifier(
@@ -562,7 +599,6 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             with st.expander("CLICK HERE to learn more about what we are doing here"):
                 st.write("We train the model by splitting it up into 'training' data and 'testing' data. We do this "
                 "so that we have 80% training data and 20% testing data. We use the training data to help the model learn how to make predictions and the testing data to evaluate its performance.")
-
 
             model.fit(X_train, y_train) # here is where the model learns from training data
             y_pred = model.predict(X_test) # here is where the model predicts from that learning
@@ -618,7 +654,7 @@ elif model_type == "K-Nearest Neighbors (KNN)":
 
 
             # -------------------------
-            # 📊 Accuracy vs K Graph
+            # Accuracy vs K Graph
             # -------------------------
             st.markdown("-----------------------------------------------------------------")
             st.markdown("### 📊 3. Accuracy vs. Number of Neighbors (k)")
