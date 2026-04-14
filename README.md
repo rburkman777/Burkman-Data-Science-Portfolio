@@ -22,7 +22,7 @@ ________________________________________________________________________________
 ### Github folder with project code, information, and data is also above and called "MLStreamlitApp"
 
 
-#### Project Overview
+### Project Overview
 
 In this project, I created an app capable of accepting an input of data from a user and using that data to illustrate the process of machine learning. The app allows users to choose a type of machine learning (linear regression, decision tree, or K-Nearest Neighbor) and tune hyperparameters based off that choice. Afterwards, the users can evaluate various metrics of model performance, including ROC curves, accuracy, precision, and others. The visualization below depicts a decision tree from the model that is outputted after the user uploads data and performs custom hyperparameter tuning. 
 
@@ -48,7 +48,7 @@ ________________________________________________________________________________
 
 ### LINK to Github folder with project code, information, and data:
 
-#### Project Overview
+### Project Overview
 
 This app is designed to give users the opporunity to explore data about American elections compiled by the website FiveThirtyEight. Users can filter congressional districts for various attributes and learn about their geographic distribution throughout the country, their partisanship, and their urbanization. Users can use this information to make insights about contempotary American politics. 
 
