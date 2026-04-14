@@ -294,7 +294,7 @@ elif model_type == "Decision Tree - Classification":
     st.write("You chose to make a decision tree! Great choice! Begin by completing the steps below to set up your model:")
     st.markdown("-----------------------------------------------------------------")
     st.markdown("#### Step One: Enter your target and predicting features below:")
-    st.write("The first step is to choose your features and target. The target is what you want the dataset to make predictions about using the decision tree. Meanwhile, the features are what you want the decision tree to use to make the decisions.")
+    st.write("The first step is to choose your features and target. The target is what you want the dataset to make predictions about using the decision tree. Meanwhile, the features are what you want the decision tree to use to make the decisions. The tree needs these chosen to work.")
 
     # we use the selectbox fucntion again to allow users to select predicting features and the target features
     target = st.selectbox("Select Target Column (y) --> what you want the dataset to make a prediction about. It should be a binary feature (a feature of 0s and 1s)", columns)
