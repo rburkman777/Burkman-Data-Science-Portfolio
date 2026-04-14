@@ -19,7 +19,7 @@ ________________________________________________________________________________
 
 ### LINK to Streamlit App: https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/
 ### LINK to project folder with app code: https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/MLStreamlitApp
-### Github folder with project code, information, and data is also above and called "MLStreamlitApp"
+### Folder with project code, information, and data is also above and called "MLStreamlitApp"
 
 
 ### Project Overview
