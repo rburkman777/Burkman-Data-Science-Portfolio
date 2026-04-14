@@ -34,7 +34,7 @@ Picture: A sample decision tree produced and visualized by the app from running 
 
 <img width="783" height="394" alt="Screen Shot 2026-04-07 at 8 28 35 PM" src="https://github.com/user-attachments/assets/a7355982-b764-4ccf-a19f-3dddffe66c2e" />
 
-#### How to Load the App via Visual Studio Code
+#### How to Load the App Via Visual Studio Code
 
 In order to run the app yourself, open up the MLStreamlitApp folder in visual studio code. You can do that by clicking on the green 'code' button on the repository main page and copy and pasting the URL. After that, go to VSCode and open the Command Palette (accessible via Ctrl + Shift + P (Windows/Linux) or Cmd + Shift + P (Mac)) then type Git: Clone. Press enter. Paste the URL and hit enter. Decide where on your computer you want to save the folder and then open the folder. 
 
