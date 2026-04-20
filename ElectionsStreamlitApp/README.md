@@ -2,8 +2,7 @@
 
 The Streamlit app is an open source Python framework for data scientists to explore interactive data applications. 
 
-## Link to Streamlit App
-
+## Link to Streamlit App: https://burkman-data-science-portfolio-zyhpnavjxj7zpptlwmskuy.streamlit.app/
 
 ## How to Load the App via Visual Studio Code
 
