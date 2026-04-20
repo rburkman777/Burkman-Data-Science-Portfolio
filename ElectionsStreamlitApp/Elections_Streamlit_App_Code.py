@@ -95,6 +95,10 @@ st.pyplot(plt)
 
 st.markdown("-----------------------------------------------------------------")
 
+st.subheader("General Overview")
+
+st.markdown("-----------------------------------------------------------------")
+
 st.write("As you may have noticed, more rural and Republican districts are in so-called red states and more "
 "Democratic and urban distircts are in so-called blue states. It turns out that rural areas tend to lean Republican "
 "and urban areas tend to lean Democratic. On the other hand, you may also find some exceptions to this. Try looking "
