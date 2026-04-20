@@ -61,7 +61,6 @@ st.write(f"Districts in the {grouping} group with PVI between {pvi_range[0]} and
 st.dataframe(filtered_df)
 
 
-import streamlit as st
 import matplotlib.pyplot as plt
 
 
