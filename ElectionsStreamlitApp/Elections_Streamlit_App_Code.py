@@ -24,7 +24,7 @@ import pandas as pd
 import seaborn as sns
 
 #here we show off our csv file
-st.subheader("Exploring Our Dataset")
+st.subheader("Data Set Preview")
 
 # Loard the CSV file
 df = pd.read_csv("ElectionsStreamlitApp/data/urbanization-index-2022.csv")
@@ -40,6 +40,8 @@ grouping = st.selectbox("Select a district type", df["grouping"].unique(), index
 filtered_df = df[df["grouping"] == grouping]
 
 st.markdown("-----------------------------------------------------------------")
+
+st.subheader("Adjust Filters")
 
 #Here, we create a slider that lets us filter by partisanship. We first need to establish variables for the 
 #minimum and maximum value. Then, we activate the function.
