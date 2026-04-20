@@ -72,8 +72,7 @@ filtered_df = df[
    (df["pvi_22"] <= pvi_range[1])
 ]
 
-st.markdown("###f Districts in the {grouping} group with PVI between {pvi_range[0]} and {pvi_range[1]}:")
-st.dataframe(filtered_df)
+st.markdown(f"### Districts in the {grouping} group with PVI between {pvi_range[0]} and {pvi_range[1]}:")st.dataframe(filtered_df)
 
 import matplotlib.pyplot as plt
 
