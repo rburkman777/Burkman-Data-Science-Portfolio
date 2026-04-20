@@ -16,15 +16,14 @@ st.write("Welcome to my first Streamlit app! As a political science major,"
 #we will need pandas and seaborn. If these are not installed, use conda to do so. 
 import pandas as pd
 
-
 import seaborn as sns
 
 #here we show off our csv file
 st.subheader("Exploring Our Dataset")
 
 # Loard the CSV file
-df = pd.read_csv("urbanization-index-2022.csv")
-
+df = pd.read_csv("./data/urbanization-index-2022.csv")
+st.write("Files in directory:", os.listdir())
 
 st.write("Here's our data!")
 st.dataframe(df)
