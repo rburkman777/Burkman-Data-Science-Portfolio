@@ -2,6 +2,8 @@ import streamlit as st
 import os
 #here we import streamlit and give our application a title
 st.title("Congressional Districts in the 2022 Election")
+st.markdown("-----------------------------------------------------------------")
+
 
 #here we have a descirption of the basic functions of our app as well as of some important information. 
 st.write("Welcome to my first Streamlit app! As a political science major,"
@@ -13,6 +15,9 @@ st.write("Welcome to my first Streamlit app! As a political science major,"
 "measuring the partisanship of each congressional district. A positive value " 
 "means an estimate that the district has a more Democratic partisanship while a negative value indicates" 
 "a more Republican congressional district.")
+
+st.markdown("-----------------------------------------------------------------")
+
 
 #we will need pandas and seaborn. If these are not installed, use conda to do so. 
 import pandas as pd
@@ -27,12 +32,15 @@ df = pd.read_csv("ElectionsStreamlitApp/data/urbanization-index-2022.csv")
 st.write("Here's our data!")
 st.dataframe(df)
 
+st.markdown("-----------------------------------------------------------------")
 
 #this is out first filter: we filter by 'grouping' or the way that FiveThirtyEight characterizes the district based on how urban, suburban, or rural it is. 
 #note that we made this a dropdown menu
 st.write("Use this menu to look at individual distirct types based on population density")
 grouping = st.selectbox("Select a district type", df["grouping"].unique(), index = None)
 filtered_df = df[df["grouping"] == grouping]
+
+st.markdown("-----------------------------------------------------------------")
 
 
 #Here, we create a slider that lets us filter by partisanship. We first need to establish variables for the 
@@ -78,6 +86,9 @@ st.pyplot(plt)
 
 #this chart gives a nice summary of one of the trends you may notice -- urban distrcits tend to be more Democratic
 #and are more likely to be located in Democratic states and vice versa. 
+
+st.markdown("-----------------------------------------------------------------")
+
 st.write("As you may have noticed, more rural and Republican districts are in so-called red states and more "
 "Democratic and urban distircts are in so-called blue states. It turns out that rural areas tend to lean Republican "
 "and urban areas tend to lean Democratic. On the other hand, you may also find some exceptions to this. Try looking "
