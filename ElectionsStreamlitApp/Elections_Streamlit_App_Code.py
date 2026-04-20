@@ -72,14 +72,14 @@ filtered_df = df[
    (df["pvi_22"] <= pvi_range[1])
 ]
 
-st.write(f"Districts in the {grouping} group with PVI between {pvi_range[0]} and {pvi_range[1]}:")
+st.markdown("### Districts in the {grouping} group with PVI between {pvi_range[0]} and {pvi_range[1]}:")
 st.dataframe(filtered_df)
 
 import matplotlib.pyplot as plt
 
 #here, we create an interactive bar plot that sums up the number of congressional districts from each filtration category in each state. 
 #note the use of the "state.counts function."
-st.subheader(f"Number of selected districts per state")
+st.markdown("### Number of selected districts per state")
 state_counts = filtered_df['state'].value_counts().sort_values(ascending=False)
 
 plt.figure(figsize=(10,5))
