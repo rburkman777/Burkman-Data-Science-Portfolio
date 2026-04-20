@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 #here we import streamlit and give our application a title
 st.title("Congressional Districts in the 2022 Election")
 
@@ -22,7 +23,7 @@ import seaborn as sns
 st.subheader("Exploring Our Dataset")
 
 # Loard the CSV file
-df = pd.read_csv("ElectionsStreamlitApp/data/urbanization-index-2022.csv")
+df = pd.read_csv("data/urbanization-index-2022.csv")
 st.write("Files in directory:", os.listdir())
 
 st.write("Here's our data!")
