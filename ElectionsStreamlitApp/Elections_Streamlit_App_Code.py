@@ -2,8 +2,8 @@ import streamlit as st
 import os
 #here we import streamlit and give our application a title
 st.title("Congressional Districts in the 2022 Election")
-st.markdown("-----------------------------------------------------------------")
 
+st.markdown("-----------------------------------------------------------------")
 
 #here we have a descirption of the basic functions of our app as well as of some important information. 
 st.write("Welcome to my first Streamlit app! As a political science major,"
@@ -17,7 +17,6 @@ st.write("Welcome to my first Streamlit app! As a political science major,"
 "a more Republican congressional district.")
 
 st.markdown("-----------------------------------------------------------------")
-
 
 #we will need pandas and seaborn. If these are not installed, use conda to do so. 
 import pandas as pd
@@ -41,7 +40,6 @@ grouping = st.selectbox("Select a district type", df["grouping"].unique(), index
 filtered_df = df[df["grouping"] == grouping]
 
 st.markdown("-----------------------------------------------------------------")
-
 
 #Here, we create a slider that lets us filter by partisanship. We first need to establish variables for the 
 #minimum and maximum value. Then, we activate the function.
@@ -67,15 +65,12 @@ filtered_df = df[
 st.write(f"Districts in the {grouping} group with PVI between {pvi_range[0]} and {pvi_range[1]}:")
 st.dataframe(filtered_df)
 
-
 import matplotlib.pyplot as plt
-
 
 #here, we create an interactive bar plot that sums up the number of congressional districts from each filtration category in each state. 
 #note the use of the "state.counts function."
 st.subheader(f"Number of selected districts per state")
 state_counts = filtered_df['state'].value_counts().sort_values(ascending=False)
-
 
 plt.figure(figsize=(10,5))
 sns.barplot(x=state_counts.index, y=state_counts.values, palette="viridis")
