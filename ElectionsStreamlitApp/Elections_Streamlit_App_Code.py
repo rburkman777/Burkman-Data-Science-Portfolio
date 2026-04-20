@@ -7,7 +7,7 @@ st.markdown("-----------------------------------------------------------------")
 
 #here we have a descirption of the basic functions of our app as well as of some important information. 
 st.write("Welcome to my first Streamlit app! As a political science major,"
-"I believe there is a lot to be learned from studying election results. This "
+" I believe there is a lot to be learned from studying election results. This "
 "page was designed to let you interact with this data from FiveThirtyEight and explore"
 " trends in American elections. You will be able to filter through data about American congressional districts" 
 "in the lead up to the 2022 elections below. You will be able to explore how many "
@@ -28,7 +28,7 @@ st.subheader("Exploring Our Dataset")
 
 # Loard the CSV file
 df = pd.read_csv("ElectionsStreamlitApp/data/urbanization-index-2022.csv")
-st.write("Here's our data!")
+st.write("Here is a preview of our data set!")
 st.dataframe(df)
 
 st.markdown("-----------------------------------------------------------------")
