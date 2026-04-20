@@ -22,7 +22,7 @@ import seaborn as sns
 st.subheader("Exploring Our Dataset")
 
 # Loard the CSV file
-df = pd.read_csv("./data/urbanization-index-2022.csv")
+df = pd.read_csv("ElectionsStreamlitApp/data/urbanization-index-2022.csv")
 st.write("Files in directory:", os.listdir())
 
 st.write("Here's our data!")
