@@ -55,6 +55,7 @@ pvi_range = st.slider(
    value=(min_pvi, max_pvi)
 )
 
+st.markdown("-----------------------------------------------------------------")
 
 #we apply both filters. In other words, this allows us to filter congressional districts for our variables. 
 filtered_df = df[
