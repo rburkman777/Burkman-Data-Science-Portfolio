@@ -6,7 +6,9 @@ The Streamlit app is an open source Python framework for data scientists to expl
 
 ## How to Load the App via Visual Studio Code
 
-In order to run the app yourself, simply open up a python script in visual studio code. Paste the code in the "main.py" file into a new file. Go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py into the interface and hit enter. It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on. You will also want to take the data from the data folder and load it into Visual Studio. The raw data and CSV data is provided in the data folder. There is also a copy in the basic_streamlit_app1 folder outside the data folder. 
+In order to run the app yourself, open up the MLStreamlitApp folder in visual studio code. You can do that by clicking on the green 'code' button on the repository main page and copy and pasting the URL. After that, go to VSCode and open the Command Palette (accessible via Ctrl + Shift + P (Windows/Linux) or Cmd + Shift + P (Mac)) then type Git: Clone. Press enter. Paste the URL and hit enter. Decide where on your computer you want to save the folder and then open the folder.
+
+Once you have everything open in VSCode, go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py" into the interface and hit enter (so if you don't change the name, you would type "streamlit run Elections_Streamlit_App_Code.py"). It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on.
 
 ## App Description
 
