@@ -15,7 +15,7 @@ import graphviz
 from sklearn.neighbors import KNeighborsClassifier # needed for KNN
 
 st.title("📈 Unsupervised Machine Learning Streamlit App")
-st.write("Welcome to my unsupervised machine learning app! This app was made to allow users to explore various machine learning models and the ways that they can be used to analyze data. I hope that you will explore all of the features that this app has to offer. To get started, choose a model type below!")
+st.write("Welcome to my unsupervised machine learning app! This app was created to allow users to explore various machine learning models and the ways that they can be used to analyze data. I hope that you will explore all of the features that this app has to offer. To get started, choose a model type below!")
 with st.expander("CLICK HERE to learn more about unsupervised machine learning"):
     st.write("Unsupervised machine learning is a variant of AI that finds patterns and relationships in data without human guidance. Unsupervised machine learning" \
     "differs from supervised machine learning in that unsupervised machine learning does not seek to make predictions about features. Instead, it aims to unveil hidden patterns and relationships from unlabeled, unstructured data.")
@@ -287,6 +287,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
     st.markdown("-----------------------------------------------------------------")
     st.markdown("#### Step One: Select Features")
+    st.write("We begin by choosing ")
 
     numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
 
