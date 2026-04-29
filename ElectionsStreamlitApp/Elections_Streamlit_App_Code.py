@@ -1,10 +1,13 @@
 import streamlit as st
+import os
 #here we import streamlit and give our application a title
 st.title("Congressional Districts in the 2022 Election")
 
+st.markdown("-----------------------------------------------------------------")
+
 #here we have a descirption of the basic functions of our app as well as of some important information. 
 st.write("Welcome to my first Streamlit app! As a political science major,"
-"I believe there is a lot to be learned from studying election results. This "
+" I believe there is a lot to be learned from studying election results. This "
 "page was designed to let you interact with this data from FiveThirtyEight and explore"
 " trends in American elections. You will be able to filter through data about American congressional districts" 
 "in the lead up to the 2022 elections below. You will be able to explore how many "
@@ -13,22 +16,28 @@ st.write("Welcome to my first Streamlit app! As a political science major,"
 "means an estimate that the district has a more Democratic partisanship while a negative value indicates" 
 "a more Republican congressional district.")
 
+st.markdown("-----------------------------------------------------------------")
+
 #we will need pandas and seaborn. If these are not installed, use conda to do so. 
 import pandas as pd
-
 
 import seaborn as sns
 
 #here we show off our csv file
-st.subheader("Exploring Our Dataset")
+st.subheader("Data Set Preview")
+
+st.markdown("-----------------------------------------------------------------")
 
 # Loard the CSV file
-df = pd.read_csv("urbanization-index-2022.csv")
-
-
-st.write("Here's our data!")
+df = pd.read_csv("ElectionsStreamlitApp/data/urbanization-index-2022.csv")
+st.write("Here is a preview of our data set!")
 st.dataframe(df)
 
+st.markdown("-----------------------------------------------------------------")
+
+st.subheader("Adjust Filters")
+
+st.markdown("-----------------------------------------------------------------")
 
 #this is out first filter: we filter by 'grouping' or the way that FiveThirtyEight characterizes the district based on how urban, suburban, or rural it is. 
 #note that we made this a dropdown menu
@@ -36,6 +45,7 @@ st.write("Use this menu to look at individual distirct types based on population
 grouping = st.selectbox("Select a district type", df["grouping"].unique(), index = None)
 filtered_df = df[df["grouping"] == grouping]
 
+st.markdown("-----------------------------------------------------------------")
 
 #Here, we create a slider that lets us filter by partisanship. We first need to establish variables for the 
 #minimum and maximum value. Then, we activate the function.
@@ -49,6 +59,11 @@ pvi_range = st.slider(
    value=(min_pvi, max_pvi)
 )
 
+st.markdown("-----------------------------------------------------------------")
+
+st.subheader("Observe Results")
+
+st.markdown("-----------------------------------------------------------------")
 
 #we apply both filters. In other words, this allows us to filter congressional districts for our variables. 
 filtered_df = df[
@@ -57,19 +72,15 @@ filtered_df = df[
    (df["pvi_22"] <= pvi_range[1])
 ]
 
-st.write(f"Districts in the {grouping} group with PVI between {pvi_range[0]} and {pvi_range[1]}:")
+st.markdown(f"#### Districts in the {grouping} group with PVI between {pvi_range[0]} and {pvi_range[1]}:")
 st.dataframe(filtered_df)
 
-
-import streamlit as st
 import matplotlib.pyplot as plt
-
 
 #here, we create an interactive bar plot that sums up the number of congressional districts from each filtration category in each state. 
 #note the use of the "state.counts function."
-st.subheader(f"Number of selected districts per state")
+st.markdown("#### Number of selected districts per state")
 state_counts = filtered_df['state'].value_counts().sort_values(ascending=False)
-
 
 plt.figure(figsize=(10,5))
 sns.barplot(x=state_counts.index, y=state_counts.values, palette="viridis")
@@ -81,6 +92,13 @@ st.pyplot(plt)
 
 #this chart gives a nice summary of one of the trends you may notice -- urban distrcits tend to be more Democratic
 #and are more likely to be located in Democratic states and vice versa. 
+
+st.markdown("-----------------------------------------------------------------")
+
+st.subheader("General Overview")
+
+st.markdown("-----------------------------------------------------------------")
+
 st.write("As you may have noticed, more rural and Republican districts are in so-called red states and more "
 "Democratic and urban distircts are in so-called blue states. It turns out that rural areas tend to lean Republican "
 "and urban areas tend to lean Democratic. On the other hand, you may also find some exceptions to this. Try looking "

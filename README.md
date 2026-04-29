@@ -2,41 +2,39 @@
 
 ## Overview
 
-Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. I invite you to explore the descriptions of my projects as well as to directly interact with them. 
+Welcome! This repository contains several projects that I have been working on that exhibit my skills in Python, Streamlit, and the broader world of coding. You will also get a sample of my skills in app development and organization. I invite you to explore the descriptions of my projects as well as to directly interact with them. The Machine Learning Streamlit App and the Elections Analysis App illustrate specifically my skills in python and app devleopment while the Tidy Data Jupyter Notebook illustrates my skills in data cleaning, Python, and using Jupyter notebooks.
 
 #### Table of Contents
 
-Machine Learning Streamlit App 
+1. Machine Learning Streamlit App 
 
-Elections Analysis Streamlit App 
+2. Elections Analysis Streamlit App 
 
-Data Cleaning Jupyter Notebook 
+3. Tidy Data Jupyter Notebook
 
 ________________________________________________________________________________________________________________________________________________
 
 
 ## Machine Learning Streamlit App
 
-### LINK to Streamlit App:
-### LINK to Github folder with project code, information, and data:
+### LINK to Streamlit App: https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/
+### LINK to project folder with app code: https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/MLStreamlitApp
+### Folder with project code, information, and data is also above and called "MLStreamlitApp"
 
-#### Project Overview
+
+### Project Overview
 
 In this project, I created an app capable of accepting an input of data from a user and using that data to illustrate the process of machine learning. The app allows users to choose a type of machine learning (linear regression, decision tree, or K-Nearest Neighbor) and tune hyperparameters based off that choice. Afterwards, the users can evaluate various metrics of model performance, including ROC curves, accuracy, precision, and others. The visualization below depicts a decision tree from the model that is outputted after the user uploads data and performs custom hyperparameter tuning. 
 
-The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters, tuning, and features can impact the performance metrics of the model. In this way, it will also be a learning experience about the nuances of machine learning. 
+The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters, tuning decisions, and features can impact the performance metrics of the model. In this way, it will also be a learning experience about the nuances of machine learning. 
+
+The  app is written in and operates through Python coding that I developed. It is an example of my Python skills. The app is also an illustration of my skills in Streamlit app development and execution. The app highlights my interest in visual layout, graphic design, and creating an engaging user experience. Most importantly, the application illustrates my love for teaching by enabling user exploration of new data analysis models and skills. 
 
 Picture: A sample decision tree produced and visualized by the app from running sample data embedded in the app: 
 
 <img width="783" height="394" alt="Screen Shot 2026-04-07 at 8 28 35 PM" src="https://github.com/user-attachments/assets/a7355982-b764-4ccf-a19f-3dddffe66c2e" />
 
-#### How to Load the App via Visual Studio Code
 
-In order to run the app yourself, open up the MLStreamlitApp folder in visual studio code. You can do that by clicking on the green 'code' button on the repository main page and copy and pasting the URL. After that, go to VSCode and open the Command Palette (accessible via Ctrl + Shift + P (Windows/Linux) or Cmd + Shift + P (Mac)) then type Git: Clone. Press enter. Paste the URL and hit enter. Decide where on your computer you want to save the folder and then open the folder. 
-
-Alternatively, you can simply follow these steps: create a new folder in VSCode with the same title as the folder on this page. Then create a folder inside that folder called data. Add the three csv files in the data folder here into the data folder in your own VSCode. Then, copy and paste the code from Machine_Learning_Streamlit_App_Code.py into a seperate file in your folder (make sure the new file is outside your data folder). In this way, you can recreate the folder in VSCode. You just need to have the data files (in a folder called 'data') and the Machine_Learning_Streamlit_App_Code.py files open. 
-
-Once you have everything open in VSCode, go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py" into the interface and hit enter (so if you don't change the name, you would type "streamlit run Machine_Learning_Streamlit_App_Code.py"). It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on. 
 ________________________________________________________________________________________________________________________________________________
 
 
@@ -44,15 +42,11 @@ ________________________________________________________________________________
 
 ### LINK: to Streamlit App: http://192.168.0.208:8501/
 
-### LINK to Github folder with project code, information, and data:
+### LINK to Github folder with project code, information, and data: https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/ElectionsStreamlitApp
 
-#### Project Overview
+### Project Overview
 
-This app is designed to give users the opporunity to explore data about American elections compiled by the website FiveThirtyEight. Users can filter congressional districts for various attributes and learn about their geographic distribution throughout the country, their partisanship, and their urbanization. Users can use this information to make insights about contempotary American politics. 
-
-#### How to Load the App via Visual Studio Code
-
-In order to run the app yourself, simply open up a python script in visual studio code. Paste the code in the "main.py" file into a new file. Go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py into the interface and hit enter. It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on. You will also want to take the data from the data folder and load it into Visual Studio. The raw data and CSV data is provided in the data folder. There is also a copy in the basic_streamlit_app1 folder outside the data folder. 
+This app is designed to give users the opporunity to explore data about American elections compiled by the website FiveThirtyEight. Users can filter congressional districts for various attributes and learn about their geographic distribution throughout the country, their partisanship, and their urbanization. Users can use this information to make insights about contempotary American politics. This app demonstrates my skills in python and app development. It is also a great resource for American politics students and those interested in the field. 
 
 Picture: A sample graphic generated by the app showing the number of congressional districts by state with a certain partisan voting index (PVI)
 
@@ -62,13 +56,11 @@ ________________________________________________________________________________
 
 ## Tidy Data Jupyter Notebook
 
-#### Project Overview
+### LINK to Github folder with project code, information, and data: https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/TidyDataProject
 
-This notebook highlights how to clean data. We take a dataset about olympic medalists that begins as quite messy and use a variety of functions to tidy it up. This makes it much easier to complete a variety of tasks with it. 
+### Project Overview
 
-#### How to Load the App via Visual Studio Code
-
-This can be accessed simply. Go into the Tidy Data Folder (accessible above) and click on the Tidy_Data_Notebook_Code file. After doing that, open the notebook in VSCode and explore. 
+This notebook highlights how to clean data. We take a dataset about olympic medalists that begins as quite messy and use a variety of functions to tidy it up. This makes it much easier to complete a variety of tasks with it, including producing visualizations. This application demonstrates my skills with data tidying, data organization, python, Jupyer notebooks, and data analysis. The application will also serve as a helpful guide for those interested in learning more about how python can be employed to tidy data. 
 
 Picture: Below is a graph showing the frequency of male and female participation across sports at the Olympics
 
