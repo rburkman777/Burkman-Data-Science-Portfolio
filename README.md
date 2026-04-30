@@ -26,9 +26,8 @@ ________________________________________________________________________________
 #### * The app allows for an interactive user experience in which users can learn about various types of unsupervised machine learning and explore how changing parameters affects model performance
 #### * The app demonstrates my committment to making access to machine learning accessbily, smooth, and user-friendly. It also complements the portfolio's focus on Python coding, deploying polished visual designs, and Streamlit use.  
 
-Picture: A plot of PCA projection of the two principal components with the largest explanatory variance 
 <img width="705" height="556" alt="Screen Shot 2026-04-29 at 9 20 17 PM" src="https://github.com/user-attachments/assets/f93745ed-9886-4616-b0e2-ea79df3aa5aa" />
-Machine Learning Streamlit App
+Picture: A plot of PCA projection of the two principal components with the largest explanatory variance 
 
 
 
