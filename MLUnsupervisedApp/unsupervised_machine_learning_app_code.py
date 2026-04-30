@@ -282,12 +282,12 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.write(
         "PCA is an unsupervised learning technique used to reduce the number of features "
         "while preserving as much variance as possible. It helps visualize high-dimensional data "
-        "and understand which features matter most."
+        "and understand which features matter most. Follow the steps below and click the 'Run PCA' button at the end to activate the model."
     )
 
     st.markdown("-----------------------------------------------------------------")
     st.markdown("#### Step One: Select Features")
-    st.write("We begin by choosing ")
+    st.write("We begin by choosing our features. These are the features of your dataset that the model will perform on. For PCA, you must choose at least two features. ")
 
     numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
 
@@ -301,12 +301,13 @@ elif model_type == "PCA (Dimensionality Reduction)":
         st.stop()
 
     X = df[features]
+    st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
     # Step 2: Scaling
     # -------------------------
     st.markdown("#### Step Two: Scale the Data")
-
+    st.write("Note: We highly recommend that you scale the data for PCA")
     from sklearn.preprocessing import StandardScaler
 
     scale_option = st.radio("Scale data before PCA?", ["Yes", "No"])
@@ -316,6 +317,11 @@ elif model_type == "PCA (Dimensionality Reduction)":
         X_scaled = scaler.fit_transform(X)
     else:
         X_scaled = X
+    with st.expander("CLICK HERE to learn more about scaling the data"):
+        st.write("Scaling the data is the process of transforming the features into similar scales without changing the shape of the data. It is highly recommended that the data be scaled for PCA since it is sensitive to variable scales.")
+
+
+    st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
     # Step 3: Choose Components
@@ -323,8 +329,13 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("#### Step Three: Select Number of Components")
 
     n_components = st.slider("Number of Principal Components", 2, min(10, len(features)), 2)
+    with st.expander("CLICK HERE to learn more about the components"):
+        st.write("The components are new linear combinations of the data ranked by importance. We can imagine them like artificial axes that rotate and project 'high-dimensional' data (data with a lot of features) into a lower dimensional space. There is a tradeoff between having simplfying the data through dimentionality reduction "
+        "and retaining greater information about the data. A higher number of components relative to the number of initial features prioiritzes information retention and accuracy while a lower number prioritizes simplicity.")
+
 
     from sklearn.decomposition import PCA
+    st.markdown("-----------------------------------------------------------------")
 
     if st.button("Run PCA"):
         pca = PCA(n_components=n_components)
@@ -336,6 +347,10 @@ elif model_type == "PCA (Dimensionality Reduction)":
         # Explained Variance
         # -------------------------
         st.markdown("### 📊 Explained Variance")
+        with st.expander("CLICK HERE to learn more about explained variance"):
+            st.write("Explained variance is a measurement of how much variance from the dataset each principal component perserves. A larger pricipial component means that more information was perserved. Each principal component has a certain explained variance, as one can see below. " \
+            "We generally want the cumulative variance' (the sums of the principal variants), to be larger (closer to 1) because this means more information was perserved.")
+
 
         explained = pca.explained_variance_ratio_
         cumulative = explained.cumsum()
@@ -344,6 +359,8 @@ elif model_type == "PCA (Dimensionality Reduction)":
             st.write(f"PC{i+1}: {var:.4f}")
 
         st.write(f"**Cumulative Variance:** {cumulative[-1]:.4f}")
+
+        st.markdown("-----------------------------------------------------------------")
 
         # -------------------------
         # Scatter Plot (2D only)
@@ -361,6 +378,12 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
             st.pyplot(fig)
 
+            with st.expander("CLICK HERE to learn more about this graphic"):
+                st.write("The above graph plots our principal components with the higest explained variances. The aim of this graph is to use these components to observe relationships in the data easily that we could not otherwise easily see. What you are looking at is the data " \
+                "simplified onto a two-dimensional axis.")
+
+        st.markdown("-----------------------------------------------------------------")
+
         # -------------------------
         # Loadings Plot
         # -------------------------
@@ -374,12 +397,39 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         st.dataframe(loadings_df.style.format("{:.3f}"))
 
-        # Optional: Bar plot for PC1
+        # -------------------------
+        # Loadings Plot
+        # -------------------------
+        st.markdown("### 📌 Feature Contributions (Loadings)")
+
+        loadings_df = pd.DataFrame(
+            pca.components_,
+            columns=features,
+            index=[f'PC{i+1}' for i in range(n_components)]
+        )
+
+        st.dataframe(loadings_df.style.format("{:.3f}"))
+
+        # NEW: Select which principal component to display
+        selected_pc = st.selectbox(
+            "Select Principal Component to visualize",
+            loadings_df.index
+        )
+
+        # Updated plot based on selection
         fig2, ax2 = plt.subplots(figsize=(8, 5))
-        loadings_df.loc['PC1'].sort_values().plot(kind='barh', ax=ax2)
-        ax2.set_title("PC1 Loadings")
+
+        loadings_df.loc[selected_pc].sort_values().plot(
+            kind='barh',
+            ax=ax2
+        )
+
+        ax2.set_title(f"{selected_pc} Loadings")
+        ax2.set_xlabel("Contribution")
+
         st.pyplot(fig2)
 
+        st.markdown("-----------------------------------------------------------------")
         # -------------------------
         # Scree Plot
         # -------------------------
