@@ -21,7 +21,7 @@ ________________________________________________________________________________
 
 ### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit  | &nbsp;  🎨🖌️ App design
 
-### **Project Overview**
+### <u>Project Overview</u>
 #### * The app lets users learn about and interact with three distinct types of unsupervised machine learning: k-means clustering, hierarchical clustering, principal component analysis
 #### * The app allows for an interactive user experience in which users can learn about various types of unsupervised machine learning and explore how changing parameters affects model performance
 #### * The app demonstrates my committment to making access to machine learning accessbily, smooth, and user-friendly. It also complements the portfolio's focus on Python coding, deploying polished visual designs, and Streamlit use.  
