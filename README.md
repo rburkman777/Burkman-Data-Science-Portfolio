@@ -14,6 +14,28 @@ Welcome! This repository contains several projects that I have been working on t
 
 ________________________________________________________________________________________________________________________________________________
 
+## Unsupervised Machine Learning App
+
+### Link to Streamlit App:
+### Link to Unsupervised Machine Learning Folder and materials:
+
+### Skills exhibited: 
+#### * 📱 App development 
+#### * 🐍 Python
+
+### Project Overview
+#### * The app lets users learn about and interact with three distinct types of unsupervised machine learning: k-means clustering, hierarchical clustering, principal component analysis
+#### * 
+
+Picture: A plot of PCA projection of the two principal components with the largest explanatory variance 
+<img width="705" height="556" alt="Screen Shot 2026-04-29 at 9 20 17 PM" src="https://github.com/user-attachments/assets/f93745ed-9886-4616-b0e2-ea79df3aa5aa" />
+Machine Learning Streamlit App
+
+
+
+
+
+
 
 ## Machine Learning Streamlit App
 
