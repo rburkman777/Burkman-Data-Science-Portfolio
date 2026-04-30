@@ -140,136 +140,168 @@ elif model_type == "K-Nearest Neighbors (KNN)" and data_option == "Built-in Data
 
 
 # =============================
-# 📈 LINEAR REGRESSION
+# 🌳 HIERARCHICAL CLUSTERING
 # =============================
 
-# if the model type is linear regression, the model follows this code
-
-if model_type == "Linear Regression":
+elif model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
-    st.header("📈 Linear Regression")
-    st.write("Linear regressions make predictions about features by writing equations based on how each predicting feature impacts the target feature. Select your target feature and predicting features below as well as decide whether to scale the model. After that, you will get some evaluation metrics on your model's performance.")
+    st.header("🌳 Hierarchical Clustering")
 
-    # -------------------------
-    # Select target + features
-    # -------------------------
-    # this is the code for the user to select which features they want as the target feature and which features they want as the predicting features
-    y_column = st.selectbox("Select target (y) - this is the feature we are making a prediction about", columns) # we use another select box
-    # the mutliselect function lets users employ multiple feautres
-    x_columns = st.multiselect(
-        "Select feature(s) (X) - these are the feature(s) we are using to make the prediction",
-        [col for col in columns if col != y_column] # this removes the feature from the x feature menu that was selected as the y feature
+    st.write(
+        "Hierarchical clustering is an unsupervised learning technique that builds a tree-like structure "
+        "(called a dendrogram) to group similar data points together. You can visually explore how clusters "
+        "form and choose the number of clusters (k)."
     )
 
-    # this stops the execution if the user does not select at least one feature
-    if not x_columns:
-        st.warning("Please select at least one feature.")
+    st.markdown("-----------------------------------------------------------------")
+
+    # -------------------------
+    # Step 1: Select Features
+    # -------------------------
+    st.markdown("#### Step One: Select Features")
+
+    numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
+
+    features = st.multiselect(
+        "Select feature columns (numeric only)",
+        numeric_columns
+    )
+
+    if len(features) < 2:
+        st.warning("Please select at least 2 features.")
         st.stop()
 
-    # creates dataframe series for x and y 
-    X = df[x_columns]
-    y = df[y_column]
+    X = df[features]
 
-    # we import some functions to help us measure the quality of our prediction
-    from sklearn.metrics import mean_squared_error, r2_score
+    st.markdown("-----------------------------------------------------------------")
+
+    # -------------------------
+    # Step 2: Scale Data
+    # -------------------------
+    st.markdown("#### Step Two: Scale the Data")
+
     from sklearn.preprocessing import StandardScaler
-    import numpy as np
 
-    # -------------------------
-    # Scaling toggle
-    # -------------------------
+    scale_option = st.radio("Scale data before clustering?", ["Yes", "No"])
 
-    # this function helps us set up the ability to scale or unscale the model
-    scaling_option = st.radio(
-        "Choose data scaling option:",
-        ["Unscaled", "Scaled"]
-    )
-    with st.expander("CLICK HERE to learn more about scaling the data"):
-        st.write("Scaling the data is the process of transforming the features into similar scales without changing the shape of the data. This can help to contextualize the coefficients of the features (which measure how much each of the features impact our target variable). It can protect against a variable with a larger magnitude from dominating the model. If you hit the 'scaled' button, the data will be scaled. If you hit the 'unscaled' button, it will not be scaled and left as it is.")
-
-    # -------------------------
-    # Train/Test Split FIRST
-    # -------------------------
-    # let's split our data into testing and training data
-    X_train_raw, X_test_raw, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-
-    # Scaling (if selected)
-    # next we use if and else statements to set up the scaling feature
-    if scaling_option == "Scaled":
+    if scale_option == "Yes":
         scaler = StandardScaler()
-        X_train = scaler.fit_transform(X_train_raw) 
-        X_test = scaler.transform(X_test_raw)
+        X_scaled = scaler.fit_transform(X)
     else:
-        X_train = X_train_raw
-        X_test = X_test_raw
-    
-    # a button the user can click to train the model
-    if st.button("Train Linear Regression Model"):
-        with st.expander("CLICK HERE to learn more what we just did here"):
-            st.write("This model works by splitting the data into 80% training data to create the regression formula (how the features predict the target feature). It then tests the regression it created on 20% of the data to evaluate performance.")
+        X_scaled = X
+
+    with st.expander("CLICK HERE to learn more about scaling"):
+        st.write(
+            "Scaling ensures that all features contribute equally to distance calculations. "
+            "This is especially important for clustering methods like Ward linkage."
+        )
+
+    st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
-    # Model Training 
+    # Step 3: Dendrogram
     # -------------------------
-    # here we set up the regression using the training data
-        lin_reg = LinearRegression()
-        lin_reg.fit(X_train, y_train)
+    st.markdown("#### Step Three: View Dendrogram")
+
+    from scipy.cluster.hierarchy import linkage, dendrogram
+
+    Z = linkage(X_scaled, method="ward")
+
+    fig, ax = plt.subplots(figsize=(12, 5))
+    dendrogram(Z, ax=ax)
+    ax.set_title("Hierarchical Clustering Dendrogram")
+    ax.set_xlabel("Data Points")
+    ax.set_ylabel("Distance")
+
+    st.pyplot(fig)
+
+    with st.expander("CLICK HERE to learn more about the dendrogram"):
+        st.write(
+            "The dendrogram shows how data points are merged into clusters. "
+            "The vertical height represents distance between clusters. "
+            "You can use this to help decide the number of clusters (k)."
+        )
+
+    st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
-    # Predictions
+    # Step 4: Choose k
     # -------------------------
-    # we use the regression we set up and test it on our testing data (20% of our data)
-        y_pred = lin_reg.predict(X_test)
+    st.markdown("#### Step Four: Select Number of Clusters")
+
+    from sklearn.cluster import AgglomerativeClustering
+
+    k = st.slider("Number of Clusters (k)", 2, 10, 4)
+
+    st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
-    # Metrics
+    # Run Clustering
     # -------------------------
-    # these prepare useful metrics to evaluate our model
-        r2 = r2_score(y_test, y_pred)
-        mse = mean_squared_error(y_test, y_pred)
-        rmse = np.sqrt(mse)
+    if st.button("Run Hierarchical Clustering"):
 
-        st.success(f"✅ Model trained ({scaling_option})")
-        # here we write out said metrics for our users to see
+        model = AgglomerativeClustering(n_clusters=k, linkage="ward")
+        cluster_labels = model.fit_predict(X_scaled)
+
+        st.success("✅ Clustering completed!")
+
+        # -------------------------
+        # Results Table
+        # -------------------------
+        results = df.copy()
+        results["Cluster"] = cluster_labels
+
+        st.markdown("### 📊 Cluster Assignments")
+        st.dataframe(results.head())
+
+        st.markdown("### Cluster Sizes")
+        st.write(results["Cluster"].value_counts())
+
         st.markdown("-----------------------------------------------------------------")
-        st.write("### 📊 Model Performance")
-        st.write(f"R² Score: {r2:.4f}")
-        st.write(f"Mean Squared Error (MSE): {mse:.4f}")
-        st.write(f"Root Mean Squared Error (RMSE): {rmse:.4f}")
-        with st.expander("CLICK HERE to learn more about these metrics"):
-            st.write("* R^2: This is a measure of the overall predictive power of your model. It is how much of the variance in the target variable can be explained the predicting varaibles. The closer to 1 the better. A score of 0 indicates no relationship. Very generally (although this varies depending on what you're measuring) 0.25 indicates a weak relationship and 0.75 indicates a substantial relationship." \
-            "\n\n * Mean Squared Error (MSE): measures the average squared difference between estimated values and the actual value, acting as a key indicator of predictive model accuracy. It is calculated by averaging the squared residuals (errors), which penalizes large errors or outliers heavily \n\n" \
-            "* Root Mean Squared Error: used to measure the average magnitude of prediction errors in models, calculating the square root of the average squared differences between predicted and observed values. It indicates model performance, with lower values signifying higher accuracy (consider the scale of your data when thinking about that)")
 
-    # -------------------------
-    # Coefficients AFTER
-    # -------------------------
-        # we print out more elements of the model with the following code, incluing the coefficients and the intercept:
+        # -------------------------
+        # PCA Visualization
+        # -------------------------
+        st.markdown("### 📉 PCA Visualization (2D)")
+
+        from sklearn.decomposition import PCA
+
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+
+        fig2, ax2 = plt.subplots()
+        scatter = ax2.scatter(
+            X_pca[:, 0],
+            X_pca[:, 1],
+            c=cluster_labels,
+            cmap='viridis',
+            edgecolor='k',
+            alpha=0.7
+        )
+
+        ax2.set_xlabel("Principal Component 1")
+        ax2.set_ylabel("Principal Component 2")
+        ax2.set_title("Cluster Visualization (PCA)")
+
+        st.pyplot(fig2)
+
         st.markdown("-----------------------------------------------------------------")
-        coef_df = pd.DataFrame({
-            "Feature": x_columns,
-            "Coefficient": lin_reg.coef_
-    })
-        st.write("### Model Coefficients")
-        st.dataframe(coef_df)
 
-        st.write(f"Intercept: {lin_reg.intercept_:.4f}")
+        # -------------------------
+        # Silhouette Score
+        # -------------------------
+        from sklearn.metrics import silhouette_score
 
-        with st.expander("CLICK HERE to learn more about coefficients and the y-intercept"):
-            st.write("The coefficient(s) measure how much a unit change in the predictor feature changes the value of the predicted target. NOTE: Explore how changing whether the data is scaled or unscaled affects the coefficients. \n\n The y-intercept is the point on the line/regression at which the predicting feature(s) are equal to zero.")
+        score = silhouette_score(X_scaled, cluster_labels)
 
-# -------------------------
-# Explanation
-# -------------------------
-# added this to help users with experimentation
-        st.info(
-    "Switch between scaled and unscaled data to see how coefficients change.\n\n"
-    "Scaling standardizes features (mean = 0, std = 1), which makes coefficients comparable.\n\n"
-    "Model performance metrics (R², MSE, RMSE) usually stay similar since we are only scaling the predictors and not the target."
-)
-        
+        st.markdown("### 📊 Silhouette Score")
+        st.write(f"Score: {score:.4f}")
+
+        with st.expander("CLICK HERE to learn more about silhouette score"):
+            st.write(
+                "The silhouette score measures how well-separated your clusters are. "
+                "Values closer to 1 indicate well-defined clusters, while values near 0 suggest overlap."
+            )
 ################
 # PCA
 ################
@@ -458,7 +490,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         st.pyplot(fig4)
         with st.expander("CLICK HERE to learn more about this plot"):
-            st.write("The scree plot shows you how much explained variance you're gaining with each principal component. If you are not gainging a lot at a certain point, you may want to simplify your model. You might want to look for the 'eblow' in the plot -- a point at which additional components offer limited model improvement.")
+            st.write("Theis plot turns our above scree plot into a bar graph and portrays how much each principal component increases model variance.")
 
 # =============================
 # 🤝 K-NEAREST NEIGHBORS (KNN)
@@ -648,3 +680,112 @@ elif model_type == "K-Nearest Neighbors (KNN)":
             with st.expander("CLICK HERE to learn more this graph"):
                 st.write("You might have noticed from experimenting above that accuracy and k are often related. The vertical line shows oyur current k value. Feel free to explore how " \
                 "adjusting some of the other model parameters impacts this relationship. You may notice that changing the scale of the data has an impact on this relationship -- go explore!")
+
+
+
+
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(features_df)
+
+
+
+from scipy.cluster.hierarchy import linkage, dendrogram
+
+# Compute the linkage matrix
+Z = linkage(X_scaled, method="ward")
+
+plt.figure(figsize=(20, 7))
+dendrogram(Z,
+           labels=country_names.tolist())
+plt.title("Hierarchical Clustering Dendrogram (Countries)")
+plt.xlabel("Country")
+plt.ylabel("Distance")
+plt.xticks(rotation=90, fontsize=6)
+plt.show()
+
+
+from sklearn.cluster import AgglomerativeClustering
+
+# Select k and assign cluster labels
+k = 4
+agg = AgglomerativeClustering(n_clusters=k, linkage="ward")
+cluster_labels = agg.fit_predict(X_scaled)
+
+# Create a results dataframe
+results = pd.DataFrame({
+    "country": country_names,
+    "country_code": country_codes,
+    "Cluster": cluster_labels
+})
+
+print(results.head())
+print("\nCluster sizes:")
+print(results["Cluster"].value_counts())
+
+from sklearn.decomposition import PCA
+
+# Reduce the dimensions for visualization (2D scatter plot)
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+
+plt.figure(figsize=(10, 7))
+scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=cluster_labels, cmap='viridis', s=60, edgecolor='k', alpha=0.7)
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.title('Agglomerative Clustering on Democracy Data (via PCA)')
+plt.legend(*scatter.legend_elements(), title="Clusters")
+plt.grid(True)
+plt.show()
+
+
+import plotly.express as px
+
+# Define a discrete color mapping for the clusters
+color_map = {0: "blue", 1: "orange", 2: "green", 3: "red"}
+
+# Create the choropleth map using country_code (ISO alpha-3)
+fig = px.choropleth(
+    results,
+    locations='country_code',
+    locationmode='ISO-3',
+    title='Country Clusters on World Map (Democracy & Dictatorship Features)',
+    color='Cluster',
+    color_discrete_map=color_map,
+    hover_name='country'
+)
+
+fig.update_geos(fitbounds="locations", visible=True)
+fig.update_layout(
+    legend_title_text='Cluster',
+    legend_title_side='top'
+)
+
+fig.show()
+
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.metrics import silhouette_score
+
+# Range of candidate cluster counts
+k_range = range(2, 11)
+sil_scores = []
+
+for k in k_range:
+    labels = AgglomerativeClustering(n_clusters=k, linkage="ward").fit_predict(X_scaled)
+    score = silhouette_score(X_scaled, labels)
+    sil_scores.append(score)
+
+# Plot the curve
+plt.figure(figsize=(7, 4))
+plt.plot(list(k_range), sil_scores, marker="o")
+plt.xticks(list(k_range))
+plt.xlabel("Number of Clusters (k)")
+plt.ylabel("Average Silhouette Score")
+plt.title("Silhouette Analysis for Agglomerative (Ward) Clustering")
+plt.grid(True, alpha=0.3)
+plt.show()
+
+# Print best k
+best_k = list(k_range)[np.argmax(sil_scores)]
+print(f"Best k by silhouette: {best_k}  (score={max(sil_scores):.3f})")
