@@ -85,6 +85,9 @@ else:
     # we again use if and elif statements to filter for the different model types
     if model_type == "PCA (Dimensionality Reduction)":
         dataset_path = os.path.join(BASE_DIR, "data", "WineQT.csv") # set up path to sample dataset for decision tree
+    elif model_type == "Hierarchical Clustering":
+        dataset_path = os.path.join(BASE_DIR, "data", "USArrests.csv") # set up path to sample dataset for decision tree
+
 
     if not os.path.exists(dataset_path):
         st.error(f"Dataset '{dataset_path}' not found.") # sets up error message if there is an issue
@@ -246,6 +249,26 @@ elif model_type == "Hierarchical Clustering":
         st.success("✅ Clustering completed!")
 
         # -------------------------
+        # PCA Visualization
+        # -------------------------
+        from sklearn.decomposition import PCA
+
+        pca = PCA(n_components=2)
+        X_pca = pca.fit_transform(X_scaled)
+
+        st.markdown("### 📉 PCA Visualization (2D)")
+
+        fig2, ax2 = plt.subplots()
+        scatter = ax2.scatter(
+            X_pca[:, 0],
+            X_pca[:, 1],
+            c=cluster_labels,
+            cmap='viridis',
+            edgecolor='k',
+            alpha=0.7
+        )
+
+        # -------------------------
         # Results Table
         # -------------------------
         results = df.copy()
@@ -259,25 +282,6 @@ elif model_type == "Hierarchical Clustering":
 
         st.markdown("-----------------------------------------------------------------")
 
-        # -------------------------
-        # PCA Visualization
-        # -------------------------
-        st.markdown("### 📉 PCA Visualization (2D)")
-
-        from sklearn.decomposition import PCA
-
-        pca = PCA(n_components=2)
-        X_pca = pca.fit_transform(X_scaled)
-
-        fig2, ax2 = plt.subplots()
-        scatter = ax2.scatter(
-            X_pca[:, 0],
-            X_pca[:, 1],
-            c=cluster_labels,
-            cmap='viridis',
-            edgecolor='k',
-            alpha=0.7
-        )
 
         ax2.set_xlabel("Principal Component 1")
         ax2.set_ylabel("Principal Component 2")
