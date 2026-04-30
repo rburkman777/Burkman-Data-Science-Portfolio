@@ -30,7 +30,7 @@ st.markdown("-----------------------------------------------------------------")
 # we want an interactive feature that allows for selection of different models to explore, so we use a selectbox
 model_type = st.selectbox(
     "👉 First, choose a model",
-    ["Select...", "Linear Regression", "PCA (Dimensionality Reduction)", "K-Nearest Neighbors (KNN)"]
+    ["Select...", "Hierarchical Clustering", "PCA (Dimensionality Reduction)", "K-Nearest Neighbors (KNN)"]
 )
 
 
