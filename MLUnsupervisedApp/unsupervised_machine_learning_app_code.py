@@ -384,10 +384,12 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         st.markdown("-----------------------------------------------------------------")
 
-        # -------------------------
-        # Loadings Plot
-        # -------------------------
-        st.markdown("### 📌 Feature Contributions (Loadings)")
+        st.markdown("### 📌 Feature Contributions (Top 2 Principal Components)")
+        with st.expander("CLICK HERE to learn more about feature contributions"):
+            st.write("Feature contributions are measurements of how each input model impacts the model and principal components. A positive score "
+            " means that  A positive loading means that higher values of a given feature push a sample's score up along that component's axis. A negative loading does the opposite. A graph of the impact of each feature on " \
+            "each principal component is also present for easier viewing. ")
+        st.space(size="small")
 
         loadings_df = pd.DataFrame(
             pca.components_,
@@ -396,38 +398,25 @@ elif model_type == "PCA (Dimensionality Reduction)":
         )
 
         st.dataframe(loadings_df.style.format("{:.3f}"))
+        st.space(size="small")
 
-        # -------------------------
-        # Loadings Plot
-        # -------------------------
-        st.markdown("### 📌 Feature Contributions (Loadings)")
+        # Only proceed if at least 2 components exist
+        if n_components >= 2:
+            fig2, ax2 = plt.subplots(figsize=(8, 5))
 
-        loadings_df = pd.DataFrame(
-            pca.components_,
-            columns=features,
-            index=[f'PC{i+1}' for i in range(n_components)]
-        )
-
-        st.dataframe(loadings_df.style.format("{:.3f}"))
-
-        # NEW: Select which principal component to display
-        selected_pc = st.selectbox(
-            "Select Principal Component to visualize",
-            loadings_df.index
-        )
-
-        # Updated plot based on selection
-        fig2, ax2 = plt.subplots(figsize=(8, 5))
-
-        loadings_df.loc[selected_pc].sort_values().plot(
+        # Select top 2 PCs and transpose for grouped bar chart
+        loadings_df.loc[['PC1', 'PC2']].T.plot(
             kind='barh',
             ax=ax2
         )
 
-        ax2.set_title(f"{selected_pc} Loadings")
-        ax2.set_xlabel("Contribution")
+        ax2.set_title("Feature Contributions: PC1 vs PC2")
+        ax2.set_xlabel("Loading Value")
+        ax2.set_ylabel("Feature")
+        ax2.legend(title="Principal Components")
 
         st.pyplot(fig2)
+
 
         st.markdown("-----------------------------------------------------------------")
         # -------------------------
@@ -444,20 +433,33 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         st.pyplot(fig3)
 
-        # -------------------------
-        # Explanation
-        # -------------------------
-        with st.expander("CLICK HERE to learn more about PCA"):
-            st.write(
-                "PCA transforms your original features into new variables (principal components).\n\n"
-                "* PC1 captures the most variance\n"
-                "* PC2 captures the second most, and so on\n\n"
-                "Loadings show how much each original feature contributes to each component.\n\n"
-                "Use PCA for:\n"
-                "- Dimensionality reduction\n"
-                "- Visualization\n"
-                "- Noise reduction"
-            )
+        with st.expander("CLICK HERE to learn more about the scree plot"):
+            st.write("The scree plot shows you how much explained variance you're gaining with each principal component. If you are not gainging a lot at a certain point, you may want to simplify your model. You might want to look for the 'eblow' in the plot -- a point at which additional components offer limited model improvement.")
+
+        st.markdown("### 📊 Variance Explained by Each Principal Component")
+
+        fig4, ax4 = plt.subplots(figsize=(8, 6))
+
+        components = range(1, len(explained) + 1)
+
+        ax4.bar(
+            components,
+            explained,
+            alpha=0.7,
+            color='teal'
+        )
+
+        ax4.set_xlabel('Principal Component')
+        ax4.set_ylabel('Variance Explained')
+        ax4.set_title('Variance Explained by Each Principal Component')
+
+        ax4.set_xticks(components)
+        ax4.grid(True, axis='y')
+
+        st.pyplot(fig4)
+        with st.expander("CLICK HERE to learn more about this plot"):
+            st.write("The scree plot shows you how much explained variance you're gaining with each principal component. If you are not gainging a lot at a certain point, you may want to simplify your model. You might want to look for the 'eblow' in the plot -- a point at which additional components offer limited model improvement.")
+
 # =============================
 # 🤝 K-NEAREST NEIGHBORS (KNN)
 # =============================
