@@ -249,12 +249,31 @@ elif model_type == "Hierarchical Clustering":
         st.success("✅ Clustering completed!")
 
         # -------------------------
+        # Silhouette Score
+        # -------------------------
+        from sklearn.metrics import silhouette_score
+
+        score = silhouette_score(X_scaled, cluster_labels)
+
+        st.markdown("### 📊 Silhouette Score")
+        st.markdown(f"## {score:.4f}")
+
+        with st.expander("CLICK HERE to learn more about silhouette score"):
+            st.write(
+                "The silhouette score measures how well-separated your clusters are. "
+                "Values closer to 1 indicate well-defined clusters, while values near 0 suggest overlap."
+            )
+
+        # -------------------------
         # PCA Visualization
         # -------------------------
         from sklearn.decomposition import PCA
 
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
+
+        st.markdown("-----------------------------------------------------------------")
+
 
         st.markdown("### 📉 PCA Visualization (2D)")
 
@@ -268,6 +287,12 @@ elif model_type == "Hierarchical Clustering":
             alpha=0.7
         )
 
+        ax2.set_xlabel("Principal Component 1")
+        ax2.set_ylabel("Principal Component 2")
+        ax2.set_title("Cluster Visualization (PCA)")
+
+        st.pyplot(fig2)
+
         # -------------------------
         # Results Table
         # -------------------------
@@ -275,37 +300,14 @@ elif model_type == "Hierarchical Clustering":
         results["Cluster"] = cluster_labels
 
         st.markdown("### 📊 Cluster Assignments")
-        st.dataframe(results.head())
-
+        st.dataframe(results, height=200, use_container_width=True)
         st.markdown("### Cluster Sizes")
         st.write(results["Cluster"].value_counts())
 
         st.markdown("-----------------------------------------------------------------")
 
 
-        ax2.set_xlabel("Principal Component 1")
-        ax2.set_ylabel("Principal Component 2")
-        ax2.set_title("Cluster Visualization (PCA)")
 
-        st.pyplot(fig2)
-
-        st.markdown("-----------------------------------------------------------------")
-
-        # -------------------------
-        # Silhouette Score
-        # -------------------------
-        from sklearn.metrics import silhouette_score
-
-        score = silhouette_score(X_scaled, cluster_labels)
-
-        st.markdown("### 📊 Silhouette Score")
-        st.write(f"Score: {score:.4f}")
-
-        with st.expander("CLICK HERE to learn more about silhouette score"):
-            st.write(
-                "The silhouette score measures how well-separated your clusters are. "
-                "Values closer to 1 indicate well-defined clusters, while values near 0 suggest overlap."
-            )
 ################
 # PCA
 ################
@@ -495,301 +497,3 @@ elif model_type == "PCA (Dimensionality Reduction)":
         st.pyplot(fig4)
         with st.expander("CLICK HERE to learn more about this plot"):
             st.write("Theis plot turns our above scree plot into a bar graph and portrays how much each principal component increases model variance.")
-
-# =============================
-# 🤝 K-NEAREST NEIGHBORS (KNN)
-# =============================
-
-# -------------------------
-# Intro information
-# -------------------------
-
-# we have another elif function for when the user chooses KNN 
-elif model_type == "K-Nearest Neighbors (KNN)":
-    st.space(size="small")
-    st.markdown("-----------------------------------------------------------------")
-    st.space(size="small")
-
-    st.header("🤝 K-Nearest Neighbors (KNN)") # creates our section header
-    st.space(size="small") # we use these to make space between parts of the app for looks purposes
-
-    st.write("You chose KNN! This model classifies points based on the majority class of their nearest 'neighbors.' In other" \
-    "words, we can imagine the model as sorting different groups together on a graph based on which data points are clustered near each other.")
-
-    st.markdown("-----------------------------------------------------------------")
-    st.markdown("#### Step One: Enter your target and predicting features below:")
-   
-    # we again use the selectbox function to allow the user to pick target and predicting variables
-    target = st.selectbox(
-        "Select Target Column (y) --> this should be your 'classes' or categorical data. For example, in the sample dataset, the diagnosis status (the 'outcome' variable) is the 'class' the model is measuring",
-        columns
-    )
-    # the multiselect function makes it so we can select more than one item
-    features = st.multiselect(
-        "Select Feature Columns (X) --> the features you want to use to predict the target variable",
-        [col for col in columns if col != target]
-    )
-
-    # -------------------------
-    # Set up and data splitting 
-    # -------------------------
-    
-    # we establish our dataframes and split our data below (using the same format as for the other models)
-    if target and features:
-        X = df[features]
-        y = df[target]
-
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42
-        )
-
-        # -------------------------
-        # Hyperparameters, tuning, and scaling 
-        # -------------------------
-        
-        st.space(size="medium")
-        st.markdown("#### Step Two: Tune your hyperparameters and prepare data below:")
-
-        k = st.slider("Number of Neighbors (k)", 1, 15, 5)
-        with st.expander("CLICK HERE to learn more about k"):
-            st.write("k is the number of neighbors that the model considers when making a prediction for a new data point. The algorithm identifies the k training samples closest to the target point and assigns the most frequent class label through majority vote.")
-
-        # we use a selectbox to set up our metric hyperparameter
-        st.space(size="small")
-
-        metric = st.selectbox("Distance Metric", ["euclidean", "manhattan"])
-        with st.expander("CLICK HERE to learn more about distance metric"):
-            st.write("This is how the model calculates distance between points. Euclidean is the most straight forward and simply calculates the distance between points. Manhattan distance calculates the distance in a 'grid-based' format (like calculating the distance of streets as they are positioned around buildings). Euclidiean is the most straight forward but some datasets might make more sense with manhattan.")
-        # standscaler can help us to scale this data
-        from sklearn.preprocessing import StandardScaler
-        st.space(size="small")
-
-        # we use the radio function to give the user the option to scale the data
-        scale_option = st.radio(
-            "Scale the data? (Recommended for KNN)",
-            ["Yes", "No"]
-        )
-        
-        # we again use the expander function to create a dropdown menu to give more information
-        with st.expander("CLICK HERE to learn more about scaling the data"):
-            st.write("This standardizes the scale of the features so that they all have a mean of 0 and a standard deviation of 1. Pay attention to how having unscaled data in a KNN model can be potentially disruptive.")
-
-        # we use if statements implement data scaling 
-        if scale_option == "Yes":
-            scaler = StandardScaler() # this is the feature from sklearn that does the rescaling
-            X_train = scaler.fit_transform(X_train) # we use it to fix the predictor scales
-            X_test = scaler.transform(X_test)
-
-        st.space(size="medium")
-        st.markdown("#### Step Three: Train your KNN model")
-
-        # -------------------------
-        # Model execution and evaluation
-        # -------------------------
-        
-        # this is the code that activates our model and allows it to classify the groups, including by incorporating our parameters
-        if st.button("Train KNN Model"):
-            model = KNeighborsClassifier(
-                n_neighbors=k,
-                metric=metric
-            )
-            with st.expander("CLICK HERE to learn more about what we are doing here"):
-                st.write("We train the model by splitting it up into 'training' data and 'testing' data. We do this "
-                "so that we have 80% training data and 20% testing data. We use the training data to help the model learn how to make predictions and the testing data to evaluate its performance.")
-
-            model.fit(X_train, y_train) # here is where the model learns from training data
-            y_pred = model.predict(X_test) # here is where the model predicts from that learning
-
-            st.success("✅ Model trained!")
-
-            st.markdown("## Quick Model Evaluation")
-
-            acc = accuracy_score(y_test, y_pred) # calculates our accuracy score
-            st.write(f"### 🎯 Model Accuracy: {acc:.2f}") # displays our accuracy score
-            with st.expander("CLICK HERE to learn more this accuracy"):
-                st.write("Model accuracy measures the proportion of features that the model correctly classifies.")
-
-            st.markdown("-----------------------------------------------------------------")
-            st.markdown("## Full Model Evaluation")
-            st.write("Below there are  different measurements of the model's performance:" \
-            "\n\n 1. Classification Report \n\n 2. Confusion Matrix \n\n 3. Accuracy vs k Graph")
-            st.space(size="small")
-            st.markdown("-----------------------------------------------------------------")
-            # Classification Report
-            report_dict = classification_report(y_test, y_pred, output_dict=True) # prepares our classification report
-            report_df = pd.DataFrame(report_dict).transpose() # fixes the format of the classification table
-
-            st.write("### 📄 1. Classification Report")
-            st.dataframe(report_df.style.format("{:.2f}")) # this displays the classification table with correct format
-            with st.expander("CLICK HERE to learn more about the classification report"):
-                st.write(
-        "The classification report gives us several useful metrics:\n\n"
-        "* Precision: The ratio of the correctly predicted class to the total predicted class. In other words, how well the model minimizes false positives for the class \n\n"
-        "* Recall: Recall is the ratio of correctly predicted class to all data in the actual class. In other words, it is how well the model minimuzes false negatives in the class \n\n"
-        "* F1-score: A balance between precision and recall that tries to capture how well the model performs on both counts by taking the harmonic mean of recall and precision\n\n"
-        "* Support: The number of actual occurrences of each class in the dataset \n\n"
-        "* 0 and 1 are the different classes in your model. Note that the precision and recall are for each class respectively \n\n"
-        "* Accuracy: The overall accuracy score for the classifier gives a general idea of the model's performance but can be misleading as it considers every correct prediction for all classes. That can inflate this value is there a huge amount of one class  \n\n"
-        "* Macro Average: This is the average of the values for each class. It can be helpful in identifying imbalances between classes \n\n"
-        "* Weighted Average: This is also an average value for both classes but it also takes it account the support"
-
-    )
-            st.markdown("-----------------------------------------------------------------")
-
-            # Confusion Matrix
-            st.markdown("### 🔢 2. Confusion Matrix")
-
-            cm = confusion_matrix(y_test, y_pred) # prepares our confusion matrix
-            fig, ax = plt.subplots() 
-            sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax) # sets up color scheme and annotations
-            ax.set_xlabel("Predicted") # x axis label
-            ax.set_ylabel("Actual") # y axis label
-            st.pyplot(fig) # plots our matrix
-            with st.expander("CLICK HERE to learn more the confusion matrix"):
-                st.write("The confusion matrix is a table that stores the number of false negatives, false positives, true positives, and true negatives. The tool has its columns that label whether a test is predicted to be positive or negative. In the rows it has the true value. So you can compare how the model predicted the variable in the columns with what actually happened in the rows. In each of the four quadrants, we then get our true positives, false positives, true negatives, and false negatives. Where the zeroes interact is the true negatives, where the 1s meet is the true positives, where the 0 is predicted and the 1 is actual is the false negative, and where the 1 is predicted and the 0 is actual is the false positives. We want to maximize true positives and negatives for best model performance."
-                "NOTE: If you have multiple classes, the same rules as above apply. True positives will still be where the prediction of the class and the actual class intercept, etc.")
-
-
-            # -------------------------
-            # Accuracy vs K Graph
-            # -------------------------
-            st.markdown("-----------------------------------------------------------------")
-            st.markdown("### 📊 3. Accuracy vs. Number of Neighbors (k)")
-
-            # Define a range of k values to explore (odd numbers only)
-            k_values = range(1, 20, 2)
-            accuracies = []
-
-            # Loop through different values of k (through the model)
-            for k_val in k_values:
-                knn_temp = KNeighborsClassifier(n_neighbors=k_val, metric=metric)
-                knn_temp.fit(X_train, y_train)
-                y_temp_pred = knn_temp.predict(X_test)
-                accuracies.append(accuracy_score(y_test, y_temp_pred))
-
-            # Plot accuracy vs. number of neighbors (k)
-            plt.figure(figsize=(8, 5))
-            plt.plot(k_values, accuracies, marker='o')
-            plt.title('Accuracy vs. Number of Neighbors (k)')
-            plt.xlabel('Number of Neighbors (k)')
-            plt.ylabel('Accuracy')
-            plt.xticks(list(k_values))
-
-            # Highlight selected k
-            plt.axvline(k, linestyle='--')
-
-            # Show in Streamlit
-            st.pyplot(plt)
-
-            with st.expander("CLICK HERE to learn more this graph"):
-                st.write("You might have noticed from experimenting above that accuracy and k are often related. The vertical line shows oyur current k value. Feel free to explore how " \
-                "adjusting some of the other model parameters impacts this relationship. You may notice that changing the scale of the data has an impact on this relationship -- go explore!")
-
-
-
-
-from sklearn.preprocessing import StandardScaler
-
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(features_df)
-
-
-
-from scipy.cluster.hierarchy import linkage, dendrogram
-
-# Compute the linkage matrix
-Z = linkage(X_scaled, method="ward")
-
-plt.figure(figsize=(20, 7))
-dendrogram(Z,
-           labels=country_names.tolist())
-plt.title("Hierarchical Clustering Dendrogram (Countries)")
-plt.xlabel("Country")
-plt.ylabel("Distance")
-plt.xticks(rotation=90, fontsize=6)
-plt.show()
-
-
-from sklearn.cluster import AgglomerativeClustering
-
-# Select k and assign cluster labels
-k = 4
-agg = AgglomerativeClustering(n_clusters=k, linkage="ward")
-cluster_labels = agg.fit_predict(X_scaled)
-
-# Create a results dataframe
-results = pd.DataFrame({
-    "country": country_names,
-    "country_code": country_codes,
-    "Cluster": cluster_labels
-})
-
-print(results.head())
-print("\nCluster sizes:")
-print(results["Cluster"].value_counts())
-
-from sklearn.decomposition import PCA
-
-# Reduce the dimensions for visualization (2D scatter plot)
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X_scaled)
-
-plt.figure(figsize=(10, 7))
-scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=cluster_labels, cmap='viridis', s=60, edgecolor='k', alpha=0.7)
-plt.xlabel('Principal Component 1')
-plt.ylabel('Principal Component 2')
-plt.title('Agglomerative Clustering on Democracy Data (via PCA)')
-plt.legend(*scatter.legend_elements(), title="Clusters")
-plt.grid(True)
-plt.show()
-
-
-import plotly.express as px
-
-# Define a discrete color mapping for the clusters
-color_map = {0: "blue", 1: "orange", 2: "green", 3: "red"}
-
-# Create the choropleth map using country_code (ISO alpha-3)
-fig = px.choropleth(
-    results,
-    locations='country_code',
-    locationmode='ISO-3',
-    title='Country Clusters on World Map (Democracy & Dictatorship Features)',
-    color='Cluster',
-    color_discrete_map=color_map,
-    hover_name='country'
-)
-
-fig.update_geos(fitbounds="locations", visible=True)
-fig.update_layout(
-    legend_title_text='Cluster',
-    legend_title_side='top'
-)
-
-fig.show()
-
-from sklearn.cluster import AgglomerativeClustering
-from sklearn.metrics import silhouette_score
-
-# Range of candidate cluster counts
-k_range = range(2, 11)
-sil_scores = []
-
-for k in k_range:
-    labels = AgglomerativeClustering(n_clusters=k, linkage="ward").fit_predict(X_scaled)
-    score = silhouette_score(X_scaled, labels)
-    sil_scores.append(score)
-
-# Plot the curve
-plt.figure(figsize=(7, 4))
-plt.plot(list(k_range), sil_scores, marker="o")
-plt.xticks(list(k_range))
-plt.xlabel("Number of Clusters (k)")
-plt.ylabel("Average Silhouette Score")
-plt.title("Silhouette Analysis for Agglomerative (Ward) Clustering")
-plt.grid(True, alpha=0.3)
-plt.show()
-
-# Print best k
-best_k = list(k_range)[np.argmax(sil_scores)]
-print(f"Best k by silhouette: {best_k}  (score={max(sil_scores):.3f})")
