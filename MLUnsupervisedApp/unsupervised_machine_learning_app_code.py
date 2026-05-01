@@ -30,14 +30,15 @@ st.markdown("-----------------------------------------------------------------")
 # we want an interactive feature that allows for selection of different models to explore, so we use a selectbox
 model_type = st.selectbox(
     "👉 First, choose a model",
-    ["Select...", "Hierarchical Clustering", "PCA (Dimensionality Reduction)", "K-Nearest Neighbors (KNN)"]
+    ["Select...", "Hierarchical Clustering", "PCA (Dimensionality Reduction)", "K-Means Clustering"]
 )
 
 
 # we use the expander function to create a drop-down box where users can learn more about different model types
 with st.expander("CLICK HERE to learn more about each model type"):
-    st.write("Linear Regressions: There are models that can tell you about the relationship between variables. Specifically, we learn whether an increase in one variable leads to an increase or decrease in the the target variable. \n\n Decision Trees: Decision trees are a kind of machine learning that make a series of decisions using yes or no questions. In this model, the decision tree classifies features into binary categories."
-    "\n\nK-Nearest Neighbor (KNN): This is a machine learning model that makes predictions about data point classifications based on data point similarities and spatial proximity to neighbors.")
+    st.write("Hierarchical Clustering: This is a type of machine learning that builds a tree-like hierarchy in order to group similar datapoints together. With hierarchical clustering, you can uncover multi-level structure in unlabelled data and segment data into variable sized groups \n\n"
+    "PCA (Principal Component Analysis): This type of machine learning reduces 'high-dimensional data' (aka data with a lot of features) and simplifies by creating new axes based on the data. This method of unsupervised machine learning allows you to break down and examine complex data in a digstable way. \n\n"
+    "K-Means Clustering: This type of machine learning uses simplifies complex or multi-dimensional data and then attempts to group the data into clusters. It does this by attempting to find the optimal central point for each cluster. It begins with three random central points and then recalculates the central points until the optimal cluster arrangement is reached.")
 
 # have an option if a model hasn't been selected using if statements 
 if model_type == "Select...":
@@ -62,10 +63,10 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.write("Let's get you a dataset to work with. You can use the built in dataset or upload your own. You can set up your dataset below.")
     st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
     st.markdown("-----------------------------------------------------------------")
-elif model_type == "K-Nearest Neighbors (KNN)":
+elif model_type == "K-Means Clustering":
     st.markdown("-----------------------------------------------------------------")
-    st.write("You chose K-Nearest Neighbors! Let's get you a dataset to work with. You can use the built in dataset or upload your own")
-    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * Make sure that your dataset has a target feature that consists of classes. A dataset where the classes are binary (meaning they are either 1 or 0) is recommended \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
+    st.write("You chose K-Means Clustering ✨! Let's get you a dataset to work with. You can use the built in dataset or upload your own")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
     st.markdown("-----------------------------------------------------------------")
 data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"]) # here is another selection box to allow the user to choose whether they upload the data or take the built-in dataset 
 
@@ -89,6 +90,8 @@ else:
         dataset_path = os.path.join(BASE_DIR, "data", "WineQT.csv") # set up path to sample dataset for decision tree
     elif model_type == "Hierarchical Clustering":
         dataset_path = os.path.join(BASE_DIR, "data", "USArrests.csv") # set up path to sample dataset for decision tree
+    elif model_type == "K-Means Clustering":
+        dataset_path = os.path.join(BASE_DIR, "data", "spotify.csv") # set up path to sample dataset for decision tree
 
 
     if not os.path.exists(dataset_path):
