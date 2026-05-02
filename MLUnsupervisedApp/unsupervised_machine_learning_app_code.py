@@ -5,15 +5,6 @@ import seaborn as sns # loading seaborn and all its features
 import matplotlib.pyplot as plt # loading mathplotlib.pyplot and all its features
 import os # importing os 
 
-# below we import a variety of tools that we will use for various project features
-from sklearn.linear_model import LinearRegression # needed for linear regression
-from sklearn.tree import DecisionTreeClassifier # needed for decision tree
-from sklearn.model_selection import train_test_split # needed for multiple models
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_curve, roc_auc_score # needed to evaluate the models
-from sklearn import tree 
-import graphviz
-from sklearn.neighbors import KNeighborsClassifier # needed for KNN
-
 st.title("📈 Unsupervised Machine Learning Streamlit App")
 st.write("Welcome to my unsupervised machine learning app! This app was created to allow users to explore various machine learning models and the ways that they can be used to analyze data. I hope that you will explore all of the features that this app has to offer. To get started, choose a model type below!")
 with st.expander("CLICK HERE to learn more about unsupervised machine learning"):
@@ -65,7 +56,8 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("-----------------------------------------------------------------")
 elif model_type == "K-Means Clustering":
     st.markdown("-----------------------------------------------------------------")
-    st.write("You chose K-Means Clustering ✨! Let's get you a dataset to work with. You can use the built in dataset or upload your own")
+    st.write("### You chose K-Means Clustering ✨!")
+    st.write("Let's get you a dataset to work with. You can use the built in dataset or upload your own")
     st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
     st.markdown("-----------------------------------------------------------------")
 data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"]) # here is another selection box to allow the user to choose whether they upload the data or take the built-in dataset 
@@ -158,7 +150,7 @@ elif model_type == "Hierarchical Clustering":
     st.write(
         "Hierarchical clustering is an unsupervised learning technique that builds a tree-like structure "
         "(called a dendrogram) to group similar data points together. You can visually explore how clusters "
-        "form and choose the number of clusters (k)."
+        "form and choose the number of clusters (k). Follow the steps below to set up your model and feel free to change parameters to adjust model results."
     )
 
     st.markdown("-----------------------------------------------------------------")
@@ -187,6 +179,7 @@ elif model_type == "Hierarchical Clustering":
     # Step 2: Scale Data
     # -------------------------
     st.markdown("#### Step Two: Scale the Data")
+    st.write("Scaling the data is recommended for hierachical clustering")
 
     from sklearn.preprocessing import StandardScaler
 
@@ -207,13 +200,37 @@ elif model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
-    # Step 3: Dendrogram
+    # Step 3: Choose Linkage Method (NEW)
     # -------------------------
-    st.markdown("#### Step Three: View Dendrogram")
+    st.markdown("#### Step Three: Choose Linkage Method")
+
+    linkage_method = st.selectbox(
+        "Select linkage method",
+        ["Select...", "ward", "single", "complete", "average"]
+        )
+
+    with st.expander("CLICK HERE to learn more about linkage methods"):
+        st.write(
+            "Ward: Minimizes variance within clusters (most balanced clusters)\n\n"
+            "Single: Uses closest points between clusters (can create chains)\n\n"
+            "Complete: Uses farthest points (creates compact clusters)\n\n"
+            "Average: Uses average distance between clusters (balanced approach)"
+        )
+
+    st.markdown("-----------------------------------------------------------------")
+
+    # -------------------------
+    # Step 4: Dendrogram
+    # -------------------------
+
+    if linkage_method == "Select...":
+        st.warning("Please choose a linkage method to view the dendrogram.")
+        st.stop()
+    st.markdown("#### Step Four: View Dendrogram")
 
     from scipy.cluster.hierarchy import linkage, dendrogram
 
-    Z = linkage(X_scaled, method="ward")
+    Z = linkage(X_scaled, method=linkage_method)
 
     fig, ax = plt.subplots(figsize=(12, 5))
     dendrogram(Z, ax=ax)
@@ -225,7 +242,7 @@ elif model_type == "Hierarchical Clustering":
 
     with st.expander("CLICK HERE to learn more about the dendrogram"):
         st.write(
-            "The dendrogram shows how data points are merged into clusters. "
+            "The dendrogram shows how data points are merged into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
             "The vertical height represents distance between clusters. "
             "You can use this to help decide the number of clusters (k)."
         )
@@ -233,12 +250,12 @@ elif model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
-    # Step 4: Choose k
+    # Step 5: Choose k
     # -------------------------
-    st.markdown("#### Step Four: Select Number of Clusters")
+    st.markdown("#### Step Five: Select Number of Clusters (k)")
 
     from sklearn.cluster import AgglomerativeClustering
-    st.write("We encourage you to use the dendrogram to experiment with different k values. Try to determine the optimal number of clusters by examining how the dendrogram groups them all together.")
+    st.write("This controls how many clusters the model will divide your data into. You can use the dendrogram above to estimate the optimal number of clusters.")
 
     k = st.slider("Number of Clusters (k)", 2, 10, 4)
 
@@ -249,7 +266,19 @@ elif model_type == "Hierarchical Clustering":
     # -------------------------
     if st.button("Run Hierarchical Clustering"):
 
-        model = AgglomerativeClustering(n_clusters=k, linkage="ward")
+        if linkage_method == "ward":
+            model = AgglomerativeClustering(
+                n_clusters=k,
+                linkage="ward",
+                metric="euclidean"
+            )
+        else:
+            model = AgglomerativeClustering(
+                n_clusters=k,
+                linkage=linkage_method,
+                metric="euclidean"
+            )
+
         cluster_labels = model.fit_predict(X_scaled)
 
         st.success("✅ Clustering completed!")
@@ -266,7 +295,7 @@ elif model_type == "Hierarchical Clustering":
 
         with st.expander("CLICK HERE to learn more about silhouette score"):
             st.write(
-                "The silhouette score measures how well-separated your clusters are. "
+                "The silhouette score is a performance metric that measures how well-separated your clusters are. "
                 "Values closer to 1 indicate well-defined clusters, while values near 0 suggest overlap. 0.5 is an alright score."
             )
 
@@ -279,7 +308,6 @@ elif model_type == "Hierarchical Clustering":
         X_pca = pca.fit_transform(X_scaled)
 
         st.markdown("-----------------------------------------------------------------")
-
 
         st.markdown("### 📉 PCA Visualization (2D)")
 
@@ -302,6 +330,7 @@ elif model_type == "Hierarchical Clustering":
         with st.expander("CLICK HERE to learn more about this graphic"):
             st.write("This plot helps illustrate how the clusters visible on the dendrogram fit together on a two-dimensional plane. It does this by plotting the data points based on the two largest principal components (which are nex axes identified by the model that simplify data composed of many features)")
 
+        st.markdown("-----------------------------------------------------------------")
 
         # -------------------------
         # Results Table
@@ -310,14 +339,14 @@ elif model_type == "Hierarchical Clustering":
         results["Cluster"] = cluster_labels
 
         st.markdown("### 📊 Cluster Assignments")
+        st.write("Here is information about which cluster the model classified each specific point of data into.")
         st.dataframe(results, height=200, use_container_width=True)
+
         st.markdown("### Cluster Sizes")
+        st.write("Here is information about the size of each cluster in the model.")
         st.write(results["Cluster"].value_counts())
 
         st.markdown("-----------------------------------------------------------------")
-
-
-
 ################
 # PCA
 ################
@@ -404,15 +433,17 @@ elif model_type == "PCA (Dimensionality Reduction)":
         cumulative = explained.cumsum()
 
         for i, var in enumerate(explained):
-            st.write(f"PC{i+1}: {var:.4f}")
+            st.write(f"#### PC{i+1}: {var:.4f}")
 
-        st.write(f"**Cumulative Variance:** {cumulative[-1]:.4f}")
+        st.write(f"#### **Cumulative Variance:** {cumulative[-1]:.4f}")
 
         st.markdown("-----------------------------------------------------------------")
 
         # -------------------------
         # Scatter Plot (2D only)
         # -------------------------
+        st.markdown("### ✏️ Visualization of Data")
+
         if n_components >= 2:
             import matplotlib.pyplot as plt
 
@@ -432,12 +463,13 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         st.markdown("-----------------------------------------------------------------")
 
-        st.markdown("### 📌 Feature Contributions (Top 2 Principal Components)")
         with st.expander("CLICK HERE to learn more about feature contributions"):
             st.write("Feature contributions are measurements of how each input model impacts the model and principal components. A positive score "
             " means that  A positive loading means that higher values of a given feature push a sample's score up along that component's axis. A negative loading does the opposite. A graph of the impact of each feature on " \
             "each principal component is also present for easier viewing. ")
         st.space(size="small")
+        
+        st.markdown("### Table of Most Important Features for Each Principal Component")
 
         loadings_df = pd.DataFrame(
             pca.components_,
@@ -462,7 +494,8 @@ elif model_type == "PCA (Dimensionality Reduction)":
         ax2.set_xlabel("Loading Value")
         ax2.set_ylabel("Feature")
         ax2.legend(title="Principal Components")
-
+        
+        st.markdown("### 📌 Feature Contributions (Top 2 Principal Components) Graph")
         st.pyplot(fig2)
 
 
@@ -513,15 +546,18 @@ elif model_type == "PCA (Dimensionality Reduction)":
 # K-MEANS CLUSTERING
 ################
 
+# we start by using an elif statement to filter our k-means clustering model
 elif model_type == "K-Means Clustering":
     st.markdown("-----------------------------------------------------------------")
     st.header("📍 K-Means Clustering")
 
+    # we use st.write to give a description of what our model does and how to set it up
     st.write(
         "K-Means is an unsupervised learning algorithm that groups data into k clusters "
-        "based on similarity. The model assigns each data point to the nearest cluster center."
+        "based on similarity. The model assigns each data point to the nearest cluster center. Follow the instructions below to set up the model and then click the button at the end to run it. You can change any of these parameters to experiment with how altering them adjusts the model resutls!"
     )
-
+    
+    # st.markdown() is again used to create lines between features
     st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
@@ -529,13 +565,16 @@ elif model_type == "K-Means Clustering":
     # -------------------------
     st.markdown("#### Step One: Select Features")
 
+    # the code below scans our dataframe, extracts only numeric values, and converts them into a list of column names
     numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
 
+    # we use the st.multiselect() function to allow the user to select multiple features for the model
     features = st.multiselect(
         "Select feature columns (numeric only)",
         numeric_columns
     )
-
+    
+    # this lets us force the user to select at least two features to continue (len() counts the number of selected features)
     if len(features) < 2:
         st.warning("Please select at least 2 features.")
         st.stop()
@@ -548,16 +587,22 @@ elif model_type == "K-Means Clustering":
     # Step 2: Scale Data
     # -------------------------
     st.markdown("#### Step Two: Scale the Data")
-
+    st.write("We recommend that you scale the data for k-means clustering")
+    
+    # we scale the data here
     from sklearn.preprocessing import StandardScaler
-
+    
+    # we use the st.radio() function to give the user the option to scale the data or not
     scale_option = st.radio("Scale data before clustering?", ["Yes", "No"])
 
+    # we use the st.radio() function to give the user the option to scale the data or not. 
+    # The scaler.fit_transform() function can scale our data for us in the event the user chooses to
     if scale_option == "Yes":
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
     else:
         X_scaled = X
+
 
     with st.expander("CLICK HERE to learn more about scaling"):
         st.write(
@@ -572,7 +617,13 @@ elif model_type == "K-Means Clustering":
     # -------------------------
     st.markdown("#### Step Three: Choose Number of Clusters (k)")
 
+    # we use the st.slider() function to set up our slider
     k = st.slider("Number of Clusters (k)", 2, 10, 3)
+
+    with st.expander("CLICK HERE to learn more about k"):
+        st.write("This is the number of clusters that you tell the algorithm to identify with the data. You can play around with different k values to see how changing it affects your model results.")
+
+
 
     st.markdown("-----------------------------------------------------------------")
 
@@ -581,9 +632,13 @@ elif model_type == "K-Means Clustering":
     # -------------------------
     if st.button("Run K-Means Clustering"):
 
+        # we import our model
         from sklearn.cluster import KMeans
 
+        # we input some important information such as the number of clusters (saved as k)
         model = KMeans(n_clusters=k, random_state=42)
+       
+        # we use this function to run our model on the data
         clusters = model.fit_predict(X_scaled)
 
         st.success("✅ K-Means clustering completed!")
@@ -593,10 +648,17 @@ elif model_type == "K-Means Clustering":
         # -------------------------
         from sklearn.metrics import silhouette_score
 
+        # we calculate a silhouette score for the data
         score = silhouette_score(X_scaled, clusters)
 
+        # we use st.markdown() to portray out silhouette score inforamtion
         st.markdown("### 📊 Silhouette Score")
         st.markdown(f"## {score:.4f}")
+
+        with st.expander("CLICK HERE to learn more about the silhouette score"):
+            st.write("This a measure of model performance telling us how well seperated our clusters are. A score closer to 1 means that the clusters are more well seperated while a score closer to 0 indicates clusters that overlap. A decent score is usually one above 0.5")
+
+
 
         # -------------------------
         # PCA Visualization
@@ -626,6 +688,11 @@ elif model_type == "K-Means Clustering":
 
         plt.colorbar(scatter)
         st.pyplot(fig)
+
+
+        with st.expander("CLICK HERE to learn more about this visualization"):
+            st.write("The above graphic plots our data along the axes of the two largest principal components (which are axes generated to simplify high-dimensional data while preserving information about the data) and plots our datapoints. You will notice that the model has assigned the data to clusters based on the number of clusters you assigned in the previous section.")
+
 
         st.markdown("-----------------------------------------------------------------")
 
@@ -660,11 +727,11 @@ elif model_type == "K-Means Clustering":
 
         st.pyplot(fig2)
 
-        with st.expander("CLICK HERE to learn more about choosing k"):
+        with st.expander("CLICK HERE to learn more about these graphics and choosing k"):
             st.write(
-                "The Elbow Method helps identify the point where adding more clusters "
-                "does not significantly improve model fit. The Silhouette Score measures "
-                "how well-separated the clusters are."
+                "The graph on the left plots the cluster sum of squares against the different values of k. It is a useful tool for 'The Elbow Method.' The Elbow Method helps identify the point where adding more clusters "
+                "does not significantly improve model fit (to find this point, we should look at where the graph on the left 'bends.'). \n\n" \
+                "The graph on the left shows how different values of k might affect the sihouette score. The Silhouette Score measures how well-separated the clusters are. Please be encouraged to try out the k value that optimizes your silhouette score using this information!"
             )
 
         st.markdown("-----------------------------------------------------------------")
@@ -674,9 +741,11 @@ elif model_type == "K-Means Clustering":
         # -------------------------
         results = df.copy()
         results["Cluster"] = clusters
-
-        st.markdown("### 📊 Cluster Assignments")
+            
+        st.markdown("### 📊 Additional Model Info & Logistics")
+        st.space()
+        st.markdown("#### 📊 Cluster Assignments")
         st.dataframe(results, use_container_width=True)
-
+        st.space()
         st.markdown("### Cluster Sizes")
         st.write(results["Cluster"].value_counts())
