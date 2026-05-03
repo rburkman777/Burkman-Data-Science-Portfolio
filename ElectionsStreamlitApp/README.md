@@ -1,6 +1,6 @@
-## Overview
+# Elections Streamlit App 🗳️
 
-The Streamlit app is an open source Python framework for data scientists to explore interactive data applications. 
+Here is the link to the app: 
 
 ## Link to Streamlit App: https://burkman-data-science-portfolio-zyhpnavjxj7zpptlwmskuy.streamlit.app/
 
