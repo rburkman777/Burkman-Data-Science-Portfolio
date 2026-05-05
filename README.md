@@ -1,4 +1,4 @@
-# Burkman-Data-Science-Portfolio
+# 🔢 Burkman-Data-Science-Portfolio
 
 ## Overview
 
@@ -38,18 +38,17 @@ ________________________________________________________________________________
 
 ## Machine Learning Streamlit App
 
-### LINK to Streamlit App: https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/
-### LINK to project folder with app code: https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/MLStreamlitApp
+### LINK to Streamlit App: [Click here](https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/)
+### LINK to project folder with app code: [Click here](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/MLStreamlitApp)
 ### Folder with project code, information, and data is also above and called "MLStreamlitApp"
 
+### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit  | &nbsp;  🎨🖌️ App design
 
 ### Project Overview
 
-In this project, I created an app capable of accepting an input of data from a user and using that data to illustrate the process of machine learning. The app allows users to choose a type of machine learning (linear regression, decision tree, or K-Nearest Neighbor) and tune hyperparameters based off that choice. Afterwards, the users can evaluate various metrics of model performance, including ROC curves, accuracy, precision, and others. The visualization below depicts a decision tree from the model that is outputted after the user uploads data and performs custom hyperparameter tuning. 
-
-The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters, tuning decisions, and features can impact the performance metrics of the model. In this way, it will also be a learning experience about the nuances of machine learning. 
-
-The  app is written in and operates through Python coding that I developed. It is an example of my Python skills. The app is also an illustration of my skills in Streamlit app development and execution. The app highlights my interest in visual layout, graphic design, and creating an engaging user experience. Most importantly, the application illustrates my love for teaching by enabling user exploration of new data analysis models and skills. 
+* In this project, I created an app capable of accepting an input of data from a user and using that data to illustrate the process of machine learning.
+* The app allows users to choose a type of machine learning (linear regression, decision tree, or K-Nearest Neighbor) and tune hyperparameters based off that choice. Afterwards, the users can evaluate various metrics of model performance, including ROC curves, accuracy, precision, and others. 
+* The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters, tuning decisions, and features can impact the performance metrics of the model. 
 
 Picture: A sample decision tree produced and visualized by the app from running sample data embedded in the app: 
 
