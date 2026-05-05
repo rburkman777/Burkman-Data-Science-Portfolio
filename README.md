@@ -44,7 +44,7 @@ ________________________________________________________________________________
 ### LINK to project folder with app code: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/MLStreamlitApp) 
 Folder with project code, information, and data is also above and called "MLStreamlitApp"
 
-### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit  | &nbsp;  🎨🖌️ App design
+### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design
 
 ### Project Overview
 
@@ -81,9 +81,9 @@ ________________________________________________________________________________
 
 ## Tidy Data Jupyter Notebook
 
-### LINK to Github folder with project code, information, and data: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/TidyDataProject)
+### LINK to Github folder with project code, information, and data: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/TidyDataProject) 
 
-### Project Overview
+### Skills exhibited: 🐍 Python &nbsp; | 🧹 Data Cleaning &nbsp; | 📓 Markdown Notebooks
 
 This notebook highlights how to clean data. We take a dataset about olympic medalists that begins as quite messy and use a variety of functions to tidy it up. This makes it much easier to complete a variety of tasks with it, including producing visualizations. This application demonstrates my skills with data tidying, data organization, python, Jupyer notebooks, and data analysis. The application will also serve as a helpful guide for those interested in learning more about how python can be employed to tidy data. 
 
