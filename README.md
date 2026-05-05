@@ -59,7 +59,7 @@ ________________________________________________________________________________
 
 ## Elections Analysis Streamlit App
 
-### LINK: to Streamlit App: [CLICK HERE](https://burkman-data-science-portfolio-zyhpnavjxj7zpptlwmskuy.streamlit.app/))
+### LINK: to Streamlit App: [CLICK HERE](https://burkman-data-science-portfolio-zyhpnavjxj7zpptlwmskuy.streamlit.app/)
 
 ### LINK to Github folder with project code, information, and data: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/ElectionsStreamlitApp)
 
