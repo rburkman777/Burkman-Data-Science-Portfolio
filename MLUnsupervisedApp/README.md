@@ -7,7 +7,7 @@ This project aims to guide users into the world of unsupervised machine learning
 
 Follow this link to open the app in streamlit cloud. 
 
-### Link to App: https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/
+### Link to App: [CLICK HERE](https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/)
 
 Alternatively, you can run the app locally by following these instructions: 
 
@@ -31,7 +31,7 @@ Principal Component Analysis: You can change the number of components to explore
 K-Means Clustering: You can also explore a k-means clustering model. You can observe how changing the number of clusters alters model performance
 
 ## References
-While creating this project I used some useful resources that I have attatched below. 
+While creating this project I used some useful resources that I have attatched below: 
 
 
 ## Visual Examples
