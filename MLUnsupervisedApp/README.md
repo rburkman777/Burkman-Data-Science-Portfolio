@@ -24,11 +24,11 @@ Also, help yourself to the sample datasets that you can upload into the app if y
 ## App Features 
 Three models were used: hierarchical clustering, principal component analysis, and k-means clustering! See below for how you can tune hyperparameters on these models to explore different outcomes:
 
-Hierarchical Clustering: You can explore how scaling the data and changing the number of clusters or the linkage method changes model performance. You can use a dendrogram to help you make those determinations! 
+* Hierarchical Clustering: You can explore how scaling the data and changing the number of clusters or the linkage method changes model performance. You can use a dendrogram to help you make those determinations! 
 
-Principal Component Analysis: You can change the number of components to explore how this affects model performance! 
+* Principal Component Analysis: You can change the number of components to explore how this affects model performance! 
 
-K-Means Clustering: You can also explore a k-means clustering model. You can observe how changing the number of clusters alters model performance
+* K-Means Clustering: You can also explore a k-means clustering model. You can observe how changing the number of clusters alters model performance
 
 ## References
 While creating this project I used some useful resources that I have attatched below: 
