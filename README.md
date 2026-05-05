@@ -23,7 +23,6 @@ ________________________________________________________________________________
 
 ### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design
 
-### Project Overview:
 * The app lets users learn about and interact with three distinct types of unsupervised machine learning: k-means clustering, hierarchical clustering, principal component analysis
 * The app allows for an interactive user experience in which users can learn about various types of unsupervised machine learning and explore how changing parameters affects model performance
 * The app demonstrates my committment to making access to machine learning accessbily, smooth, and user-friendly. It also complements the portfolio's focus on Python coding, deploying polished visual designs, and Streamlit use.  
@@ -46,8 +45,6 @@ Folder with project code, information, and data is also above and called "MLStre
 
 ### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design
 
-### Project Overview
-
 * In this project, I created an app capable of accepting an input of data from a user and using that data to illustrate the process of machine learning.
 * The app allows users to choose a type of machine learning (linear regression, decision tree, or K-Nearest Neighbor) and tune hyperparameters based off that choice. Afterwards, the users can evaluate various metrics of model performance, including ROC curves, accuracy, precision, and others. 
 * The app aims to be an interactive experience. Users will have the opportunity to explore how shifting hyperparameters, tuning decisions, and features can impact the performance metrics of the model. 
@@ -67,8 +64,6 @@ ________________________________________________________________________________
 ### LINK to Github folder with project code, information, and data: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/ElectionsStreamlitApp)
 
 ### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design  &nbsp; | &nbsp; 🏛 Political Analysis 
-
-### Project Overview
 
 * This app is designed to give users the opporunity to explore data about American elections compiled by the website FiveThirtyEight. Users can filter congressional districts for various attributes and learn about their geographic distribution throughout the country, their partisanship, and their urbanization.
 * Users can use this information to make insights about contempotary American politics
