@@ -7,7 +7,7 @@ Follow this link to open the app in streamlit cloud.
 ## ✏️ Project Overview 
 This project aims to guide users into the world of unsupervised machine learnings. Users have the opporunity to explore three distinct types of machine learning: hierarchical clustering, principal component analysis, and k-means clustering. The app is designed to give users access to these models for their own use. Additionally, it aims to teach users about the different types of unsupervised machine learning while granting users the chance to experiment with the different models. 
 
-## App Features 
+## 📱 App Features 
 Three models were used: hierarchical clustering, principal component analysis, and k-means clustering! See below for how you can tune hyperparameters on these models to explore different outcomes:
 
 * Hierarchical Clustering: You can explore how scaling the data and changing the number of clusters or the linkage method changes model performance. You can use a dendrogram to help you make those determinations! 
