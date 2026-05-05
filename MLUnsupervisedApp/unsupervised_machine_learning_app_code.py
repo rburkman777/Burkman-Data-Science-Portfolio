@@ -5,7 +5,7 @@ import seaborn as sns # loading seaborn and all its features
 import matplotlib.pyplot as plt # loading mathplotlib.pyplot and all its features
 import os # importing os 
 
-st.title("📈 Unsupervised Machine Learning Streamlit App")
+st.write("## ⚙️ Unsupervised Machine Learning App ")
 st.write("Welcome to my unsupervised machine learning app! This app was created to allow users to explore various machine learning models and the ways that they can be used to analyze data. I hope that you will explore all of the features that this app has to offer. To get started, choose a model type below!")
 with st.expander("CLICK HERE to learn more about unsupervised machine learning"):
     st.write("Unsupervised machine learning is a variant of AI that finds patterns and relationships in data without human guidance. Unsupervised machine learning" \
@@ -40,7 +40,7 @@ if model_type == "Select...":
 # STEP 2: DATA SOURCE
 # -----------------------------
 
-# we use if statements to respond to various user choices the user might make. 
+# we use if and elif statements to respond to various user choices the user might make. 
 # this code gives the user parameters for various model types
 if model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
@@ -143,6 +143,7 @@ elif model_type == "K-Nearest Neighbors (KNN)" and data_option == "Built-in Data
 # 🌳 HIERARCHICAL CLUSTERING
 # =============================
 
+# we use an elif statement to establish which model type we are using
 elif model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
     st.header("🌳 Hierarchical Clustering")
@@ -158,19 +159,25 @@ elif model_type == "Hierarchical Clustering":
     # -------------------------
     # Step 1: Select Features
     # -------------------------
+    # we use st.markdown for titles
     st.markdown("#### Step One: Select Features")
 
+    # this code allows the user to select their desired features from options
+    # you will note that it is set to only take numeric inputs
     numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
 
+    # this code creates the multi-select option for users
     features = st.multiselect(
         "Select feature columns (numeric only)",
         numeric_columns
     )
 
+    # we assuee that the user selects at least two features using the len() function
     if len(features) < 2:
         st.warning("Please select at least 2 features.")
         st.stop()
 
+    # filters data for the features chosen by the user
     X = df[features]
 
     st.markdown("-----------------------------------------------------------------")
@@ -183,8 +190,10 @@ elif model_type == "Hierarchical Clustering":
 
     from sklearn.preprocessing import StandardScaler
 
+    # st.radio allows us to create a toggle the user can use to choose whether to scale the data
     scale_option = st.radio("Scale data before clustering?", ["Yes", "No"])
 
+    # we use this code to scale the data
     if scale_option == "Yes":
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
@@ -200,17 +209,18 @@ elif model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
-    # Step 3: Choose Linkage Method (NEW)
+    # Step 3: Choose Linkage Method
     # -------------------------
     st.markdown("#### Step Three: Choose Linkage Method")
 
+    # we set up our selectbox of features
     linkage_method = st.selectbox(
         "Select linkage method",
         ["Select...", "ward", "single", "complete", "average"]
         )
 
     with st.expander("CLICK HERE to learn more about linkage methods"):
-        st.write(
+        st.write("These "
             "Ward: Minimizes variance within clusters (most balanced clusters)\n\n"
             "Single: Uses closest points between clusters (can create chains)\n\n"
             "Complete: Uses farthest points (creates compact clusters)\n\n"
@@ -223,21 +233,26 @@ elif model_type == "Hierarchical Clustering":
     # Step 4: Dendrogram
     # -------------------------
 
+    # we use the code below to stop the user from moving on until they choose a linkage method
     if linkage_method == "Select...":
-        st.warning("Please choose a linkage method to view the dendrogram.")
+        st.warning("Please choose a linkage method to continue.")
         st.stop()
     st.markdown("#### Step Four: View Dendrogram")
 
+    # we use this to import our needed functions
     from scipy.cluster.hierarchy import linkage, dendrogram
 
+    # we use this to plug in our linkeage method and our data to make the dendrogram
     Z = linkage(X_scaled, method=linkage_method)
 
+    # this sets some parameters for our figure
     fig, ax = plt.subplots(figsize=(12, 5))
     dendrogram(Z, ax=ax)
     ax.set_title("Hierarchical Clustering Dendrogram")
     ax.set_xlabel("Data Points")
     ax.set_ylabel("Distance")
 
+    # this plots our figure
     st.pyplot(fig)
 
     with st.expander("CLICK HERE to learn more about the dendrogram"):
@@ -254,9 +269,11 @@ elif model_type == "Hierarchical Clustering":
     # -------------------------
     st.markdown("#### Step Five: Select Number of Clusters (k)")
 
+    # we import another useful function
     from sklearn.cluster import AgglomerativeClustering
     st.write("This controls how many clusters the model will divide your data into. You can use the dendrogram above to estimate the optimal number of clusters.")
 
+    # we use the st.slider function to allow the user to input the number of clusters they want for each run
     k = st.slider("Number of Clusters (k)", 2, 10, 4)
 
     st.markdown("-----------------------------------------------------------------")
@@ -264,8 +281,11 @@ elif model_type == "Hierarchical Clustering":
     # -------------------------
     # Run Clustering
     # -------------------------
+    # we use a button to activate the model
     if st.button("Run Hierarchical Clustering"):
 
+        # we use if and else statements to allow the model to run for different linkage types
+        # we also preselect the metric 
         if linkage_method == "ward":
             model = AgglomerativeClustering(
                 n_clusters=k,
@@ -286,8 +306,10 @@ elif model_type == "Hierarchical Clustering":
         # -------------------------
         # Silhouette Score
         # -------------------------
+        # we import our silhouette score calculator 
         from sklearn.metrics import silhouette_score
 
+        # this calculates our sihouette score using our data and our clustering data
         score = silhouette_score(X_scaled, cluster_labels)
 
         st.markdown("### 📊 Silhouette Score")
@@ -302,8 +324,12 @@ elif model_type == "Hierarchical Clustering":
         # -------------------------
         # PCA Visualization
         # -------------------------
+        
+        # for this next step, we will need to peform some principal component analysis
+        # accordingly, we will import a tool to help us with that 
         from sklearn.decomposition import PCA
 
+        # we can use this to determine the principal components and then to transform the data
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
 
@@ -311,6 +337,8 @@ elif model_type == "Hierarchical Clustering":
 
         st.markdown("### 📉 PCA Visualization (2D)")
 
+        # we plot everything onto a visualization of how the hierarchical clustering clusters the data
+        # based on user input
         fig2, ax2 = plt.subplots()
         scatter = ax2.scatter(
             X_pca[:, 0],
@@ -321,10 +349,15 @@ elif model_type == "Hierarchical Clustering":
             alpha=0.7
         )
 
+        legend = ax2.legend(*scatter.legend_elements(), title="Clusters")
+        ax2.add_artist(legend)
+
+        # set axis labels 
         ax2.set_xlabel("Principal Component 1")
         ax2.set_ylabel("Principal Component 2")
         ax2.set_title("Cluster Visualization (PCA)")
 
+        # this actually generates the plot itself in streamlit
         st.pyplot(fig2)
 
         with st.expander("CLICK HERE to learn more about this graphic"):
@@ -335,23 +368,28 @@ elif model_type == "Hierarchical Clustering":
         # -------------------------
         # Results Table
         # -------------------------
+        
+        # we also created a results table 
         results = df.copy()
         results["Cluster"] = cluster_labels
 
-        st.markdown("### 📊 Cluster Assignments")
+        st.write("### Model Logistics")
+        st.markdown("#### 📊 Cluster Assignments")
         st.write("Here is information about which cluster the model classified each specific point of data into.")
         st.dataframe(results, height=200, use_container_width=True)
 
-        st.markdown("### Cluster Sizes")
+        st.markdown("#### Cluster Sizes")
         st.write("Here is information about the size of each cluster in the model.")
         st.write(results["Cluster"].value_counts())
 
         st.markdown("-----------------------------------------------------------------")
+
+
 ################
 # PCA
 ################
 
-
+# we use an elif statement to establish our model type 
 elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("-----------------------------------------------------------------")
     st.header("📉 Principal Component Analysis (PCA)")
@@ -366,18 +404,23 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("#### Step One: Select Features")
     st.write("We begin by choosing our features. These are the features of your dataset that the model will perform on. For PCA, you must choose at least two features. ")
 
+    # we use the code below to allow the user to choose the features they want to use and to confirm that they are numeric
     numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
 
+    # we use the multiselect() feature to help our user choose desired feature inputs
     features = st.multiselect(
         "Select feature columns (numeric only)",
         numeric_columns
     )
 
+    # we use the len() function to make sure they choose at least two features
     if len(features) < 2:
         st.warning("Please select at least 2 features for PCA.")
         st.stop()
 
+    # we establish the chosen features as the data with the code below
     X = df[features]
+
     st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
@@ -387,8 +430,10 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.write("Note: We highly recommend that you scale the data for PCA")
     from sklearn.preprocessing import StandardScaler
 
+    # we use the st.radio() function to offer the user a toggle to choose whether to scale the data or not
     scale_option = st.radio("Scale data before PCA?", ["Yes", "No"])
 
+    # we create a scaler 
     if scale_option == "Yes":
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
@@ -397,7 +442,6 @@ elif model_type == "PCA (Dimensionality Reduction)":
     with st.expander("CLICK HERE to learn more about scaling the data"):
         st.write("Scaling the data is the process of transforming the features into similar scales without changing the shape of the data. It is highly recommended that the data be scaled for PCA since it is sensitive to variable scales.")
 
-
     st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
@@ -405,15 +449,16 @@ elif model_type == "PCA (Dimensionality Reduction)":
     # -------------------------
     st.markdown("#### Step Three: Select Number of Components")
 
+    # we create a slider so the user can input their preferred number of principal components 
     n_components = st.slider("Number of Principal Components", 2, min(10, len(features)), 2)
     with st.expander("CLICK HERE to learn more about the components"):
         st.write("The components are new linear combinations of the data ranked by importance. We can imagine them like artificial axes that rotate and project 'high-dimensional' data (data with a lot of features) into a lower dimensional space. There is a tradeoff between having simplfying the data through dimentionality reduction "
         "and retaining greater information about the data. A higher number of components relative to the number of initial features prioiritzes information retention and accuracy while a lower number prioritizes simplicity.")
 
-
     from sklearn.decomposition import PCA
     st.markdown("-----------------------------------------------------------------")
 
+    # we use the button to run the model when pressed by the user
     if st.button("Run PCA"):
         pca = PCA(n_components=n_components)
         X_pca = pca.fit_transform(X_scaled)
@@ -428,10 +473,12 @@ elif model_type == "PCA (Dimensionality Reduction)":
             st.write("Explained variance is a measurement of how much variance from the dataset each principal component perserves. A larger pricipial component means that more information was perserved. Each principal component has a certain explained variance, as one can see below. " \
             "We generally want the cumulative variance' (the sums of the principal variants), to be larger (closer to 1) because this means more information was perserved.")
 
-
+        # this is code for a loop that goes through each of our principal components and determines 
+        # how much variance each of them preserves 
         explained = pca.explained_variance_ratio_
         cumulative = explained.cumsum()
 
+        # this gives us the sum of our variance 
         for i, var in enumerate(explained):
             st.write(f"#### PC{i+1}: {var:.4f}")
 
@@ -444,9 +491,11 @@ elif model_type == "PCA (Dimensionality Reduction)":
         # -------------------------
         st.markdown("### ✏️ Visualization of Data")
 
+        # we confirm that we have at least two components 
         if n_components >= 2:
             import matplotlib.pyplot as plt
 
+            # we set up the code for our graphic
             fig, ax = plt.subplots()
 
             ax.scatter(X_pca[:, 0], X_pca[:, 1], alpha=0.7)
@@ -455,6 +504,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
             ax.set_ylabel(f"PC2 ({explained[1]*100:.1f}%)")
             ax.set_title("PCA Projection")
 
+            # this displays the graphic in the app 
             st.pyplot(fig)
 
             with st.expander("CLICK HERE to learn more about this graphic"):
@@ -463,48 +513,57 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         st.markdown("-----------------------------------------------------------------")
 
-        with st.expander("CLICK HERE to learn more about feature contributions"):
-            st.write("Feature contributions are measurements of how each input model impacts the model and principal components. A positive score "
-            " means that  A positive loading means that higher values of a given feature push a sample's score up along that component's axis. A negative loading does the opposite. A graph of the impact of each feature on " \
-            "each principal component is also present for easier viewing. ")
-        st.space(size="small")
-        
-        st.markdown("### Table of Most Important Features for Each Principal Component")
 
+
+        # the code below builds our table that shows how each feature contributes to the principal components
         loadings_df = pd.DataFrame(
             pca.components_,
             columns=features,
             index=[f'PC{i+1}' for i in range(n_components)]
         )
 
-        st.dataframe(loadings_df.style.format("{:.3f}"))
-        st.space(size="small")
 
-        # Only proceed if at least 2 components exist
+        # this code makes sure we only proceed if at least 2 components exist
         if n_components >= 2:
             fig2, ax2 = plt.subplots(figsize=(8, 5))
 
-        # Select top 2 PCs and transpose for grouped bar chart
+        # Select top 2 principal components and transpose for grouped bar chart
         loadings_df.loc[['PC1', 'PC2']].T.plot(
             kind='barh',
             ax=ax2
         )
 
+        # set up information on our graphic
         ax2.set_title("Feature Contributions: PC1 vs PC2")
         ax2.set_xlabel("Loading Value")
         ax2.set_ylabel("Feature")
         ax2.legend(title="Principal Components")
         
         st.markdown("### 📌 Feature Contributions (Top 2 Principal Components) Graph")
+        
+        # this outputs our graphic in Streamlit
         st.pyplot(fig2)
 
+        st.space()
+
+        st.markdown("#### Table of Most Important Features for Each Principal Component")
+
+        st.dataframe(loadings_df.style.format("{:.3f}")) # this yields the sum of the principal component variance
+
+        with st.expander("CLICK HERE to learn more about feature contributions"):
+            st.write("Feature contributions are measurements of how each input model impacts the model and principal components. A positive score "
+            " means that  A positive loading means that higher values of a given feature push a sample's score up along that component's axis. A negative loading does the opposite. A graph of the impact of each feature on " \
+            "each principal component is also present for easier viewing. ")
+        
 
         st.markdown("-----------------------------------------------------------------")
+       
         # -------------------------
         # Scree Plot
         # -------------------------
         st.markdown("### 📉 Scree Plot")
 
+        # we establish our scree plot
         fig3, ax3 = plt.subplots()
 
         ax3.plot(range(1, len(explained)+1), cumulative, marker='o')
@@ -512,6 +571,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
         ax3.set_ylabel("Cumulative Variance")
         ax3.set_title("Explained Variance")
 
+        # this displays our plot in the app
         st.pyplot(fig3)
 
         with st.expander("CLICK HERE to learn more about the scree plot"):
@@ -519,10 +579,13 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         st.markdown("### 📊 Variance Explained by Each Principal Component")
 
+        # we outline some graphic parameters
         fig4, ax4 = plt.subplots(figsize=(8, 6))
 
+        # this generates principal components for us that can be inputted into our graph
         components = range(1, len(explained) + 1)
 
+        # this creates the bar chart
         ax4.bar(
             components,
             explained,
@@ -530,6 +593,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
             color='teal'
         )
 
+        # this sets up the labels and axes for our chart
         ax4.set_xlabel('Principal Component')
         ax4.set_ylabel('Variance Explained')
         ax4.set_title('Variance Explained by Each Principal Component')
@@ -537,6 +601,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
         ax4.set_xticks(components)
         ax4.grid(True, axis='y')
 
+        # this sets the chart up in Streamlit
         st.pyplot(fig4)
         with st.expander("CLICK HERE to learn more about this plot"):
             st.write("Theis plot turns our above scree plot into a bar graph and portrays how much each principal component increases model variance.")
@@ -579,6 +644,7 @@ elif model_type == "K-Means Clustering":
         st.warning("Please select at least 2 features.")
         st.stop()
 
+    # this establishes the data we're using as the features the user selected
     X = df[features]
 
     st.markdown("-----------------------------------------------------------------")
@@ -623,8 +689,6 @@ elif model_type == "K-Means Clustering":
     with st.expander("CLICK HERE to learn more about k"):
         st.write("This is the number of clusters that you tell the algorithm to identify with the data. You can play around with different k values to see how changing it affects your model results.")
 
-
-
     st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
@@ -665,14 +729,17 @@ elif model_type == "K-Means Clustering":
         # -------------------------
         from sklearn.decomposition import PCA
 
+        # we use this to ensure that there are two principal components in our visualization and run the model
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
 
         st.markdown("-----------------------------------------------------------------")
         st.markdown("### 📉 Cluster Visualization (PCA Projection)")
 
+        # we set up the parameters of our plot below
         fig, ax = plt.subplots()
 
+        # we set up a scatterplot and establish that the clusters will be colored distinctly 
         scatter = ax.scatter(
             X_pca[:, 0],
             X_pca[:, 1],
@@ -682,11 +749,14 @@ elif model_type == "K-Means Clustering":
             alpha=0.7
         )
 
+        # we set up axis labels
         ax.set_xlabel("Principal Component 1")
         ax.set_ylabel("Principal Component 2")
         ax.set_title("K-Means Clusters (PCA Projection)")
 
         plt.colorbar(scatter)
+
+        # we use this to set up our plot
         st.pyplot(fig)
 
 
@@ -701,25 +771,28 @@ elif model_type == "K-Means Clustering":
         # -------------------------
         st.markdown("### 📉 Choosing Optimal k")
 
+        # these lines set up a number of variables we use to have multiple k values appear in our plot
         ks = range(2, 11)
         wcss = []
         silhouette_scores = []
 
+        # the code below tests different values of k on the model and stores the values of each performance
         for i in ks:
             km = KMeans(n_clusters=i, random_state=42)
             km.fit(X_scaled)
             wcss.append(km.inertia_)
             silhouette_scores.append(silhouette_score(X_scaled, km.labels_))
 
+        # we prepare out plots (this makes two side by side plots)
         fig2, ax2 = plt.subplots(1, 2, figsize=(12, 5))
 
-        # Elbow plot
+        # Code to set up elbow plot
         ax2[0].plot(ks, wcss, marker='o')
         ax2[0].set_title("Elbow Method")
         ax2[0].set_xlabel("k")
         ax2[0].set_ylabel("WCSS")
 
-        # Silhouette plot
+        # Code to set up silhouette plot
         ax2[1].plot(ks, silhouette_scores, marker='o', color='green')
         ax2[1].set_title("Silhouette Score")
         ax2[1].set_xlabel("k")
@@ -739,6 +812,8 @@ elif model_type == "K-Means Clustering":
         # -------------------------
         # Results Table
         # -------------------------
+
+        # the code below sets up the table for our results
         results = df.copy()
         results["Cluster"] = clusters
             
