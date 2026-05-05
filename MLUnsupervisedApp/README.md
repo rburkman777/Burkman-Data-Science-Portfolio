@@ -35,7 +35,7 @@ Once you have everything open in VSCode (from either method), go to the terminal
 Also, help yourself to the sample datasets that you can upload into the app if you choose to upload your own file instead of using one of the sample datasets (in the sample_datasets_for_app_uploading folder). 
 
 
-## References
+### References
 While creating this project I used some useful resources that I have attatched below: 
 
 
