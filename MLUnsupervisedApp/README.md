@@ -1,15 +1,28 @@
-# Unsupervised Machine Learning Streamlit App ⚙️
-
-## Project Overview 
-This project aims to guide users into the world of unsupervised machine learnings. Users have the opporunity to explore three distinct types of machine learning: hierarchical clustering, principal component analysis, and k-means clustering. The app is designed to give users access to these models for their own use. Additionally, it aims to teach users about the different types of unsupervised machine learning while granting users the chance to experiment with the different models. 
-
-## App Access
+# ⚙️ Unsupervised Machine Learning Streamlit App 
 
 Follow this link to open the app in streamlit cloud. 
 
 ### Link to App: [CLICK HERE](https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/)
 
-Alternatively, you can run the app locally by following these instructions: 
+## ✏️ Project Overview 
+This project aims to guide users into the world of unsupervised machine learnings. Users have the opporunity to explore three distinct types of machine learning: hierarchical clustering, principal component analysis, and k-means clustering. The app is designed to give users access to these models for their own use. Additionally, it aims to teach users about the different types of unsupervised machine learning while granting users the chance to experiment with the different models. 
+
+## App Features 
+Three models were used: hierarchical clustering, principal component analysis, and k-means clustering! See below for how you can tune hyperparameters on these models to explore different outcomes:
+
+* Hierarchical Clustering: You can explore how scaling the data and changing the number of clusters or the linkage method changes model performance. You can use a dendrogram to help you make those determinations! 
+
+* Principal Component Analysis: You can change the number of components to explore how this affects model performance! 
+
+* K-Means Clustering: You can also explore a k-means clustering model. You can observe how changing the number of clusters alters model performance
+
+
+## Visual Examples
+Here is an example of a visual you can create with this graph -- a graphic created with the k-means clustering section:
+
+<img width="603" height="583" alt="Screen Shot 2026-05-02 at 9 25 32 PM" src="https://github.com/user-attachments/assets/2bcb4444-7515-4069-9954-aa07ed25d86c" />
+
+
 
 ### How to Run the App Locally
 
@@ -21,21 +34,8 @@ Once you have everything open in VSCode (from either method), go to the terminal
 
 Also, help yourself to the sample datasets that you can upload into the app if you choose to upload your own file instead of using one of the sample datasets (in the sample_datasets_for_app_uploading folder). 
 
-## App Features 
-Three models were used: hierarchical clustering, principal component analysis, and k-means clustering! See below for how you can tune hyperparameters on these models to explore different outcomes:
-
-* Hierarchical Clustering: You can explore how scaling the data and changing the number of clusters or the linkage method changes model performance. You can use a dendrogram to help you make those determinations! 
-
-* Principal Component Analysis: You can change the number of components to explore how this affects model performance! 
-
-* K-Means Clustering: You can also explore a k-means clustering model. You can observe how changing the number of clusters alters model performance
 
 ## References
 While creating this project I used some useful resources that I have attatched below: 
 
-
-## Visual Examples
-Here is an example of a visual you can create with this graph -- a graphic created with the k-means clustering section:
-
-<img width="603" height="583" alt="Screen Shot 2026-05-02 at 9 25 32 PM" src="https://github.com/user-attachments/assets/2bcb4444-7515-4069-9954-aa07ed25d86c" />
 
