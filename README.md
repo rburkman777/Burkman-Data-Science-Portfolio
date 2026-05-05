@@ -66,7 +66,7 @@ ________________________________________________________________________________
 
 ### LINK to Github folder with project code, information, and data: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/ElectionsStreamlitApp)
 
-### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit  | &nbsp;  🎨🖌️ App design  &nbsp; | &nbsp; 🏛 Political Analysis 
+### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design  &nbsp; | &nbsp; 🏛 Political Analysis 
 
 ### Project Overview
 
