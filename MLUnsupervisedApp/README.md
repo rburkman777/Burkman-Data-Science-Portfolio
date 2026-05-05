@@ -20,7 +20,7 @@ Three models were used: hierarchical clustering, principal component analysis, a
 ## Visual Examples
 Here is an example of a visual you can create with this graph -- a graphic created with the k-means clustering section:
 
-<img width="603" height="583" alt="Screen Shot 2026-05-02 at 9 25 32 PM" src="https://github.com/user-attachments/assets/2bcb4444-7515-4069-9954-aa07ed25d86c" />
+<img width="402" height="389" alt="Screen Shot 2026-05-02 at 9 25 32 PM" src="https://github.com/user-attachments/assets/2bcb4444-7515-4069-9954-aa07ed25d86c" />
 
 
 
