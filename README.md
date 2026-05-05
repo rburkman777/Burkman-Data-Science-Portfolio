@@ -39,8 +39,8 @@ ________________________________________________________________________________
 ## Machine Learning Streamlit App
 
 ### LINK to Streamlit App: [Click here](https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/)
-### LINK to project folder with app code: [Click here](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/MLStreamlitApp)
-### Folder with project code, information, and data is also above and called "MLStreamlitApp"
+### LINK to project folder with app code: [Click here](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/MLStreamlitApp) 
+Folder with project code, information, and data is also above and called "MLStreamlitApp"
 
 ### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit  | &nbsp;  🎨🖌️ App design
 
