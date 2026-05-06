@@ -476,11 +476,11 @@ if model_type == "Hierarchical Clustering":
         st.markdown("-----------------------------------------------------------------")
 
 
+
 ################
 # PCA
 ################
 
-# we use an elif statement to establish our model type 
 elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("-----------------------------------------------------------------")
     st.header("📉 Principal Component Analysis (PCA)")
@@ -501,8 +501,6 @@ elif model_type == "PCA (Dimensionality Reduction)":
         "Select feature columns (numeric only)",
         numeric_columns
     )
-
-    max_components = len(features)
 
     if len(features) < 3:
         st.warning("Please select at least 3 features for PCA.")
@@ -549,21 +547,33 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
     with st.expander("CLICK HERE to learn more about the principal components"):
         st.write(
-            "The principal components are new linear combinations of the data ranked by importance. We can imagine them like artificial axes that rotate and project high-dimensional data into a lower dimensional space. There is a tradeoff between simplifying the data and retaining information."
+            "The principal components are new linear combinations of the data ranked by importance. They project high-dimensional data into lower dimensions."
         )
 
     from sklearn.decomposition import PCA
 
     st.markdown("-----------------------------------------------------------------")
 
-    if st.button("Run PCA"):
-        pca = PCA(n_components=n_components)
-        X_pca = pca.fit_transform(X_scaled)
+    # -------------------------
+    # PCA STATE HANDLING (FIX)
+    # -------------------------
+
+    run_pca = st.button("Run PCA")
+
+    if run_pca or "X_pca" in st.session_state:
+
+        if run_pca:
+            pca = PCA(n_components=n_components)
+            st.session_state.pca_model = pca
+            st.session_state.X_pca = pca.fit_transform(X_scaled)
+            st.session_state.explained = pca.explained_variance_ratio_
+            st.session_state.cumulative = st.session_state.explained.cumsum()
+
+        X_pca = st.session_state.X_pca
+        explained = st.session_state.explained
+        cumulative = st.session_state.cumulative
 
         st.success("✅ PCA completed!")
-
-        explained = pca.explained_variance_ratio_
-        cumulative = explained.cumsum()
 
         st.markdown("-----------------------------------------------------------------")
         st.write("#### Model Evaluation")
@@ -625,15 +635,15 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
             with st.expander("CLICK HERE to learn more about this graphic"):
                 st.write(
-                    "This graph illustrates the simplification of our multi-dimensional data by projecting it onto the first two principal components."
+                    "This graph shows PCA projection onto the first two components."
                 )
 
         st.markdown("-----------------------------------------------------------------")
 
+        # -------------------------
+        # Variance Explained
+        # -------------------------
         st.markdown("### 2) 📊 Variance Explained by Each Principal Component")
-        st.write(
-            "Each principal component carries variance from the dataset. Below are their contributions."
-        )
 
         for i, var in enumerate(explained):
             st.write(f"#### PC{i+1}: {var:.4f}")
@@ -654,24 +664,16 @@ elif model_type == "PCA (Dimensionality Reduction)":
         ax4.set_xlabel('Principal Component')
         ax4.set_ylabel('Variance Explained')
         ax4.set_title('Variance Explained by Each Principal Component')
-
         ax4.set_xticks(components)
         ax4.grid(True, axis='y')
 
         st.pyplot(fig4)
 
-        with st.expander("CLICK HERE to learn more about this plot"):
-            st.write(
-                "This bar chart shows how much variance each principal component explains."
-            )
-
-        with st.expander("CLICK HERE to learn more about explained variance"):
-            st.write(
-                "Explained variance shows how much information each component retains."
-            )
-
         st.markdown("-----------------------------------------------------------------")
 
+        # -------------------------
+        # Scree Plot
+        # -------------------------
         st.markdown("### 3) 📉 Scree Plot")
 
         import numpy as np
@@ -698,13 +700,16 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         with st.expander("CLICK HERE to learn more about the scree plot"):
             st.write(
-                "The scree plot helps identify the optimal number of components."
+                "The scree plot shows how variance accumulates across components."
             )
 
         st.markdown("-----------------------------------------------------------------")
 
+        # -------------------------
+        # Feature Contributions
+        # -------------------------
         loadings_df = pd.DataFrame(
-            pca.components_,
+            st.session_state.pca_model.components_,
             columns=features,
             index=[f'PC{i+1}' for i in range(n_components)]
         )
@@ -720,7 +725,6 @@ elif model_type == "PCA (Dimensionality Reduction)":
             ax2.set_title("Feature Contributions: PC1 vs PC2")
             ax2.set_xlabel("Loading Value")
             ax2.set_ylabel("Feature")
-            ax2.legend(title="Principal Components")
 
             st.markdown("### 4) 📌 Feature Contributions")
 
@@ -732,9 +736,8 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         with st.expander("CLICK HERE to learn more about feature contributions"):
             st.write(
-                "Feature loadings show how each variable contributes to each principal component."
+                "Feature loadings show how variables contribute to principal components."
             )
-
 ################
 # K-MEANS CLUSTERING
 ################
