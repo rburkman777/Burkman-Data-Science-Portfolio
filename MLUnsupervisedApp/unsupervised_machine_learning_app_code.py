@@ -944,7 +944,7 @@ elif model_type == "K-Means Clustering":
             st.write(
                 "The graph on the left plots the cluster sum of squares against the different values of k. It is a useful tool for 'The Elbow Method.' The Elbow Method helps identify the point where adding more clusters "
                 "does not significantly improve model fit (to find this point, we should look at where the graph on the left 'bends.'). \n\n" \
-                "The graph on the right shows how different values of k might affect the sihouette score. The Silhouette Score measures how well-separated the clusters are. Please be encouraged to try out the k value that optimizes your silhouette score using this information!"
+                "The graph on the right shows how different values of k might affect the sihouette score. The silhouette score measures how well-separated the clusters are. Please be encouraged to try out the k value that optimizes your silhouette score using this information!"
             )
 
         st.markdown("-----------------------------------------------------------------")
