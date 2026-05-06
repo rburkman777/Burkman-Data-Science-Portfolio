@@ -157,6 +157,7 @@ elif model_type == "K-Means Clustering" and data_option == "Built-in Dataset":
         "* time_signature: the musical time signature of the song \n\n" )
 
 
+
 # =============================
 # 🌳 HIERARCHICAL CLUSTERING
 # =============================
@@ -249,70 +250,35 @@ if model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
-    # Step 4: View Dendrogram
+    # Step 4: Dendrogram
     # -------------------------
 
-    st.markdown("#### Step Four: View Dendrogram")
+    # we use the code below to stop the user from moving on until they choose a linkage method
 
-    from scipy.cluster.hierarchy import linkage, dendrogram
-
-    # 🚨 HARD GATE: prevent premature execution
     if linkage_method == "Select...":
         st.warning("Please choose a linkage method to continue.")
         st.stop()
+    st.markdown("#### Step Four: View Dendrogram")
 
-    # build linkage matrix
+    # we use this to import our needed functions
+    from scipy.cluster.hierarchy import linkage, dendrogram
+
+    # we use this to plug in our linkeage method and our data to make the dendrogram
     Z = linkage(X_scaled, method=linkage_method)
 
-    # -------------------------
-    # LABEL SELECTION (FIXED)
-    # -------------------------
-
-    labels = df.index.astype(str).tolist()
-
-    if len(df) <= 200 and data_option != "Built-in CSV":
-
-        st.write("Optional: Choose a feature for dendrogram labels")
-
-        label_column = st.selectbox(
-            "Dendrogram label feature",
-            ["Index"] + df.columns.tolist()
-        )
-
-        if label_column != "Index":
-            labels = df[label_column].astype(str).tolist()
-
-    else:
-        if data_option == "Built-in CSV":
-            st.info("Custom dendrogram labels are disabled for built-in datasets.")
-        else:
-            st.info("Using index labels (dataset too large for customization).")
-
-    # -------------------------
-    # CRITICAL FIX: align labels with dendrogram ordering
-    # -------------------------
-
-    dendro = dendrogram(Z, no_plot=True)
-    ordered_labels = [labels[i] for i in dendro["leaves"]]
-
-    # -------------------------
-    # PLOT
-    # -------------------------
-
+    # this sets some parameters for our figure
     fig, ax = plt.subplots(figsize=(12, 5))
-
-    dendrogram(
-        Z,
-        ax=ax,
-        labels=ordered_labels
-    )
-
+    dendrogram(Z, ax=ax, labels=labels)
     ax.set_title("Hierarchical Clustering Dendrogram")
     ax.set_xlabel("Data Points")
     ax.set_ylabel("Distance")
 
-    st.write("This visualization shows how observations merge into clusters.")
+    # this plots our figure
+
+    st.write("This is a visualization of the model based on the inputs you have given thus far. You will notice that it branches out into clusters!")
+
     st.pyplot(fig)
+
     with st.expander("CLICK HERE to learn more about the dendrogram"):
         st.write(
             "The dendrogram is a visualization of our tree-strcutured model and shows how data points are split into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
