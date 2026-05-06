@@ -335,15 +335,22 @@ if model_type == "Hierarchical Clustering":
         # this calculates our sihouette score using our data and our clustering data
         score = silhouette_score(X_scaled, cluster_labels)
 
-        st.markdown("### 📊 Silhouette Score")
-        st.markdown(f"## {score:.4f}")
+        st.markdown("### Quick Model Evaluation")
+        st.markdown(f"#### 📊 Silhouette Score: {score:.4f}")
 
         with st.expander("CLICK HERE to learn more about silhouette score"):
             st.write(
                 "The silhouette score is a performance metric that measures how well-separated your clusters are. "
                 "Values closer to 1 indicate well-defined clusters, while values near 0 suggest overlap. 0.5 is an alright score."
             )
+        st.markdown("-----------------------------------------------------------------")
 
+        st.write("#### Full Model Evaluation")
+        st.write("1) Principal Components Visualization \n\n" \
+        "2) K-Optimization Graph \n\n"
+        "3) Model Logistics")
+       
+       
         # -------------------------
         # PCA Visualization
         # -------------------------
@@ -358,7 +365,7 @@ if model_type == "Hierarchical Clustering":
 
         st.markdown("-----------------------------------------------------------------")
 
-        st.markdown("### 📉 PCA Visualization (2D)")
+        st.markdown("### 1) 📉 PCA Visualization (2D)")
 
         # we plot everything onto a visualization of how the hierarchical clustering clusters the data
         # based on user input
@@ -384,7 +391,68 @@ if model_type == "Hierarchical Clustering":
         st.pyplot(fig2)
 
         with st.expander("CLICK HERE to learn more about this graphic"):
-            st.write("This plot helps illustrate how the clusters visible on the dendrogram fit together on a two-dimensional plane. It does this by plotting the data points based on the two largest principal components (which are nex axes identified by the model that simplify data composed of many features)")
+            st.write("This plot helps illustrate how the clusters visible on the dendrogram fit together on a two-dimensional plane. It does this by plotting the data points based on the two largest principal components (which are axes identified by the model that simplify data composed of many features)")
+
+        st.markdown("-----------------------------------------------------------------")
+
+
+        ##################
+        #Silhouette Score
+        ##################
+
+        st.markdown("### 2) 📈 K Optimization (Silhouette Analysis)")
+
+        from sklearn.cluster import AgglomerativeClustering
+        from sklearn.metrics import silhouette_score
+        import numpy as np
+
+        k_range = range(2, 11)
+        sil_scores = []
+
+        for k_test in k_range:
+
+            # use SAME linkage the user selected
+            if linkage_method == "ward":
+                model = AgglomerativeClustering(
+                    n_clusters=k_test,
+                    linkage="ward",
+                    metric="euclidean"
+                )
+            else:
+                model = AgglomerativeClustering(
+                    n_clusters=k_test,
+                    linkage=linkage_method,
+                    metric="euclidean"
+                )
+
+            labels = model.fit_predict(X_scaled)
+
+            # silhouette requires more than 1 cluster present
+            score = silhouette_score(X_scaled, labels)
+            sil_scores.append(score)
+
+        # Plot results
+        fig3, ax3 = plt.subplots()
+        ax3.plot(list(k_range), sil_scores, marker="o")
+        ax3.set_xticks(list(k_range))
+        ax3.set_xlabel("Number of Clusters (k)")
+        ax3.set_ylabel("Average Silhouette Score")
+        ax3.set_title(f"Silhouette Analysis ({linkage_method} linkage)")
+        ax3.grid(True, alpha=0.3)
+
+        st.pyplot(fig3)
+
+        # Best k
+        best_k = list(k_range)[np.argmax(sil_scores)]
+        best_score = max(sil_scores)
+
+        st.success(f"Best k by silhouette: {best_k} (score = {best_score:.3f})")
+
+        with st.expander("CLICK HERE to learn more this graphic"):
+            st.write(
+            "This graphic runs your model for multiple different possible k clusters under the parameters you chose. This let's you see exactly which number of k clusters"
+            " actually optimalizes your silhouette score."
+        )
 
         st.markdown("-----------------------------------------------------------------")
 
@@ -396,7 +464,7 @@ if model_type == "Hierarchical Clustering":
         results = df.copy()
         results["Cluster"] = cluster_labels
 
-        st.write("### Model Logistics")
+        st.write("### 3) Model Logistics")
         st.markdown("#### 📊 Cluster Assignments")
         st.write("Here is information about which cluster the model classified each specific point of data into.")
         st.dataframe(results, height=200, use_container_width=True)
@@ -517,6 +585,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
         # we confirm that we have at least two components 
         if n_components >= 2:
             import matplotlib.pyplot as plt
+            import numpy as np
 
             # we set up the code for our graphic
             fig, ax = plt.subplots()
@@ -584,23 +653,34 @@ elif model_type == "PCA (Dimensionality Reduction)":
         # -------------------------
         # Scree Plot
         # -------------------------
-        st.markdown("### 📉 Scree Plot")
 
         # we establish our scree plot
+        st.markdown("### 📉 Scree Plot")
+
+        # run PCA again using ALL components (not slider-limited)
+        pca_full = PCA(n_components=len(features))
+        X_pca_full = pca_full.fit_transform(X_scaled)
+
+        explained_full = pca_full.explained_variance_ratio_
+        cumulative_full = np.cumsum(explained_full)
+
         fig3, ax3 = plt.subplots()
 
-        ax3.plot(range(1, len(explained)+1), cumulative, marker='o')
+        ax3.plot(range(1, len(explained_full) + 1), cumulative_full, marker='o')
         ax3.set_xlabel("Number of Components")
         ax3.set_ylabel("Cumulative Variance")
-        ax3.set_title("Explained Variance")
+        ax3.set_title("Full PCA Scree Plot (All Features)")
+        ax3.grid(True, alpha=0.3)
 
-        # this displays our plot in the app
         st.pyplot(fig3)
 
         with st.expander("CLICK HERE to learn more about the scree plot"):
             st.write("The scree plot shows you how much explained variance you're gaining with each principal component. If you are not gainging a lot at a certain point, you may want to simplify your model. You might want to look for the 'eblow' in the plot -- a point at which additional components offer limited model improvement.")
 
         st.markdown("### 📊 Variance Explained by Each Principal Component")
+
+        st.markdown("-----------------------------------------------------------------")
+
 
         # we outline some graphic parameters
         fig4, ax4 = plt.subplots(figsize=(8, 6))
