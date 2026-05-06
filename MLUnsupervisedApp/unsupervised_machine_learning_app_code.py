@@ -45,19 +45,19 @@ if model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
     st.write("### You chose Hierarchical Clustering 👑!")
     st.write("Now let's get a dataset in order for you. You can upload one or use a built-in dataset. You can set up your data source below.")
-    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the sample data for an example")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * We recommend that the dataset has 2,000 entries or less to avoid processing issues \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the sample data for an example")
     st.markdown("-----------------------------------------------------------------")
 elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("-----------------------------------------------------------------")
     st.write("### You chose PCA (Dimensionality Reduction)🔻")
     st.write("Let's get you a dataset to work with. You can use the built in dataset or upload your own. You can set up your dataset below.")
-    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * The data has at least three features \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * We recommend that the dataset has 2,000 entries or less to avoid processing issues \n\n * The data has at least three features \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
     st.markdown("-----------------------------------------------------------------")
 elif model_type == "K-Means Clustering":
     st.markdown("-----------------------------------------------------------------")
     st.write("### You chose K-Means Clustering ✨!")
     st.write("Let's get you a dataset to work with. You can use the built in dataset or upload your own")
-    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * We recommend that the dataset has 2,000 entries or less to avoid processing issues \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
     st.markdown("-----------------------------------------------------------------")
 data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"]) # here is another selection box to allow the user to choose whether they upload the data or take the built-in dataset 
 
