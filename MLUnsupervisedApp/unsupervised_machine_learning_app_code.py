@@ -753,12 +753,18 @@ elif model_type == "PCA (Dimensionality Reduction)":
         ax2.set_ylabel("Feature")
 
         st.markdown("### 4) 📌 Feature Contributions")
+        st.write("These give us an idea of how our features are impacting the model.")
 
         st.pyplot(fig2)
 
     st.markdown("#### Table of Most Important Features")
 
     st.dataframe(loadings_df.style.format("{:.3f}"))
+    
+    with st.expander("CLICK HERE to learn more about feature contributions"):
+        st.write("Feature contributions are measurements of how each input model impacts the model and principal components. A positive loading means that higher values of a given feature push a sample's score up along that component's axis. A negative loading does the opposite. A graph of the impact of each feature " \
+            "on the principal components in the aforementioned manner is at the top of this section (it only shows the top two principal components in terms of explained variance). The information is also presented for all the principal components in the table." \
+            "each principal component is also present for easier viewing. ")
 
 ################
 # K-MEANS CLUSTERING
