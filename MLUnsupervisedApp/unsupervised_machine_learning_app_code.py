@@ -547,7 +547,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
         2
     )
 
-    from sklearn.decomposition import PCA
+    from sklearn.decomposition import PCA # we import a useful tool
 
     with st.expander("CLICK HERE to learn more about the principal components"):
         st.write("The principal components are new linear combinations of the data ranked by importance. We can imagine them like artificial axes that rotate and project 'high-dimensional' data (data with a lot of features) into a lower dimensional space. There is a tradeoff between having simplifying the data through dimensionality reduction "
@@ -556,11 +556,16 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
     st.markdown("-----------------------------------------------------------------")
 
-    pca_signature = (tuple(features), scale_option, n_components)
 
+    pca_signature = (tuple(features), scale_option, n_components) # here we make a 'fingerprint' of our setup
+
+    # this checks if the model needs to be reran 
+    
     if "pca_signature" not in st.session_state or st.session_state.pca_signature != pca_signature:
 
-        pca = PCA(n_components=n_components)
+        # these lines run the model and store the results
+
+        pca = PCA(n_components=n_components) 
 
         st.session_state.pca_model = pca
         st.session_state.X_pca = pca.fit_transform(X_scaled)
@@ -568,10 +573,11 @@ elif model_type == "PCA (Dimensionality Reduction)":
         st.session_state.cumulative = st.session_state.explained.cumsum()
         st.session_state.pca_signature = pca_signature
 
-    # Safety check
+    # Safety check - we include this to stop the model if it doesn't run
     if "X_pca" not in st.session_state:
         st.stop()
 
+    # these lines load our stored results
     X_pca = st.session_state.X_pca
     explained = st.session_state.explained
     cumulative = st.session_state.cumulative
@@ -594,15 +600,18 @@ elif model_type == "PCA (Dimensionality Reduction)":
     # -------------------------
     st.markdown("### 1) ✏️ Visualization of Data")
 
+    # we make sure they used at least two components before loading our packages
     if n_components >= 2:
         import matplotlib.pyplot as plt
         import numpy as np
 
+        # we use this to set up the coloring for our features
         color_options = [
             col for col in df.columns
             if df[col].nunique() <= 12
         ]
 
+        # we set up our select box if the user wants to color based on a feature
         color_feature = st.selectbox(
             "Color PCA plot by feature (≤12 unique values)",
             ["None"] + color_options
@@ -610,6 +619,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         fig, ax = plt.subplots()
 
+        # code for if the user chooses not to color based on a feature -- we set up the chart here 
         if color_feature == "None":
             ax.scatter(X_pca[:, 0], X_pca[:, 1], alpha=0.7)
         else:
@@ -630,6 +640,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
             )
             ax.add_artist(legend)
 
+        # we establish our chart labels 
         ax.set_xlabel(f"PC1 ({explained[0]*100:.1f}%)")
         ax.set_ylabel(f"PC2 ({explained[1]*100:.1f}%)")
         ax.set_title("PCA Projection")
