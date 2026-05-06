@@ -267,7 +267,7 @@ if model_type == "Hierarchical Clustering":
     labels = df.index.astype(str).tolist()
 
     # allow customization ONLY if small dataset AND not built-in CSV
-    if len(df) <= 200 and dataset_source != "Built-in CSV":
+    if len(df) <= 200 and data_option != "Built-in CSV":
 
         st.write("Optional: Select a feature for dendrogram labels")
 
