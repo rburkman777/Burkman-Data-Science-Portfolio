@@ -594,44 +594,44 @@ elif model_type == "PCA (Dimensionality Reduction)":
         # -------------------------
         st.markdown("### 1) ✏️ Visualization of Data")
 
-# -------------------------
-# PCA Scatter Plot (with optional coloring)
-# -------------------------
-st.markdown("### 1) ✏️ Visualization of Data")
+        # -------------------------
+        # PCA Scatter Plot (with optional coloring)
+        # -------------------------
+        st.markdown("### 1) ✏️ Visualization of Data")
 
-if n_components >= 2:
-    import numpy as np
-    import matplotlib.pyplot as plt
+        if n_components >= 2:
+            import numpy as np
+            import matplotlib.pyplot as plt
 
-    # Identify columns with < 12 unique values
-    low_cardinality_cols = [
-        col for col in df.columns
-        if df[col].nunique() < 12
-    ]
+                # Identify columns with < 12 unique values
+            low_cardinality_cols = [
+                col for col in df.columns
+                if df[col].nunique() < 12
+            ]
 
-    # Let user optionally choose a coloring feature
-    color_feature = None
-
-    if len(low_cardinality_cols) > 0:
-        color_feature = st.selectbox(
-            "Optional: Choose a feature to color the data points",
-            ["None"] + low_cardinality_cols
-        )
-
-        if color_feature == "None":
+            # Let user optionally choose a coloring feature
             color_feature = None
-    else:
-        st.info("No categorical features (less than 12 unique values) available for coloring.")
 
-    # Create plot
-    fig, ax = plt.subplots()
+            if len(low_cardinality_cols) > 0:
+                color_feature = st.selectbox(
+                    "Optional: Choose a feature to color the data points",
+                    ["None"] + low_cardinality_cols
+                )
 
-    # If a valid feature is selected → color by category
-    if color_feature is not None:
-        categories = df[color_feature].astype(str)
-        unique_vals = categories.unique()
+                if color_feature == "None":
+                    color_feature = None
+            else:
+                st.info("No categorical features (less than 12 unique values) available for coloring.")
 
-        for val in unique_vals:
+            # Create plot
+            fig, ax = plt.subplots()
+
+            # If a valid feature is selected → color by category
+            if color_feature is not None:
+                categories = df[color_feature].astype(str)
+                unique_vals = categories.unique()
+
+                for val in unique_vals:
             mask = categories == val
             ax.scatter(
                 X_pca[mask, 0],
@@ -640,27 +640,27 @@ if n_components >= 2:
                 alpha=0.7
             )
 
-        ax.legend(title=color_feature)
+                ax.legend(title=color_feature)
 
-    # Otherwise → normal scatter
-    else:
-        ax.scatter(
-            X_pca[:, 0],
-            X_pca[:, 1],
-            alpha=0.7
-        )
+            # Otherwise → normal scatter
+            else:
+                ax.scatter(
+                    X_pca[:, 0],
+                    X_pca[:, 1],
+                    alpha=0.7
+                )
 
-    # Labels and title
-    ax.set_xlabel(f"PC1 ({explained[0]*100:.1f}%)")
-    ax.set_ylabel(f"PC2 ({explained[1]*100:.1f}%)")
-    ax.set_title("PCA Projection")
+            # Labels and title
+            ax.set_xlabel(f"PC1 ({explained[0]*100:.1f}%)")
+            ax.set_ylabel(f"PC2 ({explained[1]*100:.1f}%)")
+            ax.set_title("PCA Projection")
 
-    # Display plot
-    st.pyplot(fig)
+            # Display plot
+            st.pyplot(fig)
 
-    # Explanation
-    with st.expander("CLICK HERE to learn more about this graphic"):
-        st.write(
+            # Explanation
+            with st.expander("CLICK HERE to learn more about this graphic"):
+                st.write(
             "This graph illustrates the simplification of high-dimensional data using the two principal components "
             "that preserve the most variance. If a coloring feature is selected, the points are grouped visually by "
             "that variable to help identify patterns or separation between categories."
