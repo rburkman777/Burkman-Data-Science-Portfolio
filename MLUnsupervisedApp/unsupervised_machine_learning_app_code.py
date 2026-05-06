@@ -51,7 +51,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("-----------------------------------------------------------------")
     st.write("### You chose PCA (Dimensionality Reduction)🔻")
     st.write("Let's get you a dataset to work with. You can use the built in dataset or upload your own. You can set up your dataset below.")
-    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
+    st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * The data has at least three features \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
     st.markdown("-----------------------------------------------------------------")
 elif model_type == "K-Means Clustering":
     st.markdown("-----------------------------------------------------------------")
@@ -121,7 +121,7 @@ if model_type == "Hierarchical Clustering" and data_option == "Built-in Dataset"
             "* Murder: the state's murder rate per 100,000 residents \n\n"
             "* Assult: the state's assault rate per 100,000 residents \n\n" 
             "* UrbanPop: the percentage of the state's population living in urban areas \n\n"
-            "* Rape: the state's rape rate per 100,000 residents")
+            "* Armed Robberies: the state's armed robbery rate per 100,000 residents")
 
 elif model_type == "PCA (Dimensionality Reduction)" and data_option == "Built-in Dataset":
     with st.expander("CLICK HERE for an explanation on the variables in this dataset"):
@@ -493,7 +493,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
     st.markdown("-----------------------------------------------------------------")
     st.markdown("#### Step One: Select Features")
-    st.write("We begin by choosing our features. These are the features of your dataset that the model will perform on. For PCA, you must choose at least two features. ")
+    st.write("We begin by choosing our features. These are the features of your dataset that the model will perform on. For PCA, you must choose at least three features. ")
 
     # we use the code below to allow the user to choose the features they want to use and to confirm that they are numeric
     numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
@@ -543,7 +543,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
     # -------------------------
     # Step 3: Choose Components
     # -------------------------
-    st.markdown("#### Step Three: Select Number of Components")
+    st.markdown("#### Step Three: Select Number of Principal Components")
 
     # we create a slider so the user can input their preferred number of principal components 
     max_components = len(features)
@@ -555,8 +555,8 @@ elif model_type == "PCA (Dimensionality Reduction)":
     len(features),
     2
 ) 
-    with st.expander("CLICK HERE to learn more about the components"):
-        st.write("The components are new linear combinations of the data ranked by importance. We can imagine them like artificial axes that rotate and project 'high-dimensional' data (data with a lot of features) into a lower dimensional space. There is a tradeoff between having simplfying the data through dimentionality reduction "
+    with st.expander("CLICK HERE to learn more about the principal components"):
+        st.write("The principal components are new linear combinations of the data ranked by importance. We can imagine them like artificial axes that rotate and project 'high-dimensional' data (data with a lot of features) into a lower dimensional space. There is a tradeoff between having simplfying the data through dimentionality reduction "
         "and retaining greater information about the data. A higher number of components relative to the number of initial features prioiritzes information retention and accuracy while a lower number prioritizes simplicity.")
 
     from sklearn.decomposition import PCA
@@ -572,24 +572,27 @@ elif model_type == "PCA (Dimensionality Reduction)":
         # -------------------------
         # Explained Variance
         # -------------------------
-        st.markdown("### 📊 Explained Variance")
-        with st.expander("CLICK HERE to learn more about explained variance"):
-            st.write("Explained variance is a measurement of how much variance from the dataset each principal component perserves. A larger pricipial component means that more information was perserved. Each principal component has a certain explained variance, as one can see below. " \
-            "We generally want the cumulative variance' (the sums of the principal variants), to be larger (closer to 1) because this means more information was perserved.")
 
         # this is code for a loop that goes through each of our principal components and determines 
-        # how much variance each of them preserves 
+        # how much variance each of them preserves. We will use this more later, but for now it is important to set up the 'explained' variable'
         explained = pca.explained_variance_ratio_
         cumulative = explained.cumsum()
 
         # this gives us the sum of our variance 
 
         st.markdown("-----------------------------------------------------------------")
+        st.write("#### Model Evaluation")
+        st.write("1) Visualization of Data \n\n" 
+        "2) Variance Explained by Each Principal Component \n\n" 
+        "3) Scree Plot \n\n" 
+        "4) Feature Contributions")
+
+        st.markdown("-----------------------------------------------------------------")
 
         # -------------------------
         # Scatter Plot (2D only)
         # -------------------------
-        st.markdown("### ✏️ Visualization of Data")
+        st.markdown("### 1) ✏️ Visualization of Data")
 
         # we confirm that we have at least two components 
         if n_components >= 2:
@@ -609,14 +612,19 @@ elif model_type == "PCA (Dimensionality Reduction)":
             st.pyplot(fig)
 
             with st.expander("CLICK HERE to learn more about this graphic"):
-                st.write("The above graph plots our principal components with the higest explained variances. The aim of this graph is to use these components to observe relationships in the data easily that we could not otherwise easily see. What you are looking at is the data " \
-                "simplified onto a two-dimensional axis.")
+                st.write("This graph illustrates the simplification of our multi-dimenstional data. In other words, it is several features plotted in two dimensions using the principal components with the higest explained variances. The aim of this graph is to use these components to observe relationships in the data easily that we could not otherwise easily see. We may also not observe" \
+                "   meaningful relationships; the point is to get a grasp the nature of high-dimensional data.")
 
         st.markdown("-----------------------------------------------------------------")
 
-        st.markdown("### 📊 Variance Explained by Each Principal Component")
+        st.markdown("### 2) 📊 Variance Explained by Each Principal Component")
+        st.write("Each prinicpal component carries with it a certain amount of variance/information from the dataset. Below is each prinicipal component's score for information preservation. The cumulative variance adds these up and gives total model variance.")
+        for i, var in enumerate(explained):
+            st.write(f"#### PC{i+1}: {var:.4f}")
 
-
+        st.write(f"#### **Cumulative Variance:** {cumulative[-1]:.4f}")
+        
+        st.write("We can also plot how much each feature contributes to the total variance, as illustrated below:")
         # we outline some graphic parameters
         fig4, ax4 = plt.subplots(figsize=(8, 6))
 
@@ -643,18 +651,18 @@ elif model_type == "PCA (Dimensionality Reduction)":
         st.pyplot(fig4)
         with st.expander("CLICK HERE to learn more about this plot"):
             st.write("Theis plot turns our above scree plot into a bar graph and portrays how much each principal component increases model variance.")
-
-        for i, var in enumerate(explained):
-            st.write(f"#### PC{i+1}: {var:.4f}")
-
-        st.write(f"#### **Cumulative Variance:** {cumulative[-1]:.4f}")
+        with st.expander("CLICK HERE to learn more about explained variance"):
+            st.write("Explained variance is a measurement of how much variance from the dataset each principal component perserves. A larger pricipial component means that more information was perserved. Each principal component has a certain explained variance, as one can see below. " \
+            "We generally want the cumulative variance' (the sums of the principal variants), to be larger (closer to 1) because this means more information was perserved.")
         
-       
+
+        st.markdown("-----------------------------------------------------------------")
+
         # -------------------------
         # Scree Plot
         # -------------------------
         # we establish our scree plot
-        st.markdown("### 📉 Scree Plot")
+        st.markdown("### 3) 📉 Scree Plot")
 
         import numpy as np
         from sklearn.decomposition import PCA
@@ -683,15 +691,16 @@ elif model_type == "PCA (Dimensionality Reduction)":
             st.pyplot(fig3)
 
         with st.expander("CLICK HERE to learn more about the scree plot"):
-            st.write("The scree plot shows you how much explained variance you're gaining with each principal component. If you are not gainging a lot at a certain point, you may want to simplify your model. You might want to look for the 'eblow' in the plot -- a point at which additional components offer limited model improvement.")
+            st.write("The scree plot shows you how much explained variance you're gaining with each principal component. If you are not gainging a lot at a certain point, you may want to simplify your model. You might want to look for the 'eblow' in the plot -- a point at which additional components offer limited model improvement." \
+            " It looks like the 'bend' of an elbow.")
 
 
         st.markdown("-----------------------------------------------------------------")
 
-        #############
-        # Variance from each PC
-        #############
 
+        #----------------------
+        # Variance from each PC
+        #----------------------
 
         # the code below builds our table that shows how each feature contributes to the principal components
         loadings_df = pd.DataFrame(
@@ -716,7 +725,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
         ax2.set_ylabel("Feature")
         ax2.legend(title="Principal Components")
         
-        st.markdown("### 📌 Feature Contributions (Top 2 Principal Components) Graph")
+        st.markdown("### 4) 📌 Feature Contributions")
         
         # this outputs our graphic in Streamlit
         st.pyplot(fig2)
@@ -728,11 +737,10 @@ elif model_type == "PCA (Dimensionality Reduction)":
         st.dataframe(loadings_df.style.format("{:.3f}")) # this yields the sum of the principal component variance
 
         with st.expander("CLICK HERE to learn more about feature contributions"):
-            st.write("Feature contributions are measurements of how each input model impacts the model and principal components. A positive score "
-            " means that  A positive loading means that higher values of a given feature push a sample's score up along that component's axis. A negative loading does the opposite. A graph of the impact of each feature on " \
+            st.write("Feature contributions are measurements of how each input model impacts the model and principal components. A positive loading means that higher values of a given feature push a sample's score up along that component's axis. A negative loading does the opposite. A graph of the impact of each feature " \
+            "on the principal components in the aforementioned manner is at the top of this section (it only shows the top two principal components in terms of explained variance). The information is also presented for all the principal components in the table." \
             "each principal component is also present for easier viewing. ")
         
-
 
 ################
 # K-MEANS CLUSTERING
@@ -843,12 +851,17 @@ elif model_type == "K-Means Clustering":
         score = silhouette_score(X_scaled, clusters)
 
         # we use st.markdown() to portray out silhouette score inforamtion
-        st.markdown("### 📊 Silhouette Score")
-        st.markdown(f"## {score:.4f}")
+        st.markdown("### 📊 Quick Model Evaluation")
+        st.markdown(f"#### Silhouette Score: {score:.4f}")
 
         with st.expander("CLICK HERE to learn more about the silhouette score"):
             st.write("This a measure of model performance telling us how well seperated our clusters are. A score closer to 1 means that the clusters are more well seperated while a score closer to 0 indicates clusters that overlap. A decent score is usually one above 0.5")
 
+        st.markdown("-----------------------------------------------------------------")
+        st.markdown("### 📊 Full Model Evaluation")
+        st.write("1) Cluster Visualization \n\n" 
+        "2) Choosing Optimal k \n\n" \
+        "3) Additional Model Info and Logistics")
 
 
         # -------------------------
@@ -861,7 +874,7 @@ elif model_type == "K-Means Clustering":
         X_pca = pca.fit_transform(X_scaled)
 
         st.markdown("-----------------------------------------------------------------")
-        st.markdown("### 📉 Cluster Visualization (PCA Projection)")
+        st.markdown("### 1) 📉 Cluster Visualization (PCA Projection)")
 
         # we set up the parameters of our plot below
         fig, ax = plt.subplots()
@@ -896,7 +909,7 @@ elif model_type == "K-Means Clustering":
         # -------------------------
         # Elbow + Silhouette Analysis
         # -------------------------
-        st.markdown("### 📉 Choosing Optimal k")
+        st.markdown("### 2) 📉 Choosing Optimal k")
 
         # these lines set up a number of variables we use to have multiple k values appear in our plot
         ks = range(2, 11)
@@ -944,10 +957,12 @@ elif model_type == "K-Means Clustering":
         results = df.copy()
         results["Cluster"] = clusters
             
-        st.markdown("### 📊 Additional Model Info & Logistics")
+        st.markdown("### 3) 📊 Additional Model Info & Logistics")
         st.space()
         st.markdown("#### 📊 Cluster Assignments")
+        st.write("Here you can see which cluster each of the datapoints got assigned to")
         st.dataframe(results, use_container_width=True)
         st.space()
         st.markdown("### Cluster Sizes")
+        st.write("Here you can see the total number of data points in each cluster")
         st.write(results["Cluster"].value_counts())
