@@ -27,13 +27,13 @@ In order to run the app yourself, open up the MLStreamlitApp folder in visual st
 Once you have everything open in VSCode, go to the terminal (you can activate the terminal by pressing the third "button" from the bottom right with circle and a triangle). Once you have the terminal open, type "streamlit run (whatever you named the file).py" into the interface and hit enter (so if you don't change the name, you would type "streamlit run Elections_Streamlit_App_Code.py"). It should take you to the application. If that does not work, copy the second link that gets produced into the interface and paste it into a different browser than the one the application originally tried to open on.
 
 ## References
-The data came from FiveThirtyEight. Here is a link to interesting data from FiveThirtyEight: \n\n 
+The data came from FiveThirtyEight. Here is a link to interesting data from FiveThirtyEight: <br>
 [FiveThirtyEight Data](https://data.fivethirtyeight.com/)
 
-Cook Political Report is a great resource for further research on the nature of congressional distircts: \n\n
+Cook Political Report is a great resource for further research on the nature of congressional distircts: <br>
 [Cook Political Report](https://www.cookpolitical.com/pvi-map-and-district-list)
 
-Here is a guide to Streamlit: \n\n
+Here is a guide to Streamlit: <br>
 [Streamlit Guide](https://docs.streamlit.io/)
 
 
