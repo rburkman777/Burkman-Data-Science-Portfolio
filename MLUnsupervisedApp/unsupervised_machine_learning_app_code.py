@@ -481,6 +481,7 @@ if model_type == "Hierarchical Clustering":
 # PCA
 ################
 
+# we use an elif statement to establish our model type 
 elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("-----------------------------------------------------------------")
     st.header("📉 Principal Component Analysis (PCA)")
@@ -488,11 +489,12 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.write(
         "PCA is an unsupervised learning technique used to reduce the number of features "
         "while preserving as much variance as possible. It helps visualize high-dimensional data "
-        "and understand which features matter most. Follow the steps below and click the 'Run PCA' button at the end to activate the model."
+        "and understand which features matter most. Follow the steps below to activate the model."
     )
 
     st.markdown("-----------------------------------------------------------------")
     st.markdown("#### Step One: Select Features")
+    st.write("We begin by choosing our features. These are the features of your dataset that the model will perform on. For PCA, you must choose at least three features. ")
 
     numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
 
@@ -526,7 +528,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
     with st.expander("CLICK HERE to learn more about scaling the data"):
         st.write(
-            "Scaling ensures features contribute equally to PCA."
+            "Scaling ensures all features contribute equally to PCA."
         )
 
     st.markdown("-----------------------------------------------------------------")
@@ -548,27 +550,22 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("-----------------------------------------------------------------")
 
     # =====================================================
-    # 🔧 FIX: PCA STATE + SMART RECOMPUTE LOGIC
+    # 🔧 FIX: FULLY REACTIVE PCA (NO BUTTON NEEDED)
     # =====================================================
 
     pca_signature = (tuple(features), scale_option, n_components)
 
-    run_pca = st.button("Run PCA")
-
-    if "pca_signature" not in st.session_state:
-        st.session_state.pca_signature = None
-
-    if run_pca or st.session_state.pca_signature != pca_signature:
+    if "pca_signature" not in st.session_state or st.session_state.pca_signature != pca_signature:
 
         pca = PCA(n_components=n_components)
+
         st.session_state.pca_model = pca
         st.session_state.X_pca = pca.fit_transform(X_scaled)
         st.session_state.explained = pca.explained_variance_ratio_
         st.session_state.cumulative = st.session_state.explained.cumsum()
-
         st.session_state.pca_signature = pca_signature
 
-    # Only proceed if PCA exists
+    # Safety check
     if "X_pca" not in st.session_state:
         st.stop()
 
@@ -576,7 +573,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
     explained = st.session_state.explained
     cumulative = st.session_state.cumulative
 
-    st.success("✅ PCA ready!")
+    st.success("✅ PCA updated")
 
     st.markdown("-----------------------------------------------------------------")
     st.write("#### Model Evaluation")
