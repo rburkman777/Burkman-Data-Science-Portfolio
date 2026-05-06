@@ -278,6 +278,33 @@ if model_type == "Hierarchical Clustering":
 
     st.pyplot(fig)
 
+    # -------------------------
+    # FIX: Interactive dendrogram labels (only for small datasets)
+    # -------------------------
+
+    labels = df.index.astype(str).tolist()  # default fallback
+
+    if len(df) <= 200:
+
+    st.write("Optional: Customize dendrogram leaf labels")
+
+    # button toggles label customization
+    use_custom_labels = st.button("Choose a feature for dendrogram labels")
+
+    if use_custom_labels:
+
+        label_column = st.selectbox(
+            "Select feature for dendrogram labels",
+            df.columns.tolist()
+        )
+
+        labels = df[label_column].astype(str).tolist()
+
+        st.info(f"Using '{label_column}' as dendrogram labels")
+
+    else:
+        st.info("Dataset too large for custom dendrogram labels (must be ≤ 200 rows)")
+
     with st.expander("CLICK HERE to learn more about the dendrogram"):
         st.write(
             "The dendrogram is a visualization of our tree-strcutured model and shows how data points are split into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
