@@ -590,70 +590,60 @@ elif model_type == "PCA (Dimensionality Reduction)":
         st.markdown("-----------------------------------------------------------------")
 
 
-        st.markdown("### 1) ✏️ PCA Visualization (2D)")
-
         # -------------------------
-        # Safety check (prevents crashes)
+        # Scatter Plot (2D only)
         # -------------------------
-        if "X_pca" not in st.session_state:
-            st.warning("Please run PCA first.")
-            st.stop()
+        st.markdown("### 1) ✏️ Visualization of Data")
 
-        X_pca = st.session_state["X_pca"]
-        explained = st.session_state["explained"]
+        if n_components >= 2:
+            import matplotlib.pyplot as plt
+            import numpy as np
 
-        # -------------------------
-        # Find low-cardinality features for coloring
-        # -------------------------
-        low_cardinality_cols = [
-            col for col in df.columns
-            if df[col].nunique() < 12
-        ]
+            # -------------------------
+            # NEW: interactive color feature selector
+            # -------------------------
+            color_options = [
+                col for col in df.columns
+                if df[col].nunique() <= 12
+            ]
 
-        color_feature = None
-
-        if len(low_cardinality_cols) > 0:
             color_feature = st.selectbox(
-                "Optional: Choose a feature to color points",
-                ["None"] + low_cardinality_cols
+                "Color PCA plot by feature (≤12 unique values)",
+                ["None"] + color_options
             )
 
+            fig, ax = plt.subplots()
+
             if color_feature == "None":
-                color_feature = None
-        else:
-            st.info("No categorical features available for coloring.")
+                ax.scatter(X_pca[:, 0], X_pca[:, 1], alpha=0.7)
+            else:
+                categories = df[color_feature].astype(str)
 
-        # -------------------------
-        # Plot
-        # -------------------------
-        import matplotlib.pyplot as plt
-
-        fig, ax = plt.subplots()
-
-        if color_feature is not None:
-            categories = df[color_feature].astype(str)
-            unique_vals = categories.unique()
-
-            for val in unique_vals:
-                mask = categories == val
-                ax.scatter(
-                    X_pca[mask, 0],
-                    X_pca[mask, 1],
-                    label=str(val),
-                    alpha=0.7
+                scatter = ax.scatter(
+                    X_pca[:, 0],
+                    X_pca[:, 1],
+                    c=pd.factorize(categories)[0],
+                    cmap="tab10",
+                    edgecolor="k",
+                    alpha=0.8
                 )
 
-            ax.legend(title=color_feature)
+                legend = ax.legend(
+                    *scatter.legend_elements(),
+                    title=color_feature
+                )
+                ax.add_artist(legend)
 
-        else:
-            ax.scatter(X_pca[:, 0], X_pca[:, 1], alpha=0.7)
+            ax.set_xlabel(f"PC1 ({explained[0]*100:.1f}%)")
+            ax.set_ylabel(f"PC2 ({explained[1]*100:.1f}%)")
+            ax.set_title("PCA Projection")
 
-        # Labels
-        ax.set_xlabel(f"PC1 ({explained[0]*100:.1f}%)")
-        ax.set_ylabel(f"PC2 ({explained[1]*100:.1f}%)")
-        ax.set_title("PCA Projection")
+            st.pyplot(fig)
 
-        st.pyplot(fig)
+    with st.expander("CLICK HERE to learn more about this graphic"):
+        st.write(
+            "This graph illustrates the simplification of our multi-dimenstional data. In other words, it is several features plotted in two dimensions using the principal components with the higest explained variances. The aim of this graph is to use these components to observe relationships in the data easily that we could not otherwise easily see. We may also not observe meaningful relationships; the point is to get a grasp the nature of high-dimensional data."
+        )
         st.markdown("-----------------------------------------------------------------")
 
         st.markdown("### 2) 📊 Variance Explained by Each Principal Component")
