@@ -1,4 +1,3 @@
-
 import streamlit as st #loading streamlit and all its features
 import pandas as pd #loading pandas and all its features
 import seaborn as sns # loading seaborn and all its features
@@ -81,10 +80,10 @@ else:
     if model_type == "PCA (Dimensionality Reduction)":
         dataset_path = os.path.join(BASE_DIR, "data", "WineQT.csv") # set up path to sample dataset for decision tree
     elif model_type == "Hierarchical Clustering":
-        dataset_path = os.path.join(BASE_DIR, "data", "USArrests.csv") # set up path to sample dataset for decision tree
+        dataset_path = os.path.join(BASE_DIR, "data", "USArrests.csv")
+ # set up path to sample dataset for decision tree
     elif model_type == "K-Means Clustering":
-        dataset_path = os.path.join(BASE_DIR, "data", "spotify.csv") # set up path to sample dataset for decision tree
-
+        dataset_path = os.path.join(BASE_DIR, "data", "spotifysongs.csv") # set up path to sample dataset for decision tree
 
     if not os.path.exists(dataset_path):
         st.error(f"Dataset '{dataset_path}' not found.") # sets up error message if there is an issue
@@ -92,6 +91,11 @@ else:
 
     df = pd.read_csv(dataset_path) # creates dataframe for the sample, built-in data 
     st.success(f"Using built-in dataset: {os.path.basename(dataset_path)}") # success message for the dataset loading
+   
+    if model_type == "Hierarchical Clustering" and data_option == "Built-in Dataset":
+        df = df.set_index(df.columns[0])
+    if df is None:
+        st.stop()
 
 # -----------------------------
 # STEP 3: DISPLAY DATA
@@ -100,43 +104,57 @@ else:
 # we use st.write to display some information
 
 st.write("### 📊 Data Preview")
-st.write("Here's a preview of our data")
+if model_type == "Hierarchical Clustering" and data_option == "Built-in Dataset":
+    st.write("This is a dataset on crime statistics in the United States by state")
+elif model_type == "PCA (Dimensionality Reduction)" and data_option == "Built-in Dataset":
+    st.write("This is a dataset on various metrics of wine quality")
+elif model_type == "K-Means Clustering" and data_option == "Built-in Dataset":
+    st.write("This is a dataset of various Spotify song metrics")
+
 st.write(df) # we show our data 
+
 columns = df.columns.tolist() # retrieves column names so user can pick from them
 # we describe the sample data for the various models here -- give the user details about each feature
-if model_type == "Linear Regression" and data_option == "Built-in Dataset":
- with st.expander("CLICK HERE for an explainer on the variables in this dataset"):
-            st.write("* charges: this is the medical insurance bill for each patient. It is the target variable of the model. \n\n"
-                 "* sex: binary variable where 1 means the patient is a man and 0 means it is a woman \n\n"
-                 "* bmi: body mass index \n\n"
-                 "* children: how many children the individual has \n\n"
-                 "* smoker: binary variable to indicate whether the subject is a smoker or not \n\n"
-                 "* southwest: binary variable to indicate whether the subject lives in the southwest region of the country or not \n\n"
-                 "* southeast: binary variable to indicate whether the subject lives in the southeast region of the country or not \n\n"
-                 "* northwest: binary variable to indicate whether the subject lives in the northwest region of the country or not \n\n"
-                "* northeast: binary variable to indicate whether the subject lives in the northeast region of the country or not \n\n"
+if model_type == "Hierarchical Clustering" and data_option == "Built-in Dataset":
+    with st.expander("CLICK HERE for an explainer on the variables in this dataset"):
+            st.write("* State: the state being examined \n\n " 
+            "* Murder: the state's murder rate per 100,000 residents \n\n"
+            "* Assult: the state's assault rate per 100,000 residents \n\n" 
+            "* UrbanPop: the percentage of the state's population living in urban areas \n\n"
+            "* Rape: the state's rape rate per 100,000 residents")
 
-            )
-
-elif model_type == "PCA" and data_option == "Built-in Dataset":
+elif model_type == "PCA (Dimensionality Reduction)" and data_option == "Built-in Dataset":
     with st.expander("CLICK HERE for an explanation on the variables in this dataset"):
-        st.write("* admit: the target variable; whether the subject was admitted or not \n\n"
-        "* gre: the subject's GRE score \n\n"
-        "* gpa: the subjects grade-point average \n\n"
-        "* the subject's class rank")
+        st.write("* fixed accidity: the primary natural acids in wine (tartaric, malic, lactic, citric) that do not evaporate \n\n"
+        "* volatile acidity: team-distillable acids in wine, primarily acetic acid (vinegar) and ethyl acetate (nail polish remover) \n\n"
+        "* citric acid: a weak, organic acid with a sour flavor \n\n"
+        "* residual sugar: amount of sugar in the wine \n\n " 
+        "* chlorides: an electrolyte and essential mineral \n\n" 
+        "* free sulfer dioxide: unbound portion of added or natural sulfur dioxide that protects against oxidation and microbial spoilage. Crucial for wine stability  \n\n"
+        "* total sulfur dioxide: acts as a preservative against microbial spoilage and oxidation\n\n"
+        "* density: the mass per unit volume of wine\n\n"
+        "* pH: the acidity of the wine \n\n"
+        "* sulphates: \n\n" 
+        "* alcohol: the alcohol by volume of the wine\n\n"
+        "* qulaity: a measure of how 'good' the wine is \n\n"
+        "* Id: The wine's id number")
 
-elif model_type == "K-Nearest Neighbors (KNN)" and data_option == "Built-in Dataset":
+elif model_type == "K-Means Clustering" and data_option == "Built-in Dataset":
     with st.expander("CLICK HERE for an explanation on the variables in this dataset"):
-        st.write("* Outcome: the target variable. Whether the patient has diabetes or not \n\n"
-                 "* Age: patient age \n\n"
-                 "* Pregnancies: number of pregnancies patient has had in their life \n\n"
-                 "* Glucose: blood glucose level in patient \n\n"
-                 "* BloodPressure: patient blood pressure \n\n"
-                 "* SkinThickness: a measure of how thin the patient's skin is \n\n"
-                 "* Insulin: patient insulin level \n\n"
-                 "* BMI: paitient body mass index \n\n"
-                 "* Pedigree: diabetes pedigree function \n\n"
-                 "* Age: patient age in years")
+        st.write("* artists: the name of the artist(s) of the song \n\n"
+        "* track_name: name of the song \n\n"
+        "* popularity: how popular the song if on Spotify\n\n"
+        "* duration_ms: how long the song is \n\n"
+        "* danceability: a numerical metric (0.0 to 1.0) indicating how suitable a track is for dancing based on musical elements like tempo, rhythm stability, beat strength, and regularity \n\n"
+        "* energy: a measure from 0.0 to 1.0 representing a track's intensity, speed, and loudness \n\n" 
+        "* loudness: how loud the song is \n\n"
+        "* speechiness: measures the presence of spoken words in a track on a scale from 0.0 to 1.0 \n\n"
+        "* acoutsicness: a confidence metric ranging from 0.0 to 1.0 that indicates whether a track is acoustic"
+        "* instrumentalness: measures how instrumental the song is \n\n"
+        "* liveness: a rating in Spotify about whether the track was performed live or not\n\n"
+        "* valence: a measure from 0.0 to 1.0, developed by Echo Nest and used in Spotify's API, that describes the musical positiveness of a track \n\n" 
+        "* tempo: how fast the song moves \n\n"
+        "* time_signature: the musical time signature of the song \n\n" )
 
 
 # =============================
@@ -144,7 +162,7 @@ elif model_type == "K-Nearest Neighbors (KNN)" and data_option == "Built-in Data
 # =============================
 
 # we use an elif statement to establish which model type we are using
-elif model_type == "Hierarchical Clustering":
+if model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
     st.header("🌳 Hierarchical Clustering")
 
@@ -156,6 +174,7 @@ elif model_type == "Hierarchical Clustering":
 
     st.markdown("-----------------------------------------------------------------")
 
+    labels = df.index.tolist()
     # -------------------------
     # Step 1: Select Features
     # -------------------------
@@ -168,7 +187,7 @@ elif model_type == "Hierarchical Clustering":
 
     # this code creates the multi-select option for users
     features = st.multiselect(
-        "Select feature columns (numeric only)",
+        "Select the features you want the model to use (numeric only)",
         numeric_columns
     )
 
@@ -212,7 +231,7 @@ elif model_type == "Hierarchical Clustering":
     # Step 3: Choose Linkage Method
     # -------------------------
     st.markdown("#### Step Three: Choose Linkage Method")
-
+    st.write("This is how the model will determine the distace between your clusters")
     # we set up our selectbox of features
     linkage_method = st.selectbox(
         "Select linkage method",
@@ -220,11 +239,11 @@ elif model_type == "Hierarchical Clustering":
         )
 
     with st.expander("CLICK HERE to learn more about linkage methods"):
-        st.write("These "
-            "Ward: Minimizes variance within clusters (most balanced clusters)\n\n"
-            "Single: Uses closest points between clusters (can create chains)\n\n"
-            "Complete: Uses farthest points (creates compact clusters)\n\n"
-            "Average: Uses average distance between clusters (balanced approach)"
+        st.write("These are the ways in which the distance bewteen the clusters can be measured:  \n\n"
+            "* Ward: Calculates distance by minimizing the total variance from the cluster mean. It is highly effective at identifying compact, spherical, and similarly sized clusters, though it is more computationally sensitive to noise.\n\n"
+            "* Single: Calculates the distance between two clusters as the smallest distance between any single point in one cluster and any single point in the other \n\n"
+            "* Complete: Calculates the distance between two clusters as the largest distance between any single point in one cluster and any single point in the other\n\n"
+            "* Average: Calculates distance between clusters by computing all pairwise distances between points in clusters (balanced approach that reduces extreme behaviors)"
         )
 
     st.markdown("-----------------------------------------------------------------")
@@ -234,6 +253,7 @@ elif model_type == "Hierarchical Clustering":
     # -------------------------
 
     # we use the code below to stop the user from moving on until they choose a linkage method
+
     if linkage_method == "Select...":
         st.warning("Please choose a linkage method to continue.")
         st.stop()
@@ -247,18 +267,21 @@ elif model_type == "Hierarchical Clustering":
 
     # this sets some parameters for our figure
     fig, ax = plt.subplots(figsize=(12, 5))
-    dendrogram(Z, ax=ax)
+    dendrogram(Z, ax=ax, labels=labels)
     ax.set_title("Hierarchical Clustering Dendrogram")
     ax.set_xlabel("Data Points")
     ax.set_ylabel("Distance")
 
     # this plots our figure
+
+    st.write("This is a visualization of the model based on the inputs you have given thus far. You will notice that it branches out into clusters!")
+
     st.pyplot(fig)
 
     with st.expander("CLICK HERE to learn more about the dendrogram"):
         st.write(
-            "The dendrogram shows how data points are merged into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
-            "The vertical height represents distance between clusters. "
+            "The dendrogram is a visualization of our tree-strcutured model and shows how data points are split into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
+            "The vertical height represents distance between clusters while the horizontal access features indicators of data points. "
             "You can use this to help decide the number of clusters (k)."
         )
 
@@ -804,7 +827,7 @@ elif model_type == "K-Means Clustering":
             st.write(
                 "The graph on the left plots the cluster sum of squares against the different values of k. It is a useful tool for 'The Elbow Method.' The Elbow Method helps identify the point where adding more clusters "
                 "does not significantly improve model fit (to find this point, we should look at where the graph on the left 'bends.'). \n\n" \
-                "The graph on the left shows how different values of k might affect the sihouette score. The Silhouette Score measures how well-separated the clusters are. Please be encouraged to try out the k value that optimizes your silhouette score using this information!"
+                "The graph on the right shows how different values of k might affect the sihouette score. The Silhouette Score measures how well-separated the clusters are. Please be encouraged to try out the k value that optimizes your silhouette score using this information!"
             )
 
         st.markdown("-----------------------------------------------------------------")
