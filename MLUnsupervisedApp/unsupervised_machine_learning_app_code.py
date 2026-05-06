@@ -294,7 +294,7 @@ if model_type == "Hierarchical Clustering":
     # only allow customization if:
     # 1) dataset is small (<= 200 rows)
     # 2) dataset is NOT built-in CSV
-    if len(df) <= 200 and dataset_source != "Built-in CSV":
+    if len(df) <= 200 and data_option != "Built-in CSV":
 
         st.write("Optional: Choose a feature to use as dendrogram labels")
 
