@@ -21,7 +21,8 @@ ________________________________________________________________________________
 ### Link to Streamlit App:
 ### Link to Unsupervised Machine Learning Folder and materials:
 
-### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design
+### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ✨ K-Means Clustering 
+
 
 * The app lets users learn about and interact with three distinct types of unsupervised machine learning: k-means clustering, hierarchical clustering, principal component analysis
 * The app allows for an interactive user experience in which users can learn about various types of unsupervised machine learning and explore how changing parameters affects model performance
