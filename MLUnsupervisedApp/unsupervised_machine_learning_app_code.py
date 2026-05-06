@@ -249,73 +249,68 @@ if model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
 
     # -------------------------
-    # Step 4: Dendrogram
+    # Step 4: Dendrogram (FIXED + STABLE)
     # -------------------------
 
-    # we use the code below to stop the user from moving on until they choose a linkage method
-
-    if linkage_method == "Select...":
-        st.warning("Please choose a linkage method to continue.")
-        st.stop()
-    st.markdown("#### Step Four: View Dendrogram")
-
-    # we use this to import our needed functions
     from scipy.cluster.hierarchy import linkage, dendrogram
 
-    # we use this to plug in our linkeage method and our data to make the dendrogram
+    st.markdown("#### Step Four: View Dendrogram")
+
+    # build linkage
     Z = linkage(X_scaled, method=linkage_method)
 
-    # this sets some parameters for our figure
+    # -------------------------
+    # SAFE LABEL HANDLING
+    # -------------------------
+
+    # default labels (always safe fallback)
+    labels = df.index.astype(str).tolist()
+
+    # allow customization ONLY if small dataset AND not built-in CSV
+    if len(df) <= 200 and dataset_source != "Built-in CSV":
+
+        st.write("Optional: Select a feature for dendrogram labels")
+
+        # dropdown ALWAYS visible (no button — Streamlit buttons cause rerun confusion)
+        label_column = st.selectbox(
+            "Dendrogram label feature (optional)",
+            ["Index"] + df.columns.tolist()
+        )
+
+        if label_column != "Index":
+            labels = df[label_column].astype(str).tolist()
+
+    else:
+        st.info("Using index labels (custom labels disabled for this dataset)")
+
+    # -------------------------
+    # CRITICAL FIX: ensure label length matches dendrogram leaves
+    # -------------------------
+
+    # scipy dendrogram reorders leaves internally; this prevents silent mismatch issues
+    dendro = dendrogram(Z, no_plot=True)
+    ordered_labels = [labels[i] for i in dendro["leaves"]]
+
+    # -------------------------
+    # PLOT
+    # -------------------------
+
     fig, ax = plt.subplots(figsize=(12, 5))
-    dendrogram(Z, ax=ax, labels=labels)
+
+    dendrogram(
+        Z,
+        ax=ax,
+        labels=ordered_labels
+    )
+
     ax.set_title("Hierarchical Clustering Dendrogram")
     ax.set_xlabel("Data Points")
     ax.set_ylabel("Distance")
 
-    # this plots our figure
-
-    st.write("This is a visualization of the model based on the inputs you have given thus far. You will notice that it branches out into clusters!")
-
+    st.write("This is a visualization of how your data clusters hierarchically.")
     st.pyplot(fig)
-
-    # -------------------------
-    # Step 4: Dendrogram Labels (FIXED PROPERLY)
-    # -------------------------
-
-    labels = df.index.astype(str).tolist()
-
-    # only allow customization for small datasets + NOT built-in CSV
-    if len(df) <= 200 and data_option != "Built-in CSV":
-
-        st.write("Optional: Customize dendrogram labels")
-
-        # initialize session state toggle
-        if "use_custom_labels" not in st.session_state:
-            st.session_state.use_custom_labels = False
-
-        # button toggles state (THIS is what makes it work)
-        if st.button("Choose a feature for dendrogram labels"):
-            st.session_state.use_custom_labels = not st.session_state.use_custom_labels
-
-        # only show dropdown if enabled
-        if st.session_state.use_custom_labels:
-
-            label_column = st.selectbox(
-                "Select feature for dendrogram labels",
-                df.columns.tolist()
-            )
-
-            labels = df[label_column].astype(str).tolist()
-
-            st.success(f"Using '{label_column}' as dendrogram labels")
-
-    else:
-        if data_option == "Built-in CSV":
-            st.info("Custom dendrogram labels are disabled for built-in datasets.")
-        else:
-            st.info("Dataset too large for custom dendrogram labels (must be ≤ 200 rows)")
-        with st.expander("CLICK HERE to learn more about the dendrogram"):
-            st.write(
+    with st.expander("CLICK HERE to learn more about the dendrogram"):
+        st.write(
             "The dendrogram is a visualization of our tree-strcutured model and shows how data points are split into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
             "The vertical height represents distance between clusters while the horizontal access features indicators of data points. "
             "You can use this to help decide the number of clusters (k)."
