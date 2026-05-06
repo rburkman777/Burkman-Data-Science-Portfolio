@@ -246,34 +246,63 @@ if model_type == "Hierarchical Clustering":
         )
 
     st.markdown("-----------------------------------------------------------------")
-
     # -------------------------
     # Step 4: Dendrogram
     # -------------------------
 
-    # we use the code below to stop the user from moving on until they choose a linkage method
+    st.markdown("#### Step Four: View Dendrogram")
 
+    from scipy.cluster.hierarchy import linkage, dendrogram
+
+    # we use this to stop the user from moving on until they choose a linkage method
     if linkage_method == "Select...":
         st.warning("Please choose a linkage method to continue.")
         st.stop()
-    st.markdown("#### Step Four: View Dendrogram")
+    
+    # -------------------------
+    # OPTIONAL: Label selection (ONLY for uploaded data)
+    # -------------------------
+    st.markdown("##### Dendrogram Labels")
 
-    # we use this to import our needed functions
-    from scipy.cluster.hierarchy import linkage, dendrogram
+    # Only show dropdown if user uploaded file (not built-in dataset)
+    if uploaded_file is not None:
+        label_column = st.selectbox(
+            "Select column for dendrogram labels (x-axis)",
+            df.columns
+        )
+        labels = df[label_column].astype(str).tolist()
 
-    # we use this to plug in our linkeage method and our data to make the dendrogram
+    else:
+        # fallback for built-in datasets
+        labels = df.index.astype(str).tolist()
+
+    # safety check
+    if len(labels) != len(X_scaled):
+        st.error("Label column length does not match dataset rows.")
+        st.stop()
+    
+    # -------------------------
+    # Build linkage + dendrogram
+    # -------------------------
+
     Z = linkage(X_scaled, method=linkage_method)
 
-    # this sets some parameters for our figure
     fig, ax = plt.subplots(figsize=(12, 5))
-    dendrogram(Z, ax=ax, labels=labels)
+
+    dendrogram(
+        Z,
+        ax=ax,
+        labels=labels
+    )
+
     ax.set_title("Hierarchical Clustering Dendrogram")
     ax.set_xlabel("Data Points")
     ax.set_ylabel("Distance")
 
-    # this plots our figure
-
-    st.write("This is a visualization of the model based on the inputs you have given thus far. You will notice that it branches out into clusters!")
+    st.write(
+        "This is a visualization of the model based on the inputs you have given thus far. "
+        "You will notice that it branches out into clusters!"
+    )
 
     st.pyplot(fig)
 
