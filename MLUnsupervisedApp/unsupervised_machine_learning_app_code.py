@@ -282,28 +282,34 @@ if model_type == "Hierarchical Clustering":
     # FIX: Interactive dendrogram labels (only for small datasets)
     # -------------------------
 
-    labels = df.index.astype(str).tolist()  # default fallback
+    # -------------------------
+    # Step 4: Dendrogram Labels (FIXED)
+    # -------------------------
 
-    if len(df) <= 200:
+    from scipy.cluster.hierarchy import linkage, dendrogram
 
-        st.write("Optional: Customize dendrogram leaf labels")
+    # default labels
+    labels = df.index.astype(str).tolist()
 
-        # button toggles label customization
-        use_custom_labels = st.button("Choose a feature for dendrogram labels")
+    # only allow customization if:
+    # 1) dataset is small (<= 200 rows)
+    # 2) dataset is NOT built-in CSV
+    if len(df) <= 200 and dataset_source != "Built-in CSV":
 
-        if use_custom_labels:
+        st.write("Optional: Choose a feature to use as dendrogram labels")
 
-            label_column = st.selectbox(
-                "Select feature for dendrogram labels",
-                df.columns.tolist()
+        label_column = st.selectbox(
+            "Dendrogram label feature",
+            options=df.columns.tolist()
         )
 
-            labels = df[label_column].astype(str).tolist()
+        labels = df[label_column].astype(str).tolist()
 
-            st.info(f"Using '{label_column}' as dendrogram labels")
+    elif dataset_source == "Built-in CSV":
+        st.info("Custom dendrogram labels are disabled for built-in datasets.")
 
-    else:
-        st.info("Dataset too large for custom dendrogram labels (must be ≤ 200 rows)")
+else:
+    st.info("Dataset too large for custom dendrogram labels (must be ≤ 200 rows)")
 
     with st.expander("CLICK HERE to learn more about the dendrogram"):
         st.write(
