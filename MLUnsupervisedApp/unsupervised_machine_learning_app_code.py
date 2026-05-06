@@ -308,8 +308,8 @@ if model_type == "Hierarchical Clustering":
     elif dataset_source == "Built-in CSV":
         st.info("Custom dendrogram labels are disabled for built-in datasets.")
 
-else:
-    st.info("Dataset too large for custom dendrogram labels (must be ≤ 200 rows)")
+    else:
+        st.info("Dataset too large for custom dendrogram labels (must be ≤ 200 rows)")
 
     with st.expander("CLICK HERE to learn more about the dendrogram"):
         st.write(
