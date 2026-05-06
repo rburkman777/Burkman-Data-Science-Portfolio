@@ -13,59 +13,40 @@ with st.expander("CLICK HERE to learn more about unsupervised machine learning")
 
 st.markdown("-----------------------------------------------------------------")
 
-# -----------------------------
-# STEP 1: MODEL SELECTION
-# -----------------------------
-
-# we want an interactive feature that allows for selection of different models to explore, so we use a selectbox
 model_type = st.selectbox(
     "👉 First, choose a model",
     ["Select...", "Hierarchical Clustering", "PCA (Dimensionality Reduction)", "K-Means Clustering"]
 )
 
-
-# we use the expander function to create a drop-down box where users can learn more about different model types
 with st.expander("CLICK HERE to learn more about each model type"):
     st.write("Hierarchical Clustering: This is a type of machine learning that builds a tree-like hierarchy in order to group similar datapoints together. With hierarchical clustering, you can uncover multi-level structure in unlabelled data and segment data into variable sized groups \n\n"
     "PCA (Principal Component Analysis): This type of machine learning reduces 'high-dimensional data' (aka data with a lot of features) and simplifies by creating new axes based on the data. This method of unsupervised machine learning allows you to break down and examine complex data in a digstable way. \n\n"
     "K-Means Clustering: This type of machine learning uses simplifies complex or multi-dimensional data and then attempts to group the data into clusters. It does this by attempting to find the optimal central point for each cluster. It begins with three random central points and then recalculates the central points until the optimal cluster arrangement is reached.")
 
-# have an option if a model hasn't been selected using if statements 
 if model_type == "Select...":
     st.warning("Please select a model to continue.")
     st.stop()
 
-# -----------------------------
-# STEP 2: DATA SOURCE
-# -----------------------------
-
-# we use if and elif statements to respond to various user choices the user might make. 
-# this code gives the user parameters for various model types
 if model_type == "Hierarchical Clustering":
     st.markdown("-----------------------------------------------------------------")
     st.write("### You chose Hierarchical Clustering 👑!")
     st.write("Now let's get a dataset in order for you. You can upload one or use a built-in dataset. You can set up your data source below.")
     st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the sample data for an example")
     st.markdown("-----------------------------------------------------------------")
+
 elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("-----------------------------------------------------------------")
     st.write("### You chose PCA (Dimensionality Reduction)🔻")
     st.write("Let's get you a dataset to work with. You can use the built in dataset or upload your own. You can set up your dataset below.")
     st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * The data has at least three features \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
     st.markdown("-----------------------------------------------------------------")
+
 elif model_type == "K-Means Clustering":
     st.markdown("-----------------------------------------------------------------")
     st.write("### You chose K-Means Clustering ✨!")
     st.write("Let's get you a dataset to work with. You can use the built in dataset or upload your own")
     st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
     st.markdown("-----------------------------------------------------------------")
-# -----------------------------
-# STEP 2: DATA SOURCE
-# -----------------------------
-
-# -----------------------------
-# STEP 2: DATA SOURCE (FIXED FLOW)
-# -----------------------------
 
 data_option = st.selectbox(
     "Choose data source",
@@ -75,20 +56,25 @@ data_option = st.selectbox(
 df = None
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# ALWAYS show uploader FIRST (no conditions hiding it)
+# -----------------------------
+# FIXED CSV FLOW (ONLY CHANGE)
+# -----------------------------
 if data_option == "Upload CSV":
 
     st.subheader("📂 Upload your dataset")
 
-    uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
+    uploaded_file = st.file_uploader(
+        "Upload your CSV file",
+        type=["csv"],
+        key="csv_upload"
+    )
 
-    if uploaded_file is None:
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)
+        st.success("✅ File uploaded successfully!")
+        st.dataframe(df.head())
+    else:
         st.info("⬆️ Please upload a CSV file to continue.")
-        st.stop()
-
-    df = pd.read_csv(uploaded_file)
-    st.success("✅ File uploaded successfully!")
-    st.dataframe(df.head())
 
 else:
 
@@ -113,9 +99,12 @@ else:
     if model_type == "Hierarchical Clustering":
         df = df.set_index(df.columns[0])
 
-# FINAL SAFETY CHECK
 if df is None:
     st.stop()
+
+# -----------------------------
+# (everything else in your code unchanged)
+# -----------------------------
 # -----------------------------
 # STEP 3: DISPLAY DATA
 # -----------------------------
