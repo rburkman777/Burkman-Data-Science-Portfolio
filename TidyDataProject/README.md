@@ -2,7 +2,7 @@
 The goal of this project is to illustrate the power of data cleaning. We were able to turn what was a fairly messy, poorly organized dataset into something digestable and useable with just a few functions. 
 
 ## ✏️ Project Overview
-The project aims to guide users through the process of tidying data using Python. The project uses a Markdown notebook to illustrate this to users. 
+The project aims to guide users through the process of tidying data using Python. The project uses a Markdown notebook to illustrate this to users. Users will learn how to 
 
 ## 📋 Project Features 
 
