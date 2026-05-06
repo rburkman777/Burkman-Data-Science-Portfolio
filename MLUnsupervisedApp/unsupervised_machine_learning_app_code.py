@@ -915,7 +915,7 @@ elif model_type == "K-Means Clustering":
         # Elbow + Silhouette Analysis
         # -------------------------
         st.markdown("### 2) 📉 Choosing Optimal k")
-        st.write("Interested in what k value creates the highest silhouette score the most efficiently? Use this chart to find out!")
+        st.write("Interested in what k value creates the highest silhouette score the most efficiently? Use these charts to find out!")
 
         # these lines set up a number of variables we use to have multiple k values appear in our plot
         ks = range(2, 11)
