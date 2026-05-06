@@ -265,7 +265,7 @@ if model_type == "Hierarchical Clustering":
     st.markdown("##### Dendrogram Labels")
 
     # Only show dropdown if user uploaded their own dataset
-    if data_source == "upload":
+    if data_source == "Upload CSV":
         label_column = st.selectbox(
             "Select column for dendrogram labels (x-axis)",
             df.columns
