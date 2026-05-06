@@ -221,7 +221,7 @@ if model_type == "Hierarchical Clustering":
 
     with st.expander("CLICK HERE to learn more about scaling"):
         st.write(
-            "Scaling ensures that all features contribute equally to distance calculations. "
+            "Scaling standardizes the data so that it is all on the same range of size. Scaling ensures that all features contribute equally to distance calculations. "
             "This is especially important for clustering methods like Ward linkage."
         )
 
@@ -807,7 +807,7 @@ elif model_type == "K-Means Clustering":
 
     with st.expander("CLICK HERE to learn more about scaling"):
         st.write(
-            "Scaling ensures that all features contribute equally to distance calculations. "
+            "Scaling standardizes the data so that it is all on the same range of size. Scaling ensures that all features contribute equally to distance calculations. "
             "This is important for K-Means since it relies on distance."
         )
 
