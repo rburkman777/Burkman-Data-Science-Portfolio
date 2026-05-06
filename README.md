@@ -83,7 +83,7 @@ ________________________________________________________________________________
 
 ### LINK to Github folder with project code, information, and data: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/TidyDataProject) 
 
-### Skills exhibited: 🐍 Python &nbsp; | 🧹 Data Cleaning &nbsp; | 📓 Markdown Notebooks
+### Skills exhibited: 🐍 Python &nbsp; |  &nbsp; 🧹 Data Cleaning &nbsp; |  &nbsp; 📓 Markdown Notebooks
 
 This notebook highlights how to clean data. We take a dataset about olympic medalists that begins as quite messy and use a variety of functions to tidy it up. This makes it much easier to complete a variety of tasks with it, including producing visualizations. This application demonstrates my skills with data tidying, data organization, python, Jupyer notebooks, and data analysis. The application will also serve as a helpful guide for those interested in learning more about how python can be employed to tidy data. 
 
