@@ -27,8 +27,8 @@ model_type = st.selectbox(
 # we use the expander function to create a drop-down box where users can learn more about different model types
 with st.expander("CLICK HERE to learn more about each model type"):
     st.write("Hierarchical Clustering: This is a type of machine learning that builds a tree-like hierarchy in order to group similar datapoints together. With hierarchical clustering, you can uncover multi-level structure in unlabelled data and segment data into variable sized groups \n\n"
-    "PCA (Principal Component Analysis): This type of machine learning reduces 'high-dimensional data' (aka data with a lot of features) and simplifies by creating new axes based on the data. This method of unsupervised machine learning allows you to break down and examine complex data in a digstable way. \n\n"
-    "K-Means Clustering: This type of machine learning uses simplifies complex or multi-dimensional data and then attempts to group the data into clusters. It does this by attempting to find the optimal central point for each cluster. It begins with three random central points and then recalculates the central points until the optimal cluster arrangement is reached.")
+    "PCA (Principal Component Analysis): This type of machine learning reduces 'high-dimensional data' (aka data with a lot of features) and simplifies by creating new axes based on the data. This method of unsupervised machine learning allows you to break down and examine complex data in a digestible way. \n\n"
+    "K-Means Clustering: This type of machine learning simplifies complex or multi-dimensional data and then attempts to group the data into clusters. It does this by attempting to find the optimal central point for each cluster. It begins with three random central points and then recalculates the central points until the optimal cluster arrangement is reached.")
 
 # have an option if a model hasn't been selected using if statements 
 if model_type == "Select...":
@@ -62,7 +62,7 @@ elif model_type == "K-Means Clustering":
 data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"]) # here is another selection box to allow the user to choose whether they upload the data or take the built-in dataset 
 
 df = None # this creates our dataframe variable 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # this code begins setting up our file pathes for the built in datasets
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # this code begins setting up our file paths for the built in datasets
 
 # we use if statements to direct students to their choice of where to obtain their dataset
 if data_option == "Upload CSV":
@@ -246,63 +246,34 @@ if model_type == "Hierarchical Clustering":
         )
 
     st.markdown("-----------------------------------------------------------------")
+
     # -------------------------
     # Step 4: Dendrogram
     # -------------------------
 
-    st.markdown("#### Step Four: View Dendrogram")
+    # we use the code below to stop the user from moving on until they choose a linkage method
 
-    from scipy.cluster.hierarchy import linkage, dendrogram
-
-    # we use this to stop the user from moving on until they choose a linkage method
     if linkage_method == "Select...":
         st.warning("Please choose a linkage method to continue.")
         st.stop()
+    st.markdown("#### Step Four: View Dendrogram")
 
-    # -------------------------
-    # OPTIONAL: Label selection (ONLY for uploaded data)
-    # -------------------------
-    st.markdown("##### Dendrogram Labels")
+    # we use this to import our needed functions
+    from scipy.cluster.hierarchy import linkage, dendrogram
 
-    # Only show dropdown if user uploaded their own dataset
-    if data_source == "Upload CSV":
-        label_column = st.selectbox(
-            "Select column for dendrogram labels (x-axis)",
-            df.columns
-        )
-        labels = df[label_column].astype(str).tolist()
-    
-    else:
-        # fallback for built-in datasets
-        labels = df.index.astype(str).tolist()
-
-    # safety check
-    if len(labels) != len(X_scaled):
-        st.error("Label column length does not match dataset rows.")
-        st.stop()
-
-    # -------------------------
-    # Build linkage + dendrogram
-    # -------------------------
-
+    # we use this to plug in our linkeage method and our data to make the dendrogram
     Z = linkage(X_scaled, method=linkage_method)
 
+    # this sets some parameters for our figure
     fig, ax = plt.subplots(figsize=(12, 5))
-
-    dendrogram(
-        Z,
-        ax=ax,
-        labels=labels
-    )
-
+    dendrogram(Z, ax=ax, labels=labels)
     ax.set_title("Hierarchical Clustering Dendrogram")
     ax.set_xlabel("Data Points")
     ax.set_ylabel("Distance")
 
-    st.write(
-        "This is a visualization of the model based on the inputs you have given thus far. "
-        "You will notice that it branches out into clusters!"
-    )
+    # this plots our figure
+
+    st.write("This is a visualization of the model based on the inputs you have given thus far. You will notice that it branches out into clusters!")
 
     st.pyplot(fig)
 
@@ -993,3 +964,4 @@ elif model_type == "K-Means Clustering":
         st.markdown("#### Cluster Sizes")
         st.write("Here you can see the total number of data points in each cluster")
         st.write(results["Cluster"].value_counts())
+
