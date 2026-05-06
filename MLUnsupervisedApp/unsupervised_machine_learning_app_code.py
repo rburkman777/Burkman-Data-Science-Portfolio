@@ -505,12 +505,17 @@ elif model_type == "PCA (Dimensionality Reduction)":
     )
 
     # we use the len() function to make sure they choose at least two features
-    if len(features) < 2:
-        st.warning("Please select at least 2 features for PCA.")
-        st.stop()
+    max_components = len(features)
 
-    # we establish the chosen features as the data with the code below
+# ensure slider is always valid (min < max)
+    if len(features) < 3:
+        st.warning("Please select at least 3 features for PCA.")
+        st.stop()
+        # we establish the chosen features as the data with the code below
+    
+        
     X = df[features]
+
 
     st.markdown("-----------------------------------------------------------------")
 
@@ -541,7 +546,15 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("#### Step Three: Select Number of Components")
 
     # we create a slider so the user can input their preferred number of principal components 
-    n_components = st.slider("Number of Principal Components", 2, min(10, len(features)), 2)
+    max_components = len(features)
+
+    # ensure slider is always valid (min < max)
+    n_components = st.slider(
+    "Number of Principal Components",
+    2,
+    len(features),
+    2
+) 
     with st.expander("CLICK HERE to learn more about the components"):
         st.write("The components are new linear combinations of the data ranked by importance. We can imagine them like artificial axes that rotate and project 'high-dimensional' data (data with a lot of features) into a lower dimensional space. There is a tradeoff between having simplfying the data through dimentionality reduction "
         "and retaining greater information about the data. A higher number of components relative to the number of initial features prioiritzes information retention and accuracy while a lower number prioritizes simplicity.")
@@ -570,10 +583,6 @@ elif model_type == "PCA (Dimensionality Reduction)":
         cumulative = explained.cumsum()
 
         # this gives us the sum of our variance 
-        for i, var in enumerate(explained):
-            st.write(f"#### PC{i+1}: {var:.4f}")
-
-        st.write(f"#### **Cumulative Variance:** {cumulative[-1]:.4f}")
 
         st.markdown("-----------------------------------------------------------------")
 
@@ -605,6 +614,83 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         st.markdown("-----------------------------------------------------------------")
 
+        st.markdown("### 📊 Variance Explained by Each Principal Component")
+
+
+        # we outline some graphic parameters
+        fig4, ax4 = plt.subplots(figsize=(8, 6))
+
+        # this generates principal components for us that can be inputted into our graph
+        components = range(1, len(explained) + 1)
+
+        # this creates the bar chart
+        ax4.bar(
+            components,
+            explained,
+            alpha=0.7,
+            color='teal'
+        )
+
+        # this sets up the labels and axes for our chart
+        ax4.set_xlabel('Principal Component')
+        ax4.set_ylabel('Variance Explained')
+        ax4.set_title('Variance Explained by Each Principal Component')
+
+        ax4.set_xticks(components)
+        ax4.grid(True, axis='y')
+
+        # this sets the chart up in Streamlit
+        st.pyplot(fig4)
+        with st.expander("CLICK HERE to learn more about this plot"):
+            st.write("Theis plot turns our above scree plot into a bar graph and portrays how much each principal component increases model variance.")
+
+        for i, var in enumerate(explained):
+            st.write(f"#### PC{i+1}: {var:.4f}")
+
+        st.write(f"#### **Cumulative Variance:** {cumulative[-1]:.4f}")
+        
+       
+        # -------------------------
+        # Scree Plot
+        # -------------------------
+        # we establish our scree plot
+        st.markdown("### 📉 Scree Plot")
+
+        import numpy as np
+        from sklearn.decomposition import PCA
+
+        # limit PCA to at most 15 components OR number of features (whichever is smaller)
+        max_components = min(15, len(features))
+
+        if max_components < 2:
+            st.warning("Select at least 2 features to view scree plot.")
+        else:
+            # run PCA up to 15 components (or fewer if dataset is smaller)
+            pca_full = PCA(n_components=max_components)
+            X_pca_full = pca_full.fit_transform(X_scaled)
+
+            explained_full = pca_full.explained_variance_ratio_
+            cumulative_full = np.cumsum(explained_full)
+
+            fig3, ax3 = plt.subplots()
+
+            ax3.plot(range(1, len(explained_full) + 1), cumulative_full, marker='o')
+            ax3.set_xlabel("Number of Components")
+            ax3.set_ylabel("Cumulative Variance")
+            ax3.set_title("Scree Plot (Up to 15 Components)")
+            ax3.grid(True, alpha=0.3)
+
+            st.pyplot(fig3)
+
+        with st.expander("CLICK HERE to learn more about the scree plot"):
+            st.write("The scree plot shows you how much explained variance you're gaining with each principal component. If you are not gainging a lot at a certain point, you may want to simplify your model. You might want to look for the 'eblow' in the plot -- a point at which additional components offer limited model improvement.")
+
+
+        st.markdown("-----------------------------------------------------------------")
+
+        #############
+        # Variance from each PC
+        #############
 
 
         # the code below builds our table that shows how each feature contributes to the principal components
@@ -613,7 +699,6 @@ elif model_type == "PCA (Dimensionality Reduction)":
             columns=features,
             index=[f'PC{i+1}' for i in range(n_components)]
         )
-
 
         # this code makes sure we only proceed if at least 2 components exist
         if n_components >= 2:
@@ -647,67 +732,6 @@ elif model_type == "PCA (Dimensionality Reduction)":
             " means that  A positive loading means that higher values of a given feature push a sample's score up along that component's axis. A negative loading does the opposite. A graph of the impact of each feature on " \
             "each principal component is also present for easier viewing. ")
         
-
-        st.markdown("-----------------------------------------------------------------")
-       
-        # -------------------------
-        # Scree Plot
-        # -------------------------
-
-        # we establish our scree plot
-        st.markdown("### 📉 Scree Plot")
-
-        # run PCA again using ALL components (not slider-limited)
-        pca_full = PCA(n_components=len(features))
-        X_pca_full = pca_full.fit_transform(X_scaled)
-
-        explained_full = pca_full.explained_variance_ratio_
-        cumulative_full = np.cumsum(explained_full)
-
-        fig3, ax3 = plt.subplots()
-
-        ax3.plot(range(1, len(explained_full) + 1), cumulative_full, marker='o')
-        ax3.set_xlabel("Number of Components")
-        ax3.set_ylabel("Cumulative Variance")
-        ax3.set_title("Full PCA Scree Plot (All Features)")
-        ax3.grid(True, alpha=0.3)
-
-        st.pyplot(fig3)
-
-        with st.expander("CLICK HERE to learn more about the scree plot"):
-            st.write("The scree plot shows you how much explained variance you're gaining with each principal component. If you are not gainging a lot at a certain point, you may want to simplify your model. You might want to look for the 'eblow' in the plot -- a point at which additional components offer limited model improvement.")
-
-        st.markdown("### 📊 Variance Explained by Each Principal Component")
-
-        st.markdown("-----------------------------------------------------------------")
-
-
-        # we outline some graphic parameters
-        fig4, ax4 = plt.subplots(figsize=(8, 6))
-
-        # this generates principal components for us that can be inputted into our graph
-        components = range(1, len(explained) + 1)
-
-        # this creates the bar chart
-        ax4.bar(
-            components,
-            explained,
-            alpha=0.7,
-            color='teal'
-        )
-
-        # this sets up the labels and axes for our chart
-        ax4.set_xlabel('Principal Component')
-        ax4.set_ylabel('Variance Explained')
-        ax4.set_title('Variance Explained by Each Principal Component')
-
-        ax4.set_xticks(components)
-        ax4.grid(True, axis='y')
-
-        # this sets the chart up in Streamlit
-        st.pyplot(fig4)
-        with st.expander("CLICK HERE to learn more about this plot"):
-            st.write("Theis plot turns our above scree plot into a bar graph and portrays how much each principal component increases model variance.")
 
 
 ################
