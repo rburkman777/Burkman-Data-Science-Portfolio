@@ -290,16 +290,15 @@ if model_type == "Hierarchical Clustering":
         # button toggles label customization
         use_custom_labels = st.button("Choose a feature for dendrogram labels")
 
-            if use_custom_labels:
-
-                label_column = st.selectbox(
-                    "Select feature for dendrogram labels",
-                    df.columns.tolist()
+        if use_custom_labels:
+            label_column = st.selectbox(
+                "Select feature for dendrogram labels",
+                df.columns.tolist()
                 )
 
-                labels = df[label_column].astype(str).tolist()
+            labels = df[label_column].astype(str).tolist()
 
-                st.info(f"Using '{label_column}' as dendrogram labels")
+            st.info(f"Using '{label_column}' as dendrogram labels")
 
             else:
                 st.info("Dataset too large for custom dendrogram labels (must be ≤ 200 rows)")
