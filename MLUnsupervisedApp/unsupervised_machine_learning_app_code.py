@@ -905,8 +905,8 @@ elif model_type == "K-Means Clustering":
 
 
         with st.expander("CLICK HERE to learn more about this visualization and how it was created"):
-            st.write("The above graphic plots our data along the axes of the two largest principal components (which are axes generated to simplify high-dimensional data while preserving information about the data) and plots our datapoints. You will notice that the model has assigned the data to clusters based on the number of clusters you assigned in the previous section. 
-            "The algorithm does this by kicking certain 'centroid' points (the number of centroid points is equal to your k value) and assigning each data point in the cluster to a centroid point. The centroid points then relocate to the mean of its cluster to minimize the total sum of squared distances in that each cluster.")
+            st.write("The above graphic plots our data along the axes of the two largest principal components (which are axes generated to simplify high-dimensional data while preserving information about the data) and plots our datapoints. You will notice that the model has assigned the data to clusters based on the number of clusters you assigned in the previous section."
+            " The algorithm does this by kicking certain 'centroid' points (the number of centroid points is equal to your k value) and assigning each data point in the cluster to a centroid point. The centroid points then relocate to the mean of its cluster to minimize the total sum of squared distances in that each cluster.")
 
 
         st.markdown("-----------------------------------------------------------------")
