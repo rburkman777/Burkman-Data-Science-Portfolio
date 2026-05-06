@@ -393,7 +393,7 @@ if model_type == "Hierarchical Clustering":
 
         # this actually generates the plot itself in streamlit
 
-        st.write("This chart plots the data clusters you saw in the dendrogram into two-dimensional clusters using the two largest principal components as axes. 
+        st.write("This chart plots the data clusters you saw in the dendrogram into two-dimensional clusters using the two largest principal components as axes.")
         st.pyplot(fig2)
 
         with st.expander("CLICK HERE to learn more about this graphic"):
