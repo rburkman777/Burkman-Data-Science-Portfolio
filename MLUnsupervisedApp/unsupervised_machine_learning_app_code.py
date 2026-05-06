@@ -258,20 +258,20 @@ if model_type == "Hierarchical Clustering":
     if linkage_method == "Select...":
         st.warning("Please choose a linkage method to continue.")
         st.stop()
-    
+
     # -------------------------
     # OPTIONAL: Label selection (ONLY for uploaded data)
     # -------------------------
     st.markdown("##### Dendrogram Labels")
 
-    # Only show dropdown if user uploaded file (not built-in dataset)
-    if uploaded_file is not None:
+    # Only show dropdown if user uploaded their own dataset
+    if data_source == "upload":
         label_column = st.selectbox(
             "Select column for dendrogram labels (x-axis)",
             df.columns
         )
         labels = df[label_column].astype(str).tolist()
-
+    
     else:
         # fallback for built-in datasets
         labels = df.index.astype(str).tolist()
@@ -280,7 +280,7 @@ if model_type == "Hierarchical Clustering":
     if len(labels) != len(X_scaled):
         st.error("Label column length does not match dataset rows.")
         st.stop()
-    
+
     # -------------------------
     # Build linkage + dendrogram
     # -------------------------
@@ -298,6 +298,22 @@ if model_type == "Hierarchical Clustering":
     ax.set_title("Hierarchical Clustering Dendrogram")
     ax.set_xlabel("Data Points")
     ax.set_ylabel("Distance")
+
+    st.write(
+        "This is a visualization of the model based on the inputs you have given thus far. "
+        "You will notice that it branches out into clusters!"
+    )
+
+    st.pyplot(fig)
+
+    with st.expander("CLICK HERE to learn more about the dendrogram"):
+        st.write(
+        "The dendrogram is a visualization of our tree-structured model and shows how data points are split into clusters. "
+        "The vertical height represents distance between clusters while the horizontal axis shows data points. "
+        "You can use this to help decide the number of clusters (k)."
+    )
+
+st.markdown("-----------------------------------------------------------------")
 
     st.write(
         "This is a visualization of the model based on the inputs you have given thus far. "
