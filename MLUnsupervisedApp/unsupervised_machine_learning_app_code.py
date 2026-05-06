@@ -352,7 +352,7 @@ if model_type == "Hierarchical Clustering":
         st.write("#### Full Model Evaluation")
         st.write("1) Principal Components Visualization \n\n" \
         "2) K-Optimization Graph \n\n"
-        "3) Model Logistics")
+        "3) Model Logistics (and specific data point information)")
        
        
         # -------------------------
