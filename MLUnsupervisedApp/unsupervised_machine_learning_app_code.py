@@ -369,7 +369,7 @@ if model_type == "Hierarchical Clustering":
 
         st.markdown("-----------------------------------------------------------------")
 
-        st.markdown("### 1) 📉 PCA Visualization (2D)")
+        st.markdown("### 1) 📉 Principal Components 2D Visualization")
 
         # we plot everything onto a visualization of how the hierarchical clustering clusters the data
         # based on user input
@@ -392,20 +392,24 @@ if model_type == "Hierarchical Clustering":
         ax2.set_title("Cluster Visualization (PCA)")
 
         # this actually generates the plot itself in streamlit
+
+        st.write("This chart plots the data clusters you saw in the dendrogram into two-dimensional clusters using the two largest principal components as axes. 
         st.pyplot(fig2)
 
         with st.expander("CLICK HERE to learn more about this graphic"):
-            st.write("This plot helps illustrate how the clusters visible on the dendrogram fit together on a two-dimensional plane. It does this by plotting the data points based on the two largest principal components (which are axes identified by the model that simplify data composed of many features)")
+            st.write("This plot helps illustrate how the clusters visible on the dendrogram fit together on a two-dimensional plane (these are the same clusters highlighted on the dendrogram). It does this by plotting the data points based on the two largest principal components (which are axes identified by the model that simplify data composed of many features). It is only for display. Some data points may be missing due to compression/visualization purposes.")
 
         st.markdown("-----------------------------------------------------------------")
 
 
-        ##################
-        #Silhouette Score
-        ##################
+        #------------------------------
+        #Silhouette Score Calculations
+        #------------------------------
 
         st.markdown("### 2) 📈 K Optimization (Silhouette Analysis)")
+        st.write("Interested in the best k value to maximize your silhouette score? The graph below can help you choose!")
 
+        # we start by bringing in some useful packages 
         from sklearn.cluster import AgglomerativeClustering
         from sklearn.metrics import silhouette_score
         import numpy as np
