@@ -2,7 +2,7 @@
 
 Use the link below to access the app on Streamlit cloud:
 
-## Link to App: [CLICK HERE](https://burkman-data-science-portfolio-zyhpnavjxj7zpptlwmskuy.streamlit.app/)
+### Link to App: [CLICK HERE](https://burkman-data-science-portfolio-zyhpnavjxj7zpptlwmskuy.streamlit.app/)
 
 ## ✏️ Project Overview
 
