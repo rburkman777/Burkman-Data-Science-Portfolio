@@ -590,12 +590,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
         st.markdown("-----------------------------------------------------------------")
 
         # -------------------------
-        # Scatter Plot (2D only)
-        # -------------------------
-        st.markdown("### 1) ✏️ Visualization of Data")
-
-        # -------------------------
-        # PCA Scatter Plot (with optional coloring)
+        # PCA Scatter Plot 
         # -------------------------
         st.markdown("### 1) ✏️ Visualization of Data")
 
@@ -632,13 +627,13 @@ elif model_type == "PCA (Dimensionality Reduction)":
                 unique_vals = categories.unique()
 
                 for val in unique_vals:
-            mask = categories == val
-            ax.scatter(
-                X_pca[mask, 0],
-                X_pca[mask, 1],
-                label=str(val),
-                alpha=0.7
-            )
+                    mask = categories == val
+                    ax.scatter(
+                        X_pca[mask, 0],
+                        X_pca[mask, 1],
+                        label=str(val),
+                        alpha=0.7
+                    )
 
                 ax.legend(title=color_feature)
 
