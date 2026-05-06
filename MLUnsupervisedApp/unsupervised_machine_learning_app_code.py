@@ -66,13 +66,20 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # this code begins setting
 
 # we use if statements to direct students to their choice of where to obtain their dataset
 if data_option == "Upload CSV":
+
     uploaded_file = st.file_uploader("📂 Upload your CSV file", type=["csv"])
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file) # creates dataframe for the uploaded data 
+
+    if uploaded_file:
+        df = pd.read_csv(uploaded_file)
+        st.session_state.df = df
         st.success("✅ CSV uploaded successfully!")
-    else:
+
+    elif "df" not in st.session_state:
+        st.info("Please upload a CSV file to continue.")
         st.stop()
 
+    else:
+        df = st.session_state.df
 # we move to an else statement if the user does not choose to upload their own file
 else: 
     st.subheader("📁 Using Built-in Dataset") # use a subheader to make the title
