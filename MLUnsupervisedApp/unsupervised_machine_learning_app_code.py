@@ -279,40 +279,43 @@ if model_type == "Hierarchical Clustering":
     st.pyplot(fig)
 
     # -------------------------
-    # FIX: Interactive dendrogram labels (only for small datasets)
+    # Step 4: Dendrogram Labels (FIXED PROPERLY)
     # -------------------------
 
-    # -------------------------
-    # Step 4: Dendrogram Labels (FIXED)
-    # -------------------------
-
-    from scipy.cluster.hierarchy import linkage, dendrogram
-
-    # default labels
     labels = df.index.astype(str).tolist()
 
-    # only allow customization if:
-    # 1) dataset is small (<= 200 rows)
-    # 2) dataset is NOT built-in CSV
-    if len(df) <= 200 and data_option != "Built-in CSV":
+    # only allow customization for small datasets + NOT built-in CSV
+    if len(df) <= 200 and dataset_source != "Built-in CSV":
 
-        st.write("Optional: Choose a feature to use as dendrogram labels")
+        st.write("Optional: Customize dendrogram labels")
 
-        label_column = st.selectbox(
-            "Dendrogram label feature",
-            options=df.columns.tolist()
-        )
+        # initialize session state toggle
+        if "use_custom_labels" not in st.session_state:
+            st.session_state.use_custom_labels = False
 
-        labels = df[label_column].astype(str).tolist()
+        # button toggles state (THIS is what makes it work)
+        if st.button("Choose a feature for dendrogram labels"):
+            st.session_state.use_custom_labels = not st.session_state.use_custom_labels
 
-    elif dataset_source == "Built-in CSV":
-        st.info("Custom dendrogram labels are disabled for built-in datasets.")
+        # only show dropdown if enabled
+        if st.session_state.use_custom_labels:
+
+            label_column = st.selectbox(
+                "Select feature for dendrogram labels",
+                df.columns.tolist()
+            )
+
+            labels = df[label_column].astype(str).tolist()
+
+            st.success(f"Using '{label_column}' as dendrogram labels")
 
     else:
-        st.info("Dataset too large for custom dendrogram labels (must be ≤ 200 rows)")
-
-    with st.expander("CLICK HERE to learn more about the dendrogram"):
-        st.write(
+        if dataset_source == "Built-in CSV":
+            st.info("Custom dendrogram labels are disabled for built-in datasets.")
+        else:
+            st.info("Dataset too large for custom dendrogram labels (must be ≤ 200 rows)")
+        with st.expander("CLICK HERE to learn more about the dendrogram"):
+            st.write(
             "The dendrogram is a visualization of our tree-strcutured model and shows how data points are split into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
             "The vertical height represents distance between clusters while the horizontal access features indicators of data points. "
             "You can use this to help decide the number of clusters (k)."
