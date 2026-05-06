@@ -634,9 +634,8 @@ elif model_type == "PCA (Dimensionality Reduction)":
         st.pyplot(fig)
 
         with st.expander("CLICK HERE to learn more about this graphic"):
-            st.write(
-                "This graph shows PCA projection onto the first two components."
-            )
+            st.write("This graph illustrates the simplification of our multi-dimensional data. In other words, it is several features plotted in two dimensions using the principal components with the highest explained variances. The aim of this graph is to use these components to observe relationships in the data easily that we could not otherwise easily see. We may also not observe" \
+                "   meaningful relationships; the point is to get a grasp the nature of high-dimensional data.")
 
     st.markdown("-----------------------------------------------------------------")
 
@@ -644,6 +643,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
     # Variance Explained
     # -------------------------
     st.markdown("### 2) 📊 Variance Explained by Each Principal Component")
+    st.write("Each principal component carries with it a certain amount of variance/information from the dataset. Below is each principal component's score for information preservation. The cumulative variance adds these up and gives total model variance.")
 
     for i, var in enumerate(explained):
         st.write(f"#### PC{i+1}: {var:.4f}")
@@ -666,7 +666,16 @@ elif model_type == "PCA (Dimensionality Reduction)":
     ax4.set_xticks(components)
     ax4.grid(True, axis='y')
 
+    st.write("We can also plot how much each feature contributes to the total variance, as illustrated below:")
+    
     st.pyplot(fig4)
+
+    with st.expander("CLICK HERE to learn more about this plot"):
+        st.write("Theis plot turns our above scree plot into a bar graph and portrays how much each principal component increases model variance.")
+    with st.expander("CLICK HERE to learn more about explained variance"):
+        st.write("Explained variance is a measurement of how much variance from the dataset each principal component preserves. A larger principal component means that more information was preserved. Each principal component has a certain explained variance, as one can see below. " \
+            "We generally want the cumulative variance' (the sums of the principal variants), to be larger (closer to 1) because this means more information was perserved.")
+
 
     st.markdown("-----------------------------------------------------------------")
 
@@ -697,8 +706,10 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
         st.pyplot(fig3)
 
-    with st.expander("CLICK HERE to learn more about the scree plot"):
-        st.write("Shows how variance accumulates across components.")
+        with st.expander("CLICK HERE to learn more about the scree plot"):
+            st.write("The scree plot shows you how much explained variance you're gaining with each principal component. If you are not gaining a lot at a certain point, you may want to simplify your model. You might want to look for the 'elbow' in the plot -- a point at which additional components offer limited model improvement." \
+            " It looks like the 'bend' of an elbow.")
+
 
     st.markdown("-----------------------------------------------------------------")
 
@@ -730,6 +741,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
     st.markdown("#### Table of Most Important Features")
 
     st.dataframe(loadings_df.style.format("{:.3f}"))
+
 ################
 # K-MEANS CLUSTERING
 ################
