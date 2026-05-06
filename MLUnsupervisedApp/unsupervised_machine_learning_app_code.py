@@ -963,6 +963,6 @@ elif model_type == "K-Means Clustering":
         st.write("Here you can see which cluster each of the datapoints got assigned to")
         st.dataframe(results, use_container_width=True)
         st.space()
-        st.markdown("### Cluster Sizes")
+        st.markdown("#### Cluster Sizes")
         st.write("Here you can see the total number of data points in each cluster")
         st.write(results["Cluster"].value_counts())
