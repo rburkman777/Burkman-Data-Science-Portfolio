@@ -313,8 +313,8 @@ if model_type == "Hierarchical Clustering":
 
     st.write("This visualization shows how observations merge into clusters.")
     st.pyplot(fig)
-        with st.expander("CLICK HERE to learn more about the dendrogram"):
-            st.write(
+    with st.expander("CLICK HERE to learn more about the dendrogram"):
+        st.write(
             "The dendrogram is a visualization of our tree-strcutured model and shows how data points are split into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
             "The vertical height represents distance between clusters while the horizontal access features indicators of data points. "
             "You can use this to help decide the number of clusters (k)."
