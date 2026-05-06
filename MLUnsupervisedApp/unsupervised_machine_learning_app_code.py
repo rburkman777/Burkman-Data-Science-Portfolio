@@ -458,7 +458,7 @@ if model_type == "Hierarchical Clustering":
 
         with st.expander("CLICK HERE to learn more this graphic"):
             st.write(
-            "This graphic runs your model for multiple different possible k clusters under the parameters you chose. This let's you see exactly which number of k clusters"
+            "This graphic runs your model for multiple different possible k clusters numbers under the parameters you chose. This let's you see exactly which number of k clusters"
             " actually optimalizes your silhouette score."
         )
 
