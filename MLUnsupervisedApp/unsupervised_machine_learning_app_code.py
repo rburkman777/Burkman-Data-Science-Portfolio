@@ -594,27 +594,77 @@ elif model_type == "PCA (Dimensionality Reduction)":
         # -------------------------
         st.markdown("### 1) ✏️ Visualization of Data")
 
-        # we confirm that we have at least two components 
-        if n_components >= 2:
-            import matplotlib.pyplot as plt
-            import numpy as np
+# -------------------------
+# PCA Scatter Plot (with optional coloring)
+# -------------------------
+st.markdown("### 1) ✏️ Visualization of Data")
 
-            # we set up the code for our graphic
-            fig, ax = plt.subplots()
+if n_components >= 2:
+    import numpy as np
+    import matplotlib.pyplot as plt
 
-            ax.scatter(X_pca[:, 0], X_pca[:, 1], alpha=0.7)
+    # Identify columns with < 12 unique values
+    low_cardinality_cols = [
+        col for col in df.columns
+        if df[col].nunique() < 12
+    ]
 
-            ax.set_xlabel(f"PC1 ({explained[0]*100:.1f}%)")
-            ax.set_ylabel(f"PC2 ({explained[1]*100:.1f}%)")
-            ax.set_title("PCA Projection")
+    # Let user optionally choose a coloring feature
+    color_feature = None
 
-            # this displays the graphic in the app 
-            st.pyplot(fig)
+    if len(low_cardinality_cols) > 0:
+        color_feature = st.selectbox(
+            "Optional: Choose a feature to color the data points",
+            ["None"] + low_cardinality_cols
+        )
 
-            with st.expander("CLICK HERE to learn more about this graphic"):
-                st.write("This graph illustrates the simplification of our multi-dimenstional data. In other words, it is several features plotted in two dimensions using the principal components with the higest explained variances. The aim of this graph is to use these components to observe relationships in the data easily that we could not otherwise easily see. We may also not observe" \
-                "   meaningful relationships; the point is to get a grasp the nature of high-dimensional data.")
+        if color_feature == "None":
+            color_feature = None
+    else:
+        st.info("No categorical features (less than 12 unique values) available for coloring.")
 
+    # Create plot
+    fig, ax = plt.subplots()
+
+    # If a valid feature is selected → color by category
+    if color_feature is not None:
+        categories = df[color_feature].astype(str)
+        unique_vals = categories.unique()
+
+        for val in unique_vals:
+            mask = categories == val
+            ax.scatter(
+                X_pca[mask, 0],
+                X_pca[mask, 1],
+                label=str(val),
+                alpha=0.7
+            )
+
+        ax.legend(title=color_feature)
+
+    # Otherwise → normal scatter
+    else:
+        ax.scatter(
+            X_pca[:, 0],
+            X_pca[:, 1],
+            alpha=0.7
+        )
+
+    # Labels and title
+    ax.set_xlabel(f"PC1 ({explained[0]*100:.1f}%)")
+    ax.set_ylabel(f"PC2 ({explained[1]*100:.1f}%)")
+    ax.set_title("PCA Projection")
+
+    # Display plot
+    st.pyplot(fig)
+
+    # Explanation
+    with st.expander("CLICK HERE to learn more about this graphic"):
+        st.write(
+            "This graph illustrates the simplification of high-dimensional data using the two principal components "
+            "that preserve the most variance. If a coloring feature is selected, the points are grouped visually by "
+            "that variable to help identify patterns or separation between categories."
+        )
         st.markdown("-----------------------------------------------------------------")
 
         st.markdown("### 2) 📊 Variance Explained by Each Principal Component")
