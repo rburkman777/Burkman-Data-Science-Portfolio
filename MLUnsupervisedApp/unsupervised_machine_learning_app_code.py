@@ -114,6 +114,7 @@ elif model_type == "K-Means Clustering" and data_option == "Built-in Dataset":
 st.write(df) # we show our data 
 
 columns = df.columns.tolist() # retrieves column names so user can pick from them
+
 # we describe the sample data for the various models here -- give the user details about each feature
 if model_type == "Hierarchical Clustering" and data_option == "Built-in Dataset":
     with st.expander("CLICK HERE for an explainer on the variables in this dataset"):
@@ -173,10 +174,13 @@ if model_type == "Hierarchical Clustering":
 
     st.markdown("-----------------------------------------------------------------")
 
+    # we use this to fix an issue with our dataset in the hierarchical clustering section. We need the dataset to have the left column by the indicies for the example
     labels = df.index.tolist()
+   
     # -------------------------
     # Step 1: Select Features
     # -------------------------
+   
     # we use st.markdown for titles
     st.markdown("#### Step One: Select Features")
 
@@ -203,6 +207,7 @@ if model_type == "Hierarchical Clustering":
     # -------------------------
     # Step 2: Scale Data
     # -------------------------
+    
     st.markdown("#### Step Two: Scale the Data")
     st.write("Scaling the data is recommended for hierachical clustering")
 
@@ -237,7 +242,7 @@ if model_type == "Hierarchical Clustering":
         ["Select...", "ward", "single", "complete", "average"]
         )
 
-    with st.expander("CLICK HERE to learn more about linkage methods"):
+    with st.expander("CLICK HERE to learn more about linkage methods and each linkage method type"):
         st.write("These are the ways in which the distance bewteen the clusters can be measured:  \n\n"
             "* Ward: Calculates distance by minimizing the total variance from the cluster mean. It is highly effective at identifying compact, spherical, and similarly sized clusters, though it is more computationally sensitive to noise.\n\n"
             "* Single: Calculates the distance between two clusters as the smallest distance between any single point in one cluster and any single point in the other \n\n"
@@ -273,13 +278,13 @@ if model_type == "Hierarchical Clustering":
 
     # this plots our figure
 
-    st.write("This is a visualization of the model based on the inputs you have given thus far. You will notice that it branches out into clusters!")
+    st.write("This is a visualization of the model based on the inputs you have given thus far. You will notice that it branches out into clusters! You can use the dendrogram to estimate the optimal number of clusters for your model.")
 
     st.pyplot(fig)
 
     with st.expander("CLICK HERE to learn more about the dendrogram"):
         st.write(
-            "The dendrogram is a visualization of our tree-strcutured model and shows how data points are split into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
+            "The dendrogram is a visualization of our tree-strcutured model and visualizes how data points are split into clusters. You will notice that the various branches of the dendrogram resemble clusters. "
             "The vertical height represents distance between clusters while the horizontal access features indicators of data points. "
             "You can use this to help decide the number of clusters (k)."
         )
@@ -853,7 +858,7 @@ elif model_type == "K-Means Clustering":
         st.markdown(f"#### Silhouette Score: {score:.4f}")
 
         with st.expander("CLICK HERE to learn more about the silhouette score"):
-            st.write("This a measure of model performance telling us how well seperated our clusters are. A score closer to 1 means that the clusters are more well seperated while a score closer to 0 indicates clusters that overlap. A decent score is usually one above 0.5")
+            st.write("This a good measure of model performance telling us how well seperated our clusters are. A score closer to 1 means that the clusters are more well seperated while a score closer to 0 indicates clusters that overlap. A decent score is usually one above 0.5")
 
         st.markdown("-----------------------------------------------------------------")
         st.markdown("### 📊 Full Model Evaluation")
@@ -873,6 +878,7 @@ elif model_type == "K-Means Clustering":
 
         st.markdown("-----------------------------------------------------------------")
         st.markdown("### 1) 📉 Cluster Visualization (PCA Projection)")
+        st.write("Here is a projection of our clusters. Each colored groups represents a different cluster of data.")
 
         # we set up the parameters of our plot below
         fig, ax = plt.subplots()
@@ -898,8 +904,9 @@ elif model_type == "K-Means Clustering":
         st.pyplot(fig)
 
 
-        with st.expander("CLICK HERE to learn more about this visualization"):
-            st.write("The above graphic plots our data along the axes of the two largest principal components (which are axes generated to simplify high-dimensional data while preserving information about the data) and plots our datapoints. You will notice that the model has assigned the data to clusters based on the number of clusters you assigned in the previous section.")
+        with st.expander("CLICK HERE to learn more about this visualization and how it was created"):
+            st.write("The above graphic plots our data along the axes of the two largest principal components (which are axes generated to simplify high-dimensional data while preserving information about the data) and plots our datapoints. You will notice that the model has assigned the data to clusters based on the number of clusters you assigned in the previous section. 
+            "The algorithm does this by kicking certain 'centroid' points (the number of centroid points is equal to your k value) and assigning each data point in the cluster to a centroid point. The centroid points then relocate to the mean of its cluster to minimize the total sum of squared distances in that each cluster.")
 
 
         st.markdown("-----------------------------------------------------------------")
@@ -908,6 +915,7 @@ elif model_type == "K-Means Clustering":
         # Elbow + Silhouette Analysis
         # -------------------------
         st.markdown("### 2) 📉 Choosing Optimal k")
+        st.write("Interested in what k value creates the highest silhouette score? Use this chart to find out!")
 
         # these lines set up a number of variables we use to have multiple k values appear in our plot
         ks = range(2, 11)
@@ -952,6 +960,7 @@ elif model_type == "K-Means Clustering":
         # -------------------------
 
         # the code below sets up the table for our results
+       
         results = df.copy()
         results["Cluster"] = clusters
             
