@@ -63,27 +63,34 @@ elif model_type == "K-Means Clustering":
 # STEP 2: DATA SOURCE
 # -----------------------------
 
-data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"])
+# -----------------------------
+# STEP 2: DATA SOURCE (FIXED FLOW)
+# -----------------------------
+
+data_option = st.selectbox(
+    "Choose data source",
+    ["Upload CSV", "Built-in Dataset"]
+)
 
 df = None
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-uploaded_file = None  # always defined first
-
+# ALWAYS show uploader FIRST (no conditions hiding it)
 if data_option == "Upload CSV":
 
     st.subheader("📂 Upload your dataset")
 
     uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
-    if uploaded_file:
-        df = pd.read_csv(uploaded_file)
-        st.success("✅ File uploaded successfully!")
+    if uploaded_file is None:
+        st.info("⬆️ Please upload a CSV file to continue.")
+        st.stop()
 
-    else:
-        st.info("Please upload a CSV file to continue.")
+    df = pd.read_csv(uploaded_file)
+    st.success("✅ File uploaded successfully!")
+    st.dataframe(df.head())
 
-elif data_option == "Built-in Dataset":
+else:
 
     st.subheader("📁 Using Built-in Dataset")
 
@@ -97,19 +104,18 @@ elif data_option == "Built-in Dataset":
         dataset_path = os.path.join(BASE_DIR, "data", "spotifysongs.csv")
 
     if not os.path.exists(dataset_path):
-        st.error(f"Dataset '{dataset_path}' not found.")
+        st.error("Dataset not found.")
         st.stop()
 
     df = pd.read_csv(dataset_path)
-    st.success(f"Using built-in dataset: {os.path.basename(dataset_path)}")
+    st.success("Built-in dataset loaded successfully!")
 
     if model_type == "Hierarchical Clustering":
         df = df.set_index(df.columns[0])
 
-# 🚨 ONLY STOP AFTER df is properly handled
+# FINAL SAFETY CHECK
 if df is None:
     st.stop()
-
 # -----------------------------
 # STEP 3: DISPLAY DATA
 # -----------------------------
