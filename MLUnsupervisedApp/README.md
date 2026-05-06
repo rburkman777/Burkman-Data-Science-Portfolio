@@ -2,7 +2,7 @@
 
 Follow this link to open the app in streamlit cloud. 
 
-### Link to App: [CLICK HERE]([https://machinelearningappappcodepy-jgwqytyvmrs4jkhtqsblpd.streamlit.app/](https://burkman-data-science-portfolio-iym9h8kjqjgfvfishrzv7i.streamlit.app/))
+### Link to App: [CLICK HERE](https://burkman-data-science-portfolio-iym9h8kjqjgfvfishrzv7i.streamlit.app/)
 
 ## ✏️ Project Overview 
 This project aims to guide users into the world of unsupervised machine learnings. Users have the opporunity to explore three distinct types of machine learning: hierarchical clustering, principal component analysis, and k-means clustering. The app is designed to give users access to these models for their own use. Additionally, it aims to teach users about the different types of unsupervised machine learning while granting users the chance to experiment with the different models. 
