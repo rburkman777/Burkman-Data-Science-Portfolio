@@ -15,7 +15,7 @@ The app lets you explore congressional election information compiled by FiveThir
 * Summary table of the voting patterns of various district types based on population density
 
 ## Visual Examples
-Here are some examples of the kinds of visual you will produce using the app (picture: a graphic of a chart of electoral districts falling within a certain partisan range produced by the app):
+Here is an example of the kind of visual you will produce using the app (picture: a graphic of a chart of electoral districts falling within a certain partisan range produced by the app):
 
 <img width="786" height="498" alt="Screen Shot 2026-05-03 at 1 54 29 AM" src="https://github.com/user-attachments/assets/c1e7f28f-7e2b-4841-a489-72bd569eb62d" />
 
