@@ -6,7 +6,7 @@ Use the link below to access the app on Streamlit cloud:
 
 ## ✏️ Project Overview
 
-The app lets you explore congressional election information compiled by FiveThirtyEight in the leadup to the 2022 election. The data is partially based on real election results. While exploring the app, do notice the data has been displayed for easy viewing. You can sort the congressional distircts by "partisan voting index" (aka PVI) and by their level of density as categorized by state. From this, you can find information on the voting habits of different states and the trends across congressional districts. 
+The app lets you explore congressional election information compiled by FiveThirtyEight in the leadup to the 2022 elections. The data is partially based on real election results.  You can sort the congressional distircts by "partisan voting index" (aka PVI) and by their level of density as categorized by state. From this, you can find information on the voting habits of different states and the trends across congressional districts. The app enables easy visualization of American political data. 
 
 ## 📱 App Features 
 
