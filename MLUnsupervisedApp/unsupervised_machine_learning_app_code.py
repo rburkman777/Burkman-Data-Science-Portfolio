@@ -59,50 +59,56 @@ elif model_type == "K-Means Clustering":
     st.write("Let's get you a dataset to work with. You can use the built in dataset or upload your own")
     st.write("NOTE: If you want to upload your own dataset, make sure that it meets the following parameters: \n\n * It is a csv file \n\n * The rows above each column of data are labelled \n\n * The data is numeric \n\n See the built-in dataset for an example")
     st.markdown("-----------------------------------------------------------------")
-data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"]) # here is another selection box to allow the user to choose whether they upload the data or take the built-in dataset 
+# -----------------------------
+# STEP 2: DATA SOURCE
+# -----------------------------
 
-df = None # this creates our dataframe variable 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # this code begins setting up our file pathes for the built in datasets
+data_option = st.selectbox("Choose data source", ["Upload CSV", "Built-in Dataset"])
 
-# we use if statements to direct students to their choice of where to obtain their dataset
+df = None
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+uploaded_file = None  # always defined first
+
 if data_option == "Upload CSV":
 
-    uploaded_file = st.file_uploader("📂 Upload your CSV file", type=["csv"])
+    st.subheader("📂 Upload your dataset")
+
+    uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
     if uploaded_file:
         df = pd.read_csv(uploaded_file)
-        st.session_state.df = df
-        st.success("✅ CSV uploaded successfully!")
-
-    elif "df" not in st.session_state:
-        st.info("Please upload a CSV file to continue.")
-        st.stop()
+        st.success("✅ File uploaded successfully!")
 
     else:
-        df = st.session_state.df
-# we move to an else statement if the user does not choose to upload their own file
-else: 
-    st.subheader("📁 Using Built-in Dataset") # use a subheader to make the title
-    # we again use if and elif statements to filter for the different model types
+        st.info("Please upload a CSV file to continue.")
+
+elif data_option == "Built-in Dataset":
+
+    st.subheader("📁 Using Built-in Dataset")
+
     if model_type == "PCA (Dimensionality Reduction)":
-        dataset_path = os.path.join(BASE_DIR, "data", "WineQT.csv") # set up path to sample dataset for decision tree
+        dataset_path = os.path.join(BASE_DIR, "data", "WineQT.csv")
+
     elif model_type == "Hierarchical Clustering":
         dataset_path = os.path.join(BASE_DIR, "data", "USArrests.csv")
- # set up path to sample dataset for decision tree
+
     elif model_type == "K-Means Clustering":
-        dataset_path = os.path.join(BASE_DIR, "data", "spotifysongs.csv") # set up path to sample dataset for decision tree
+        dataset_path = os.path.join(BASE_DIR, "data", "spotifysongs.csv")
 
     if not os.path.exists(dataset_path):
-        st.error(f"Dataset '{dataset_path}' not found.") # sets up error message if there is an issue
+        st.error(f"Dataset '{dataset_path}' not found.")
         st.stop()
 
-    df = pd.read_csv(dataset_path) # creates dataframe for the sample, built-in data 
-    st.success(f"Using built-in dataset: {os.path.basename(dataset_path)}") # success message for the dataset loading
-   
-    if model_type == "Hierarchical Clustering" and data_option == "Built-in Dataset":
+    df = pd.read_csv(dataset_path)
+    st.success(f"Using built-in dataset: {os.path.basename(dataset_path)}")
+
+    if model_type == "Hierarchical Clustering":
         df = df.set_index(df.columns[0])
-    if df is None:
-        st.stop()
+
+# 🚨 ONLY STOP AFTER df is properly handled
+if df is None:
+    st.stop()
 
 # -----------------------------
 # STEP 3: DISPLAY DATA
