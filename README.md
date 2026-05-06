@@ -21,7 +21,8 @@ ________________________________________________________________________________
 ### Link to Streamlit App:
 ### Link to Unsupervised Machine Learning Folder and materials:
 
-### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; ✨ K-Means Clustering &nbsp; | &nbsp; 🌳 Hierarchical Clustering &nbsp;| &nbsp; 📌 Principal Component Analysis 
+### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design 
+### Model Skills exhibited: ✨ K-Means Clustering &nbsp; | &nbsp; 🌳 Hierarchical Clustering &nbsp;| &nbsp; 📌 Principal Component Analysis 
 
 
 * The app lets users learn about and interact with three distinct types of unsupervised machine learning: k-means clustering, hierarchical clustering, principal component analysis
@@ -45,7 +46,9 @@ ________________________________________________________________________________
 ### LINK to project folder with app code: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/MLStreamlitApp) 
 Folder with project code, information, and data is also above and called "MLStreamlitApp"
 
-### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design
+### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design 
+### Model Skills exhibited: 📈 Linear Regression &nbsp; | &nbsp; 🌳 Decision Tree &nbsp;| &nbsp; 🏠 K-Nearest Neighbor 
+
 
 * In this project, I created an app capable of accepting an input of data from a user and using that data to illustrate the process of machine learning.
 * The app allows users to choose a type of machine learning (linear regression, decision tree, or K-Nearest Neighbor) and tune hyperparameters based off that choice. Afterwards, the users can evaluate various metrics of model performance, including ROC curves, accuracy, precision, and others. 
@@ -65,7 +68,7 @@ ________________________________________________________________________________
 
 ### LINK to Github folder with project code, information, and data: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/ElectionsStreamlitApp)
 
-### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design  &nbsp; | &nbsp; 🏛 Political Analysis 
+### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp; 🏛 Political Analysis  
 
 This app is designed to give users the opporunity to explore data about American elections compiled by the website FiveThirtyEight. Users can filter congressional districts for various attributes and learn about their geographic distribution throughout the country, their partisanship, and their urbanization. Users can use this information to make insights about contempotary American politics
 
