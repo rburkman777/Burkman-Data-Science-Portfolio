@@ -525,11 +525,10 @@ elif model_type == "PCA (Dimensionality Reduction)":
         X_scaled = scaler.fit_transform(X)
     else:
         X_scaled = X
-
+    
     with st.expander("CLICK HERE to learn more about scaling the data"):
-        st.write(
-            "Scaling ensures all features contribute equally to PCA."
-        )
+        st.write("Scaling the data is the process of transforming the features into similar scales without changing the shape of the data. It is highly recommended that the data be scaled for PCA since it is sensitive to variable scales.")
+
 
     st.markdown("-----------------------------------------------------------------")
 
@@ -547,11 +546,12 @@ elif model_type == "PCA (Dimensionality Reduction)":
 
     from sklearn.decomposition import PCA
 
-    st.markdown("-----------------------------------------------------------------")
+    with st.expander("CLICK HERE to learn more about the principal components"):
+        st.write("The principal components are new linear combinations of the data ranked by importance. We can imagine them like artificial axes that rotate and project 'high-dimensional' data (data with a lot of features) into a lower dimensional space. There is a tradeoff between having simplifying the data through dimensionality reduction "
+        "and retaining greater information about the data. A higher number of components relative to the number of initial features prioritizes information retention and accuracy while a lower number prioritizes simplicity.")
 
-    # =====================================================
-    # 🔧 FIX: FULLY REACTIVE PCA (NO BUTTON NEEDED)
-    # =====================================================
+
+    st.markdown("-----------------------------------------------------------------")
 
     pca_signature = (tuple(features), scale_option, n_components)
 
@@ -573,7 +573,7 @@ elif model_type == "PCA (Dimensionality Reduction)":
     explained = st.session_state.explained
     cumulative = st.session_state.cumulative
 
-    st.success("✅ PCA updated")
+    st.write("The PCA model changes automatically when you change the parameters above. Get exploring!")
 
     st.markdown("-----------------------------------------------------------------")
     st.write("#### Model Evaluation")
