@@ -14,7 +14,7 @@ The app lets you explore congressional election information compiled by FiveThir
 * Interactive information about state-level voting trends that can explored by the user 
 * Summary table of the voting patterns of various district types based on population density
 
-## Visual Examples
+## Visual Example
 Here is an example of the kind of visual you will produce using the app (picture: a graphic of a chart of electoral districts falling within a certain partisan range produced by the app):
 
 <img width="786" height="498" alt="Screen Shot 2026-05-03 at 1 54 29 AM" src="https://github.com/user-attachments/assets/c1e7f28f-7e2b-4841-a489-72bd569eb62d" />
@@ -33,7 +33,7 @@ Once you have everything open in VSCode, go to the terminal (you can activate th
 * Cook Political Report is a great resource for further research on the nature of congressional distircts: <br>
 [Cook Political Report](https://www.cookpolitical.com/pvi-map-and-district-list)
 
-* Here is a guide to Streamlit: <br>
+* Here is a guide to Streamlit, helpful for grasping how the app was made: <br>
 [Streamlit Guide](https://docs.streamlit.io/)
 
 
