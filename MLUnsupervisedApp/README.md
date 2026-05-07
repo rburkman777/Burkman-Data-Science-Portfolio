@@ -41,7 +41,7 @@ Also, help yourself to the sample datasets that you can upload into the app if y
 * To get a grasp on some of the practical applications of this app, take a look at this article: <br>
 [biztechmagazine article on the uses of unsupervised machine learning](https://biztechmagazine.com/article/2025/05/what-are-benefits-unsupervised-machine-learning-and-clustering-perfcon)
 
-* This helps with understanding the k-means clusteringa algorithm:
+* This helps with understanding the k-means clusteringa algorithm: <br>
 [K-Means Clustering](https://stanford.edu/~cpiech/cs221/handouts/kmeans.html)
 
 
