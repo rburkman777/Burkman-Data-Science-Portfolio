@@ -12,9 +12,9 @@ Three models are available in the app: hierarchical clustering, principal compon
 
 * Hierarchical Clustering: You can explore how scaling the data and changing the number of clusters or the linkage method changes model performance. You can use a dendrogram to help you make those determinations.
 
-* Principal Component Analysis: You can change the number of components to explore how this affects model performance.
+* Principal Component Analysis: You can change the number of components to explore how this affects model performance. You can also observe how this changes the data structure. 
 
-* K-Means Clustering: You can also explore a k-means clustering model. You can observe how changing the number of clusters (k) alters model performance.
+* K-Means Clustering: You can also explore a k-means clustering model. You can observe how changing the number of clusters (k) alters model performance and clustering. 
 
 
 ## Visual Example
