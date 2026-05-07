@@ -18,7 +18,7 @@ Three models are available in the app: hierarchical clustering, principal compon
 
 
 ## Visual Example
-Here is an example of a visual you can create with this graph -- a graphic created with the k-means clustering section:
+Here is an example of a visual you can create with this app -- a graphic created with the k-means clustering section:
 
 <img width="402" height="389" alt="Screen Shot 2026-05-02 at 9 25 32 PM" src="https://github.com/user-attachments/assets/2bcb4444-7515-4069-9954-aa07ed25d86c" />
 
