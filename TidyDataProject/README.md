@@ -7,8 +7,8 @@ The goal of this project is to illustrate the power of data cleaning. The notebo
 
 ## 📋 Project Features 
 * Instructions for users on how to use Python to melt data, split columns, and remove NaN values from data
-* Insturctions and guide for users on how to create visualizations from data, including bar charts and pie charts with Python
-* Insturctions for users on how to create a pivot tables with data from Python code
+* Insturctions and guide for users on how to create visualizations from data in Python, including bar charts and pie charts 
+* Insturctions for users on how to use Python to generate a pivot tables from data
 * Broad tutorial of Python coding, including pandas functions
 
 ## Visual Examples
