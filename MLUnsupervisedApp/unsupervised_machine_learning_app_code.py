@@ -702,16 +702,18 @@ elif model_type == "PCA (Dimensionality Reduction)":
     # -------------------------
     st.markdown("### 3) 📉 Scree Plot")
 
+    #bring in some useful packages
     import numpy as np
     from sklearn.decomposition import PCA
 
+    # don't use more components than we have available 
     max_components = min(15, len(features))
-
+    # make sure we run only if we hav two components
     if max_components >= 2:
         pca_full = PCA(n_components=max_components)
         X_pca_full = pca_full.fit_transform(X_scaled)
 
-        explained_full = pca_full.explained_variance_ratio_
+        explained_full = pca_full.explained_variance_ratio_ # this gets us how much variance each component explains
         cumulative_full = np.cumsum(explained_full)
 
         fig3, ax3 = plt.subplots()
@@ -734,6 +736,9 @@ elif model_type == "PCA (Dimensionality Reduction)":
     # -------------------------
     # Feature Contributions
     # -------------------------
+
+    # we use the following code to get our feature contributions in chart and table form
+    
     loadings_df = pd.DataFrame(
         st.session_state.pca_model.components_,
         columns=features,
