@@ -35,11 +35,10 @@ Once you have everything open in VSCode (from either method), go to the terminal
 Also, help yourself to the sample datasets that you can upload into the app if you choose to upload your own file instead of using one of the sample datasets (in the data_for_user folder). 
 
 ### References
-While creating this project I used some useful resources that I have attatched below: 
+* Here is a useful article on supervised machine learning: <br>
+[IBM Unsupervised Machine Learning Article](https://www.ibm.com/think/topics/unsupervised-learning)
 
-* Here is a useful article on supervised machine learning: <b>
-  [IBM Unsupervised Machine Learning Article](https://www.ibm.com/think/topics/unsupervised-learning) <b>
-* To get a grasp on some of the practical applications of this app, take a look at this article: <b>
+* To get a grasp on some of the practical applications of this app, take a look at this article: <br>
 [biztechmagazine article on the uses of unsupervised machine learning](https://biztechmagazine.com/article/2025/05/what-are-benefits-unsupervised-machine-learning-and-clustering-perfcon)
 
 
