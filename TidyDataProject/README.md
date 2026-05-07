@@ -18,11 +18,11 @@ Here is an example of the kind of visuals you will produce with the app.
 <img width="1386" height="590" alt="image" src="https://github.com/user-attachments/assets/bf59ca0f-e46f-41b8-b3d4-4bb4dc401ee7" />
 
 
-#### How to Run the Project
+### How to Run the Project
 
 Open the "TidyData_Notebook_Code.ipynb" file in VSCode and simply run each box of code. The code will output the relevant data at each step. Make sure that the olmypics_08_medalists.csv file is also open so the "TidyData_Notebook_Code.ipynb file can import it and work with it. Open them in the same repository/location.
 
-#### Data Tidying Additional Info and References
+### Data Tidying Additional Info and References
 * This references gives you a cheat sheet on tidying data using pandas functions, the main library of functions we use in this project: <br>
 [Pandas Cheat Sheet](https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf)
 
