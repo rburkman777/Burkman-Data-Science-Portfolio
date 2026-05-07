@@ -3,13 +3,14 @@
 Use the files above to access this project. See 'How to Run Project' section below for specific instructions. 
 
 ## ✏️ Project Overview
-The goal of this project is to illustrate the power of data cleaning. The notebook enables a user to turn a fairly messy, poorly organized dataset into something digestable and useable with just a few functions. The app also includes several visualizations of the dataset once it has ben cleaned. The project aims to guide users through the process of tidying data using Python and the pandas package. The project also uses a Markdown notebook. 
+The goal of this project is to illustrate the power of data cleaning. The notebook enables a user to turn a fairly messy, poorly organized dataset into something digestable and useable with just a few functions. The app also includes several visualizations of the dataset once it has ben cleaned. The project aims to guide users through the process of tidying data using Python and the pandas package. 
 
 ## 📋 Project Features 
 * Instructions for users on how to use Python to melt data, split columns, and remove NaN values from data
 * Insturctions and guide for users on how to create visualizations from data in Python, including bar charts and pie charts 
 * Insturctions for users on how to use Python to generate a pivot tables from data
 * Broad tutorial of Python coding, including pandas functions
+* The project uses a Markdown notebook to carefully walk users through each step of the process 
 
 ## Visual Example
 
