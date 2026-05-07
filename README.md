@@ -22,7 +22,7 @@ ________________________________________________________________________________
 ### Link to Unsupervised Machine Learning Folder and materials: [CLICK HERE](https://github.com/rburkman777/Burkman-Data-Science-Portfolio/tree/main/MLUnsupervisedApp)
 
 ### Skills exhibited: 📱 App development &nbsp; | &nbsp; 🐍 Python &nbsp; | &nbsp; 👑 Streamlit &nbsp; | &nbsp;  🎨🖌️ App design 
-### Model Skills exhibited: ✨ K-Means Clustering &nbsp; | &nbsp; 🌳 Hierarchical Clustering &nbsp;| &nbsp; 📌 Principal Component Analysis 
+### Model Skills exhibited: ✨ K-Means Clustering &nbsp; | &nbsp; 🌳 Hierarchical Clustering &nbsp;| &nbsp; 📌 PCA
 
 
 * The app lets users learn about and interact with three distinct types of unsupervised machine learning: k-means clustering, hierarchical clustering, principal component analysis
