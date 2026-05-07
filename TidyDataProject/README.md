@@ -11,7 +11,7 @@ The goal of this project is to illustrate the power of data cleaning. The notebo
 * Insturctions for users on how to use Python to generate a pivot tables from data
 * Broad tutorial of Python coding, including pandas functions
 
-## Visual Examples
+## Visual Example
 
 Here is an example of the kind of visuals you will produce with the app. 
 
